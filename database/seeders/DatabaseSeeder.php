@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Encore\Admin\Auth\Database\AdminTablesSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create();
         $this->call([AppSeeder::class]);
+        $this->call(AdminTablesSeeder::class);
     }
 }

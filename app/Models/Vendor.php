@@ -15,4 +15,14 @@ class Vendor extends Model
         'alias',
         'country_id'
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

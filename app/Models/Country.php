@@ -14,4 +14,9 @@ class Country extends Model
         'name', 
         'alias'
     ];
+
+    public function vendors()
+    {
+        return $this->hasMany(Vendor::class);
+    }
 }

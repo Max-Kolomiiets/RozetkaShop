@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Routing\Router;
+use Encore\Admin\Facades\Admin;
+use Illuminate\Support\Facades\Route;
 
 Admin::routes();
 
@@ -13,4 +15,11 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
 
+    $router->resource('categories', CategoryController::class);
+    $router->resource('products', ProductController::class);
+    $router->resource('users', UserController::class);
+    $router->resource('cart', CartController::class);
+    $router->resource('wish-list', WishListController::class);
+    $router->resource('vendors', VendorController::class);
+    $router->resource('countries', CountryController::class);
 });

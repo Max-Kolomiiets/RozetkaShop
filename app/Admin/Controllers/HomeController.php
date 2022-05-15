@@ -14,8 +14,10 @@ class HomeController extends Controller
     {
         return $content
             ->title('Dashboard')
-            ->description('Description...')
-            ->row(Dashboard::title())
+            ->description('Welcome to rozetka admin part')
+            //->row(Dashboard::title())
+            ->row("<div class='title'>Rozetka - Admin</div>")
+            
             ->row(function (Row $row) {
 
                 $row->column(4, function (Column $column) {

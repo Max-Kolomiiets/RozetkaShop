@@ -19,4 +19,9 @@ class Description extends Model
         'country_id',
         'logistic_parameters_id'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

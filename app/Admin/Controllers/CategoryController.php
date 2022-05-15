@@ -26,11 +26,12 @@ class CategoryController extends AdminController
     {
         $grid = new Grid(new Category());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('parent_id', 'Parent Name')->display(function ($parent_id) {
             return Category::where('id', $parent_id)->first()->name ?? "No parent";
-        });
-        $grid->column('name', __('Name'));
+        })->sortable();
+        
+        $grid->column('name', __('Name'))->sortable();
         $grid->column('alias', __('Alias'));
 
         return $grid;
@@ -70,9 +71,12 @@ class CategoryController extends AdminController
 
         $form->select('parent_id', 'Parent category')->options(Category::all()->pluck('name','id'));
 
-        $form->text('name', __('Name'));
-        $form->text('alias', __('Alias'));
-
+        $form->text('name', __('Name'))->rules('required|min:3', [
+            'min'   => 'Name can not be less than 3 characters',
+        ]);
+        $form->text('alias', __('Alias'))->rules('required|min:3', [
+            'min'   => 'Alias can not be less than 3 characters',
+        ]);
         return $form;
     }
 }

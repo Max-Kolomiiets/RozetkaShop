@@ -26,8 +26,8 @@ class CountryController extends AdminController
     {
         $grid = new Grid(new Country());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Name'))->sortable();
         $grid->column('alias', __('Alias'));
 
         return $grid;

@@ -26,4 +26,34 @@ class Product extends Model
     {
         return $this->belongsTo(Vendor::class);
     }
+
+    public function characteristics()
+    {
+        return $this->hasMany(Characteristic::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Characteristic::class);
+    }
+
+    public function price()
+    {
+        return $this->hasOne(Price::class);
+    }
+
+    public function availability()
+    {
+        return $this->hasOne(Availability::class);
+    }
+
+    public function description()
+    {
+        return $this->hasOne(Description::class);
+    }
+
+    public function guaranty()
+    {
+        return $this->hasOne(Guaranty::class);
+    }
 }

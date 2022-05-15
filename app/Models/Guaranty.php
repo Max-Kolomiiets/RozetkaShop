@@ -17,4 +17,10 @@ class Guaranty extends Model
         'vendor_id',
         'product_id'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
 }

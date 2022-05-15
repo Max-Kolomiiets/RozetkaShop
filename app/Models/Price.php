@@ -16,4 +16,9 @@ class Price extends Model
         'price_promo',
         'product_id'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

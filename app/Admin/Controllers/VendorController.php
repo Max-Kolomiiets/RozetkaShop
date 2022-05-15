@@ -27,12 +27,12 @@ class VendorController extends AdminController
     {
         $grid = new Grid(new Vendor());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Name'))->sortable();
         $grid->column('alias', __('Alias'));
         $grid->column('country_id', 'Country')->display(function ($country_id) {
             return Country::where('id', $country_id)->first()->name ?? "No country";
-        });
+        })->sortable();
 
         return $grid;
     }

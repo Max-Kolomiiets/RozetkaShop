@@ -26,9 +26,9 @@ class UserController extends AdminController
     {
         $grid = new Grid(new User());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('email', __('Email'));
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Name'))->sortable();
+        $grid->column('email', __('Email'))->sortable();
         $grid->column('email_verified_at', __('Email verified at'));
         $grid->column('password', __('Password'));
         $grid->column('remember_token', __('Remember token'));

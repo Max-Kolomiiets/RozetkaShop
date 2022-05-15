@@ -28,8 +28,8 @@ class ProductController extends AdminController
     {
         $grid = new Grid(new Product());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Name'))->sortable();
         $grid->column('alias', __('Alias'));
 
         $grid->category()->name();
@@ -71,6 +71,9 @@ class ProductController extends AdminController
         
         $form->select('category_id', 'Category')->options(Category::where('parent_id', '!=', 'null')->pluck('name','id'));
         $form->select('vendor_id', 'Vendor')->options(Vendor::all()->pluck('name','id'));
+
+        $form->number('price.price', 'Price');
+        $form->textarea('description.description', 'Description')->rows(10);
 
         return $form;
     }

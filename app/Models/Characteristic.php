@@ -12,7 +12,7 @@ class Characteristic extends Model
     protected $table = 'characteristics';
     protected $fillable = [
         'value', 
-        'attribute_id',
+        'attribut_id',
         'product_id'
     ];
 }

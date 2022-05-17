@@ -21,8 +21,8 @@ class HomeController extends Controller
         foreach ($selected_products as $it) {
             array_push($products, (object)[
                 'name'=> $it->name,
-                'image_url'=> Image::firstWhere("product_id", $it->id)->first()->url,
-                'price' => Price::firstWhere("product_id", $it->id)->first()->price / 100.0,
+                'image_url'=> Image::firstWhere("product_id", $it->id)->url,
+                'price' => Price::firstWhere("product_id", $it->id)->price / 100.0,
                 'description' => Description::firstWhere("product_id", $it->id)->description
             ]);
         }

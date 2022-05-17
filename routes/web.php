@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/main', "HomeController@index")->name("main.index");
+
+Route::get('/categories/{category}', "CategoryController@show")->name("category.show");
+
+
+Route::get('/test', "ProductsController@index");
+Route::get('/item', "ProductsController@product");

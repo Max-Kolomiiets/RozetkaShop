@@ -24,7 +24,7 @@ class CountryFactory extends Factory
         $name = $this->faker->country();
         return [
             'name' => $name,
-            'alias' => str_replace(' ', '_', $name)
+            'alias' => str_replace(' ', '_', strtolower($name))
         ];
     }
 }

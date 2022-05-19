@@ -26,7 +26,7 @@ class ProductFactory extends Factory
         $name = $this->faker->words(rand(1,3), true);
         return [
             'name' => ucwords($name),
-            'alias' => str_replace(' ', '_', $name),
+            'alias' => str_replace(' ', '_', strtolower($name)),
             'vendor_id'  => Vendor::factory(),
             'category_id' => Category::factory()
         ];

@@ -23,8 +23,6 @@ class AvailabilityFactory extends Factory
     public function definition()
     {
         return [
-            'hiden'=>[true, false][rand(0,1)],
-            'availability'=>[true, false][rand(0,1)],
             'quantity'=> rand(10, 200),
             'product_id' => Product::factory()
         ];

@@ -17,9 +17,9 @@ class CreateAttributesTable extends Migration
             $table->id();
             $table->string("name", 200);
             $table->string("alias", 200);
-            $table->string("value_type", 200);
-            $table->boolean("filter");
-            $table->boolean("required");
+            $table->string("value_type", 200)->default("checkBox");
+            $table->boolean("filter")->default(true);
+            $table->boolean("required")->default(false);
         });
     }
 

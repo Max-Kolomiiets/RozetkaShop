@@ -22,13 +22,9 @@ class AttributeFactory extends Factory
     public function definition()
     {
         $name = $this->faker->word();
-        $value_types = ['text', 'number', 'txt_array', 'num_array'];
         return [
-            'name' => $name,
-            'alias' => ucfirst($name),
-            'value_type' => $value_types[rand(0, 3)],
-            'filter' => [true, false][rand(0,1)],
-            'required'=> [true, false][rand(0,1)]
+            'name' => ucfirst($name),
+            'alias' => str_replace(' ', '_', strtolower($name)),
         ];
     }
 }

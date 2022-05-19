@@ -215,8 +215,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <hr>
-                        <hr>
+
 						<div class="description">
                             <h3>Опис</h3>
                             <p class="product-description">
@@ -227,9 +226,17 @@
                         <div class="characteristic">
                             <h3>Характеристики</h3>
                             <div>
-
+                                <table>
+                                    @foreach($product_info->characteristics as $characteristic)
+                                        <tr>
+                                            <td>{{$characteristic->name}}</td>
+                                            <td>{{$characteristic->value}}</td>
+                                        </tr>
+                                    @endforeach
+                                </table>
                             </div>
                         </div>  
+                        
 					</div>
 					<div class="details col-md-6">
 						<h3 class="product-title">{{$product_info->name}}</h3>

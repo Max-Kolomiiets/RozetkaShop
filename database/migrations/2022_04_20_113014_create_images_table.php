@@ -21,10 +21,10 @@ class CreateImagesTable extends Migration
             $table->string("alt", 256);
             $table->string("title", 256);
 
-            $table->timestamp("created_at");
-
             $table->foreignId("product_id");
-            $table->foreign("product_id")->references("id")->on("products")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreign("product_id")->references("id")->on("products")->onDelete("cascade")->onUpdate("cascade");            
+            
+            $table->timestamps();
         });
     }
 

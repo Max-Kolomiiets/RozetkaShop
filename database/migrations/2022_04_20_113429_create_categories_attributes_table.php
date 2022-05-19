@@ -16,11 +16,13 @@ class CreateCategoriesAttributesTable extends Migration
         Schema::create('categories_attributes', function (Blueprint $table) {
             $table->id();
             
-            $table->foreignId("attribut_id");
-            $table->foreign("attribut_id")->references("id")->on("attributes")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreignId("attribute_id");
+            $table->foreign("attribute_id")->references("id")->on("attributes")->onDelete("cascade")->onUpdate("cascade");
 
             $table->foreignId("category_id");
             $table->foreign("category_id")->references("id")->on("categories")->onDelete("cascade")->onUpdate("cascade");
+            
+            $table->timestamps();
         });
     }
 

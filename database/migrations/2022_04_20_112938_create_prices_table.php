@@ -16,11 +16,13 @@ class CreatePricesTable extends Migration
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger("price");
-            $table->unsignedInteger("price_old");
-            $table->unsignedInteger("price_promo");
+            $table->unsignedInteger("price_old")->default(0);
+            $table->unsignedInteger("price_promo")->default(0);
             
             $table->foreignId("product_id");
             $table->foreign("product_id")->references("id")->on("products")->onDelete("cascade")->onUpdate("cascade");
+                  
+            $table->timestamps();
         });
     }
 

@@ -15,11 +15,19 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
-        $selected_products = Product::where("id", ">", 15)->get();
+        $categories = [];
+        foreach (Category::all() as $category) {
+            if(count(Product::where("category_id", $category->id)->get()) > 0)
+            {
+                array_push($categories, $category);
+            }
+        }
+        
+        $selected_products = Product::all();
         $products = [];
         foreach ($selected_products as $it) {
             array_push($products, (object)[
+                'id'=>$it->id,
                 'name'=> $it->name,
                 'image_url'=> Image::firstWhere("product_id", $it->id)->url,
                 'price' => Price::firstWhere("product_id", $it->id)->price / 100.0,

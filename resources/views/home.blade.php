@@ -12,12 +12,12 @@
             @foreach($products as $product)
                 <div class="feature col">
                 <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-primary bg-gradient text-white fs-2 mb-3">
-                    <a href="#" class="icon-link d-inline-flex align-items-center">
+                    <a href="{{route("product.show", $product->id)}}" class="icon-link d-inline-flex align-items-center">
                         <img class="bi" width="100em" height="100em" src="{{$product->image_url}}" alt="">
                     </a> 
                 </div>          
                 <br> 
-                <a href="#" class="icon-link d-inline-flex align-items-center">
+                <a href="{{route("product.show", $product->id)}}" class="icon-link d-inline-flex align-items-center">
                     <h2>{{$product->name}}</h2>
                 </a>
                 <br> 

@@ -25,6 +25,8 @@ class CreateGuarantiesTable extends Migration
 
             $table->foreignId("product_id");
             $table->foreign("product_id")->references("id")->on("products")->onDelete("cascade")->onUpdate("cascade");
+       
+            $table->timestamps();
         });
     }
 

@@ -20,7 +20,6 @@ Route::get('/', function () {
 Route::get('/main', "HomeController@index")->name("main.index");
 
 Route::get('/categories/{category}', "CategoryController@show")->name("category.show");
+Route::get('/products/{product}', "ProductsController@show")->name("product.show");
 
-
-Route::get('/test', "ProductsController@index");
-Route::get('/item', "ProductsController@product");
+Route::post('/categories/{category}/filtering', "CategoryController@filtering")->name("category.filtering");

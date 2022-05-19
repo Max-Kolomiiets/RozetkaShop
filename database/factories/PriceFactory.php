@@ -23,12 +23,8 @@ class PriceFactory extends Factory
     public function definition()
     {
         $price = rand(50, 1000000);
-        $old_cof = rand(10, 90) / 100;
-        $promo_cof = rand(10, 90) / 100;
         return [
-            'price' => $price, 
-            'price_old' => [0, (int)round($price * $old_cof)][(int)rand(0, 7) == 0], 
-            'price_promo' => [0, (int)round($price * $promo_cof)][(int)rand(0, 7) == 0],
+            'price' => $price,
             'product_id' => Product::factory()
         ];
     }

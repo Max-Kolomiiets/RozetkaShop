@@ -3,18 +3,18 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\CategoryAttribut;
+use App\Models\CategoryAttribute;
 use App\Models\Category;
 use App\Models\Attribute;
 
-class CategoryAttributFactory extends Factory
+class CategoryAttributeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = CategoryAttribut::class;
+    protected $model = CategoryAttribute::class;
 
     /**
      * Define the model's default state.
@@ -25,7 +25,7 @@ class CategoryAttributFactory extends Factory
     {
         return [
             'category_id'=>Category::factory(), 
-            'attribut_id'=>Attribute::factory()
+            'attribute_id'=>Attribute::factory()
         ];
     }
 }

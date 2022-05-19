@@ -24,7 +24,7 @@ class CategoryFactory extends Factory
         $name = $this->faker->words(rand(1,3), true);
         return [
             'name' => ucwords($name),
-            'alias' => str_replace(' ', '_', $name)
+            'alias' => str_replace(' ', '_', strtolower($name))
         ];
     }
 }

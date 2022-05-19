@@ -19,16 +19,14 @@ class CreateDescriptionsTable extends Migration
             $table->string("state", 6);
             $table->char("ean", 13);
             $table->string("description", 2048);
-            $table->timestamp("added_at");
             
             $table->foreignId("product_id");
             $table->foreign("product_id")->references("id")->on("products")->onDelete("cascade")->onUpdate("cascade");
 
             $table->foreignId("country_id");
             $table->foreign("country_id")->references("id")->on("countries")->onDelete("restrict")->onUpdate("cascade");
-
-            $table->foreignId("logistic_parameters_id");
-            $table->foreign("logistic_parameters_id")->references("id")->on("logistic_parameters")->onDelete("restrict")->onUpdate("cascade");
+                
+            $table->timestamps();
         });
     }
 

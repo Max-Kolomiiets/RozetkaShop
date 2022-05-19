@@ -29,10 +29,8 @@ class DescriptionFactory extends Factory
             'state' => $states[rand(0,2)],
             'ean' => $this->faker->ean13(),
             'description'=> $this->faker->text(2000),
-            'added_at' => $this->faker->dateTime('now', null),
             'product_id' => Product::factory(),
-            'country_id' => Country::factory(),
-            'logistic_parameters_id' => LogisticParameters::factory()
+            'country_id' => Country::factory()
         ];
     }
 }

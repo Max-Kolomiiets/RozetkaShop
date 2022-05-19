@@ -19,6 +19,7 @@ class CreateVendorsTable extends Migration
             $table->string("alias", 200);
             $table->foreignId("country_id");
             $table->foreign("country_id")->references("id")->on("countries")->onDelete("restrict")->onUpdate("cascade");
+            $table->timestamps();
         });
     }
 

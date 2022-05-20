@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Characteristic extends Model
 {
     use HasFactory;
-    public $timestamps = false;
     protected $table = 'characteristics';
     protected $fillable = [
         'value', 

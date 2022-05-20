@@ -29,3 +29,9 @@ Route::middleware([
         return view('welcome');
     })->name('home');
 });
+Route::get('/main', "HomeController@index")->name("main.index");
+
+Route::get('/categories/{category}', "CategoryController@show")->name("category.show");
+Route::get('/products/{product}', "ProductsController@show")->name("product.show");
+
+Route::post('/categories/{category}/filtering', "CategoryController@filtering")->name("category.filtering");

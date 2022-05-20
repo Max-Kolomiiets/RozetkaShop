@@ -23,6 +23,7 @@ class CreateCharacteristicsTable extends Migration
             $table->foreign("attribute_id")->references("id")->on("attributes")->onDelete("cascade")->onUpdate("cascade");
 
             $table->string("value", 2048);
+            $table->timestamps();
         });
     }
 

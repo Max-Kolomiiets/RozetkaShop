@@ -16,12 +16,14 @@ class CreateAvailabilitiesTable extends Migration
         Schema::create('availabilities', function (Blueprint $table) {
             $table->id();
             
-            $table->boolean("hiden");
-            $table->boolean("availability");
+            $table->boolean("hiden")->default(false);
+            $table->boolean("availability")->default(true);
             $table->unsignedInteger("quantity");
             
             $table->foreignId("product_id");
             $table->foreign("product_id")->references("id")->on("products")->onDelete("cascade")->onUpdate("cascade");
+            
+            $table->timestamps();
         });
     }
 

@@ -150,16 +150,26 @@ return [
     | disk and upload path.
     |
     */
+    // 'upload' => [
+
+    //     // Disk in `config/filesystem.php`.
+    //     'disk' => 'admin',
+
+    //     // Image and file upload path under the disk above.
+    //     'directory' => [
+    //         'image' => 'images',
+    //         'file'  => 'files',
+    //     ],
+    // ],
+
     'upload' => [
 
-        // Disk in `config/filesystem.php`.
-        'disk' => 'admin',
-
-        // Image and file upload path under the disk above.
+        'disk' =>'admin',
+    
         'directory' => [
-            'image' => 'images',
-            'file'  => 'files',
-        ],
+            'image' =>'images',
+            'file' =>'files',
+        ]
     ],
 
     /*

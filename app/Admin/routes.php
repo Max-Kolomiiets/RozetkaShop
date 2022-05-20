@@ -22,4 +22,7 @@ Route::group([
     $router->resource('wish-list', WishListController::class);
     $router->resource('vendors', VendorController::class);
     $router->resource('countries', CountryController::class);
+    $router->resource('availabilities', AvailabilityController::class);
+    $router->resource('images', ImagesController::class);
+    $router->resource('attributes', AttributeController::class);
 });

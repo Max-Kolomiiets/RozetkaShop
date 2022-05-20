@@ -26,9 +26,6 @@ class CreateDescriptionsTable extends Migration
 
             $table->foreignId("country_id");
             $table->foreign("country_id")->references("id")->on("countries")->onDelete("restrict")->onUpdate("cascade");
-
-            $table->foreignId("logistic_parameters_id");
-            $table->foreign("logistic_parameters_id")->references("id")->on("logistic_parameters")->onDelete("restrict")->onUpdate("cascade");
         });
     }
 

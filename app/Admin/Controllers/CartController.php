@@ -69,6 +69,13 @@ class CartController extends AdminController
         $form->number('product_id', __('Product id'));
         $form->number('qty', __('Qty'));
 
+
+        $form->footer(function ($footer) {
+            $footer->disableViewCheck();
+            $footer->disableEditingCheck();
+            $footer->disableCreatingCheck();
+        });
+        
         return $form;
     }
 }

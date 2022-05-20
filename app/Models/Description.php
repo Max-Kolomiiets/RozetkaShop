@@ -16,8 +16,7 @@ class Description extends Model
         'description',
         'added_at',
         'product_id',
-        'country_id',
-        'logistic_parameters_id'
+        'country_id'
     ];
 
     public function product()

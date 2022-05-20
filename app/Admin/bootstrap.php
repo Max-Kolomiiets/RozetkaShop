@@ -19,7 +19,12 @@
  */
 
 use Encore\Admin\Facades\Admin;
+use Encore\Admin\Grid\Column;
 
 Encore\Admin\Form::forget(['map', 'editor']);
 
 Admin::css('./css/admin-styles.css');
+
+Column::extend('color', function ($value, $color) {
+    return "<span style='color: $color'>$value</span>";
+});

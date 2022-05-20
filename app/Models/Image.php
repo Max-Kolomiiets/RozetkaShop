@@ -18,4 +18,9 @@ class Image extends Model
         'created_at',
         'product_id'
     ];
+
+    public function product()
+    {
+        return $this->hasOne(Product::class);
+    }
 }

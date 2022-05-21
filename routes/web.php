@@ -35,3 +35,9 @@ Route::get('/categories/{category}', "CategoryController@show")->name("category.
 Route::get('/products/{product}', "ProductsController@show")->name("product.show");
 
 Route::post('/categories/{category}/filtering', "CategoryController@filtering")->name("category.filtering");
+
+// for cookies cart
+Route::view('/products-temp', 'cart.products-temp');
+Route::post('/add-to-cart','CartController@addtocart');
+Route::get('/load-cart-data','CartController@cartloadbyajax');
+Route::get('/cart','CartController@index');

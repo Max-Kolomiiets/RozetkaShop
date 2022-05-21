@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Selectable\Attributes;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Image;
@@ -100,23 +101,13 @@ class ProductController extends AdminController
 
         $form->divider();
         $form->tab('Media', function($form) {
-            //$form->multipleSelect('images.product_id', 'Images')->options(Image::all()->pluck('name','id'));
-            //$form->multipleImage('images.url', 'Images');
-            //$form->hidden()
             $form->multipleImage('images','Images')->pathColumn('url')->removable();
             
         });
         
         $form->divider();
-        $form->tab('Characteristics', function($form) {
-            $form->hasMany('characteristics', 'Attributes', function (Form\NestedForm $form) {
-
-                $form->text('attribute.name');
-                $form->text('attribute.alias');
-                $form->text('attribute.value_type');
-                $form->switch('attribute.filter', 'Show in filter');
-                $form->switch('attribute.required', 'Is Required');
-            });
+        $form->tab('Attributes', function($form) {
+            $form->belongsToMany('attributes', Attributes::class, 'Attributes');
         });
         // $form->tab('Guarantee', function($form) {
         //     $form->divider();
@@ -131,23 +122,6 @@ class ProductController extends AdminController
             $footer->disableEditingCheck();
             $footer->disableCreatingCheck();
         });
-        $form->confirm('Confirm creating     new product？', 'create');
-
-
-        $form->submitted(function (Form $form) {
-            var_dump($form);
-        });
-        
-        // callback before save
-        $form->saving(function (Form $form) {
-            var_dump($form);
-        });
-        
-        // callback after save
-        $form->saved(function (Form $form) {
-            var_dump($form);
-        });
-
         return $form;
     }
 }

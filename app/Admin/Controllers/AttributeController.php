@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Attribute;
+use App\Models\Category;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -26,12 +27,22 @@ class AttributeController extends AdminController
     {
         $grid = new Grid(new Attribute());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'));
         $grid->column('alias', __('Alias'));
         $grid->column('value_type', __('Value type'));
         $grid->column('filter', __('Filter'));
         $grid->column('required', __('Required'));
+
+        $grid->categories()->display(function ($categories) {
+
+            if (!$categories) return;
+            $categories = array_map(function ($category) {
+                return "<span class='label label-success'>{$category['name']}</span>";
+            }, $categories);
+        
+            return join('&nbsp;', $categories);
+        });
 
         return $grid;
     }
@@ -70,7 +81,7 @@ class AttributeController extends AdminController
         $form->text('value_type', __('Value type'));
         $form->switch('filter', __('Filter'));
         $form->switch('required', __('Required'));
-
+        $form->multipleSelect('categories','Categories')->options(Category::all()->pluck('name','id'));
         return $form;
     }
 }

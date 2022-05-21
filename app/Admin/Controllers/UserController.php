@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends AdminController
 {
@@ -74,6 +75,10 @@ class UserController extends AdminController
         $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
         $form->password('password', __('Password'));
         $form->text('remember_token', __('Remember token'));
+
+        $form->saving(function (Form $form) {
+            $form->password = Hash::make($form->password);
+        });
 
         return $form;
     }

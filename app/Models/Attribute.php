@@ -17,14 +17,9 @@ class Attribute extends Model
         'filter',
         'required'
     ];
- 
-    public function category_attributes()
-    {
-        return $this->hasMany(CategoryAttribute::class);
-    }
 
-    public function characteristics()
+    public function categories()
     {
-        return $this->hasMany(Characteristic::class);
+        return $this->belongsToMany(Category::class, 'categories_attributes');
     }
 }

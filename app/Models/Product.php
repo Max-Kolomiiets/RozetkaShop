@@ -55,4 +55,9 @@ class Product extends Model
     {
         return $this->hasOne(Guaranty::class);
     }
+
+    public function attributes()
+    {
+        return $this->belongsToMany(Attribute::class, 'categories_attributes');
+    }
 }

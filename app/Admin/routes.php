@@ -25,4 +25,5 @@ Route::group([
     $router->resource('availabilities', AvailabilityController::class);
     $router->resource('images', ImagesController::class);
     $router->resource('attributes', AttributeController::class);
+    $router->resource('category-attributes', CategoryAttributeController::class);
 });

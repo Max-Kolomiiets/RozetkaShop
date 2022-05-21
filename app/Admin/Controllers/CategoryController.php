@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Selectable\Attributes;
+use App\Models\Attribute;
 use App\Models\Category;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
@@ -37,6 +39,16 @@ class CategoryController extends AdminController
         $grid->column('name', __('Name'))->sortable();
         $grid->column('alias', __('Alias'));
 
+        $grid->attributes()->display(function ($attributes) {
+
+            if (!$attributes) return;
+            $categories = array_map(function ($attribute) {
+                return "<span class='label label-success'>{$attribute['name']}</span>";
+            }, $attributes);
+        
+            return join('&nbsp;', $categories);
+        });
+
         return $grid;
     }
 
@@ -59,6 +71,21 @@ class CategoryController extends AdminController
         });
         $show->field('name', __('Name'));
         $show->field('alias', __('Alias'));
+
+        $show->attributes('Attributes', function ($attributes) {
+
+            $attributes->resource('/admin/attributes');
+        
+            $attributes->id();
+            $attributes->name();
+            $attributes->alias();
+            $attributes->value_type();
+            $attributes->required();
+        
+            $attributes->filter(function ($filter) {
+                $filter->like('name');
+            });
+        });
 
         return $show;
     }
@@ -84,14 +111,7 @@ class CategoryController extends AdminController
         });
 
         $form->tab('Attributes', function($form) {
-            $form->hasMany('category_attributes', 'Attributes', function (Form\NestedForm $form) {
-                $form->hidden('attribute_id')->value(1);
-                $form->text('attribute.name');
-                $form->text('attribute.alias');
-                $form->text('attribute.value_type');
-                $form->switch('attribute.filter', 'Show in filter');
-                $form->switch('attribute.required', 'Is Required');
-            });
+             $form->belongsToMany('attributes', Attributes::class, 'Attributes');
         });
 
         $form->footer(function ($footer) {

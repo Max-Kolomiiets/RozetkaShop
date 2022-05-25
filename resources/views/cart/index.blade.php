@@ -34,18 +34,17 @@
                                                             value="{{ $data['item_id'] }}">
                                                         <td class="cart-image">
                                                             <a class="entry-thumbnail" href="javascript:void(0)">
-                                                                <img src="{{ asset('admin/uploads/productcatelist/' . $data['item_image']) }}"
-                                                                    width="70px" alt="">
+                                                                <img src="{{$data['item_image']}}" width="70px" alt="">
                                                             </a>
                                                         </td>
                                                         <td class="cart-product-name-info">
                                                             <h4 class='cart-product-description'>
-                                                                <a href="javascript:void(0)">{{ $data['item_name'] }}</a>
+                                                                <a href="{{route("product.show", $data['item_id'])}}">{{ $data['item_name'] }}</a>
                                                             </h4>
                                                         </td>
                                                         <td class="cart-product-sub-total">
                                                             <span
-                                                                class="cart-sub-total-price">{{ number_format($data['item_price'], 2) }}</span>
+                                                                class="cart-sub-total-price">{{ $data['item_price']  / 100.0; }}</span>
                                                         </td>
                                                         <td class="cart-product-quantity" width="130px">
                                                             <div class="input-group quantity">
@@ -64,13 +63,13 @@
                                                         </td>
                                                         <td class="cart-product-grand-total">
                                                             <span
-                                                                class="cart-grand-total-price">{{ number_format($data['item_quantity'] * $data['item_price'], 2) }}</span>
+                                                                class="cart-grand-total-price">{{ ($data['item_quantity'] * $data['item_price']) / 100.0; }}</span>
                                                         </td>
                                                         <td style="font-size: 20px;">
                                                             <button type="button"
                                                                 class="btn btn-danger delete_cart_data">Remove</button>
                                                         </td>
-                                                        @php $total += ($data["item_quantity"] * $data["item_price"]) @endphp
+                                                        @php $total += (($data["item_quantity"] * $data["item_price"]) / 100.0) @endphp
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -96,7 +95,7 @@
                                                     <h6 class="cart-subtotal-price">
                                                         Rs.
                                                         <span
-                                                            class="cart-grand-price-viewajax">{{ number_format($total, 2) }}</span>
+                                                            class="cart-grand-price-viewajax">{{ $total }}</span>
                                                     </h6>
                                                 </div>
                                             </div>
@@ -109,7 +108,7 @@
                                                     <h6 class="cart-grand-price">
                                                         Rs.
                                                         <span
-                                                            class="cart-grand-price-viewajax">{{ number_format($total, 2) }}</span>
+                                                            class="cart-grand-price-viewajax">{{ $total }}</span>
                                                     </h6>
                                                 </div>
                                             </div>

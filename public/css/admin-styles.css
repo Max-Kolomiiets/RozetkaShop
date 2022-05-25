@@ -1,0 +1,26 @@
+body {
+    font-size: 1.55rem !important;
+}
+
+.title {
+    font-size: 50px;
+    color: #636b6f;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 100;
+    display: block;
+    text-align: center;
+    margin: 20px 0 10px 0px;
+}
+
+.content-header>h1>small {
+    font-size: 21px !important;
+    display: inline-block;
+    padding-left: 4px;
+    font-weight: 300;
+}
+
+.sidebar-menu .treeview-menu>li>a {
+    padding: 5px 5px 5px 15px;
+    display: block;
+    font-size: 16px !important;
+}

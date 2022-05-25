@@ -13,6 +13,39 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', "HomeController@index")->name("main.index");
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    userCabinetRoute();
 });
+Route::get('/main', "HomeController@index")->name("main.index");
+
+Route::get('/categories/{category}', "CategoryController@show")->name("category.show");
+Route::get('/products/{product}', "ProductsController@show")->name("product.show");
+
+Route::post('/categories/{category}/filtering', "CategoryController@filtering")->name("category.filtering");
+
+// for cookies cart
+// NEEDS REFACTORING
+Route::get('/load-cart-data','CartController@cartloadbyajax');
+Route::get('/cart','CartController@index')->name('cart.index');
+
+Route::post('/add-to-cart','CartController@addtocart');
+Route::post('update-to-cart','CartController@updatetocart');
+
+Route::delete('delete-from-cart','CartController@deletefromcart');
+Route::get('clear-cart','CartController@clearcart');
+
+// for user cabinet
+
+function userCabinetRoute() {
+    Route::get('/cabinet', 'UserCabinetController@index')->name('cabinet.index');
+    Route::get('/cabinet/orders', 'UserCabinetController@orders')->name('cabinet.orders');
+    Route::get('/cabinet/wishlist', 'UserCabinetController@index')->name('cabinet.wishlist');
+}

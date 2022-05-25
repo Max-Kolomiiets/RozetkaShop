@@ -18,6 +18,11 @@ class Attribute extends Model
         'required'
     ];
 
+    public function products() 
+    {
+        return $this->belongsToMany(Product::class, 'characteristics');
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'categories_attributes');

@@ -1,0 +1,33 @@
+.product {
+    max-width: 290px;
+    max-height: 400px;
+    margin: 3px;
+    padding: 2px;
+}
+
+.product-name {
+    color: black;
+}
+
+.category_li {
+    list-style: none;
+    font-weight: 500px;
+    font-size: 18px;
+    color: #3e77aa;
+    cursor: pointer;
+}
+
+.category_li:hover {
+    color: #f84147 !important;
+}
+
+a {
+    color: #3e77aa;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+     text-decoration: none;
+     color: darkblue;
+}

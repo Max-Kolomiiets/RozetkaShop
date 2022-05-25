@@ -23,17 +23,18 @@ class HomeController extends Controller
             }
         }
         
-        $selected_products = Product::all();
-        $products = [];
-        foreach ($selected_products as $it) {
-            array_push($products, (object)[
-                'id'=>$it->id,
-                'name'=> $it->name,
-                'image_url'=> Image::firstWhere("product_id", $it->id)->url,
-                'price' => Price::firstWhere("product_id", $it->id)->price / 100.0,
-                'description' => Description::firstWhere("product_id", $it->id)->description
-            ]);
-        }
+        $products = Product::paginate(24);
+        //$products = [];
+       // dd($selected_products[0]->images()->get()[0]->url);
+        // foreach ($selected_products as $it) {
+        //     array_push($products, (object)[
+        //         'id'=>$it->id,
+        //         'name'=> $it->name,
+        //         'image_url'=> $it->images()->get()[0]->url, //Image::firstWhere("product_id", $it->id)->url,
+        //         'price' => Price::firstWhere("product_id", $it->id)->price / 100.0,
+        //         'description' => Description::firstWhere("product_id", $it->id)->description
+        //     ]);
+        // }
         return view("home", compact("categories", "products"));
     }
 }

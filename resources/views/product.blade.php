@@ -264,8 +264,10 @@
 							<span class="color green"></span>
 							<span class="color blue"></span>
 						</h5> --}}
-						<div class="action">
-							<button class="add-to-cart btn btn-default" type="button">add to cart</button>
+						<div class="action feature">
+							<button class="add-to-cart btn btn-default add-to-cart-btn" type="button">add to cart</button>
+                            <input type="hidden" class="product_id" value="{{ $product_info->id }}"> <!-- Your Product ID -->
+                            <input type="hidden" class="qty-input" value="1">
 							{{-- <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button> --}}
 						</div>
 					</div>

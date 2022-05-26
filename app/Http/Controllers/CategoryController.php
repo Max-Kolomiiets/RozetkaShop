@@ -12,6 +12,7 @@ use App\Models\CategoryAttribut;
 use App\Models\Characteristic;
 use App\Models\Attribute;
 use App\Models\CategoryAttribute;
+use App\Models\Vendor;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -22,18 +23,41 @@ class CategoryController extends Controller
         $category_id = 1;
     }
     
-    public function getProductData(Product $product)
+    private function getMinMaxPrices($products)
+    {
+        $prices = [];
+        foreach ($products as $product) {
+            array_push($prices, Price::firstWhere("product_id", $product->id)->price);
+        }
+        $min_max_prices = (object)[
+            'min' => min($prices)/100.0,
+            'max' => max($prices)/100.0
+        ];
+        return $min_max_prices;
+    }
+
+    private function getVendors($products)
+    {
+        $vendors = [];
+        foreach ($products as $product) {
+            array_push($vendors, Vendor::find($product->vendor_id));
+        }
+        return array_unique($vendors);
+    }
+
+    private function getProductData(Product $product)
     {
         return (object)[
             'id'=>$product->id,
             'name'=> $product->name,
+            'vendor_id'=>$product->vendor_id,
             'image_url'=> Image::firstWhere("product_id", $product->id)->url,
             'price' => Price::firstWhere("product_id", $product->id)->price / 100.0,
             'description' => Description::firstWhere("product_id", $product->id)->description
         ];
     }
 
-    public function getFilltresValues($attribute_id, $products)
+    private function getFiltersValues($attribute_id, $products)
     {
         $selected_characteristics = Characteristic::where("attribute_id", $attribute_id)->get();
         $values = [];
@@ -50,13 +74,25 @@ class CategoryController extends Controller
         return array_unique($values);
     }
 
-    public function filtingProduct($product_id, $filtres)
+    private function filteringProductByPrice($product_id, $prices)
+    {
+        $price = Price::firstWhere("product_id", $product_id)->price/100.0;
+        return $prices->min <= $price && $price <= $prices->max;
+    }
+
+    private function filteringProductByVendors($vendor_id, $vendors)
+    {
+        $vendor = Vendor::find($vendor_id)->alias;
+        return in_array($vendor, $vendors);
+    }   
+
+    private function filteringProductByAttrbutes($product_id, $attributes)
     {
         $characteristics = Characteristic::where('product_id', $product_id)->get();
         foreach ($characteristics as $characteristic) {
             $attribute_name = Attribute::find($characteristic->attribute_id)->name;
-            if(property_exists($filtres, $attribute_name) &&
-                in_array($characteristic->value, $filtres->$attribute_name))
+            if(property_exists($attributes, $attribute_name) &&
+                in_array($characteristic->value, $attributes->$attribute_name))
             {
                 return true;
             }
@@ -64,7 +100,29 @@ class CategoryController extends Controller
         return false;
     }
 
-    public function getCategoriesProducts($category_id)
+    private function filteringProducts($products, $filters)
+    {
+        $filtered_products = [];
+        foreach ($products as $product) {
+            $isInFilter = true;
+            if(property_exists($filters, 'vendor') && count((array)$filters->vendor)>0)
+            {
+                $isInFilter &= $this->filteringProductByVendors($product->vendor_id, $filters->vendor);
+            }
+            if(property_exists($filters, 'filters') && count((array)$filters->filters)>0)
+            {
+                $isInFilter &= $this->filteringProductByAttrbutes($product->id, $filters->filters);
+            }
+            $isInFilter &= $this->filteringProductByPrice($product->id, $filters->price);
+            if($isInFilter)
+            {
+                array_push($filtered_products, $product);
+            }
+        }
+        return $filtered_products;
+    }
+
+    private function getCategoriesProducts($category_id)
     {
         $selected_products = Product::where("category_id", $category_id)->get();
         $products = [];
@@ -74,20 +132,20 @@ class CategoryController extends Controller
         return $products;
     }
 
-    public function uncheckAllFilterValues($values_list, $mask = null)
+    private function uncheckAllFilterValues($values_list, $mask = null)
     {
         $values_states = [];
         foreach ($values_list as $value) {
             $value_state = (object)[
                 'alias' => $value,
-                'state' => [false, true][$mask != null && in_array($value, $mask)]
+                'state' => ($mask != null && in_array($value, $mask))
             ];
             array_push($values_states , $value_state);
         }
         return $values_states;
     }
 
-    public function convertStringListToListsArray($keysvalues_in_string)
+    private function convertStringListToListsArray($keysvalues_in_string)
     {
         $keyvalues = (object)[];
         $keys = [];
@@ -104,15 +162,40 @@ class CategoryController extends Controller
         return $keyvalues;
     }
 
-    public function show( Category $category)
+    private function getFiltersForm($category_id, $products, $filters = null)
     {
-        $products = $this->getCategoriesProducts($category->id);
+        $prices = $this->getMinMaxPrices($products);
 
-        $selected_attributes = CategoryAttribute::where("category_Id", $category->id)->get();
+        if($filters == null){
+            $prices->value_min = $prices->min;
+            $prices->value_max = $prices->max;
+        }
+        else{
+            $prices->value_min = $filters->price->min;
+            $prices->value_max = $filters->price->max;
+        }
+
+        $vendors = $this->getVendors($products);
+        $vendors_forms = [];
+        foreach ($vendors as $vendor) {
+            array_push($vendors_forms, (object)[
+                'name' => $vendor->name,
+                'alias' => $vendor->alias,
+                'state' => ($filters != null && property_exists($filters, 'vendor') && in_array($vendor->alias, $filters->vendor))
+            ]);
+        }
+
+        $selected_attributes = CategoryAttribute::where("category_id", $category_id)->get();
         $attributes = [];
         foreach ($selected_attributes as $sattribute) {
-            $values = $this->getFilltresValues($sattribute->attribute_id, $products);
-            $values = $this->uncheckAllFilterValues($values);
+            $values = $this->getFiltersValues($sattribute->attribute_id, $products);
+            $attribute = Attribute::find($sattribute->attribute_id);
+            $key = $attribute->name;
+            if($filters != null && property_exists($filters, 'filters') && property_exists($filters->filters, $key)){
+                $values = $this->uncheckAllFilterValues($values, $filters->filters->$key);
+            }else{
+                $values = $this->uncheckAllFilterValues($values);
+            }
             if(count($values) != 0){
                 array_push($attributes, (object)[
                     'name'=>Attribute::find($sattribute->attribute_id)->name,
@@ -120,45 +203,68 @@ class CategoryController extends Controller
                 ]);
             }
         }
-        return view("products", compact("category", "products", "attributes"));
+
+        $formstates = (object)[
+            'prices' => $prices,
+            'vendors' => $vendors_forms,
+            'attributes' => $attributes
+        ];
+
+        return $formstates;
     }
 
-    public function filtering(Category $category)
+    public function show(Category $category, $filters = null)
     {
+        $products = $this->getCategoriesProducts($category->id);
+        $formstates = $this->getFiltersForm($category->id, $products, $filters);
+
+        if($filters != null)
+        {
+            $products = $this->filteringProducts($products, $filters);
+        }
+
+        return view("products", compact("category", "products", "formstates"));
+    }
+
+    public function filltering(Category $category)
+    {
+        //приймає данні з форми
         $request_data = request()->all();
+
+        //видалаяє данні токена з масива
         array_shift($request_data);
+
+        $price_min = array_shift($request_data);
+        $price_max = array_shift($request_data);
+
+        //бере ключі з масива (так як значення завжди має бути "on")
         $changes = array_keys($request_data);
+
+        //примає масив строк типу [key1#value1, key1#value2, key2#value1] 
+        //і перетворює його в обєкт типу [key1= [value1, value2], key2 = [value1]]
         $mask = $this->convertStringListToListsArray($changes);
 
-        $products = $this->getCategoriesProducts($category->id);
-
-        $selected_attributes = CategoryAttribute::where("category_Id", $category->id)->get();
-        $attributes = [];
-        foreach ($selected_attributes as $sattribute) {
-            $attribute = Attribute::find($sattribute->attribute_id);
-            $values = $this->getFilltresValues($attribute->id, $products);
-
-            $key = $attribute->name;
-            if(property_exists($mask, $key)){
-                $values = $this->uncheckAllFilterValues($values, $mask->$key);
-            }else{
-                $values = $this->uncheckAllFilterValues($values);
-            }
-            
-            if(count($values) != 0){
-                array_push($attributes, (object)[
-                    'name'=>$attribute->name,
-                    'values'=>$values,
-                ]);
+        //відділяє "vendor" фільтри від фітрів по атрибутам 
+        $filters = (object)[];
+        $vendor = [];
+        if(property_exists($mask, 'vendor')){
+            $vendor = $mask->vendor;
+            $filters->vendor = $vendor;
+            $mask_array = (array)$mask;
+            if(count($mask_array) > 1)
+            {
+                array_shift($mask_array);
+                $filters->filters = (object)$mask_array;
             }
         }
-
-        if(count((array)$mask) > 0){
-            $products = array_filter($products, function ($p) use ($mask) {
-                return $this->filtingProduct($p->id, $mask);
-            });
+        else {
+            $filters->filters = $mask;
         }
 
-        return view("products", compact("category", "products", "attributes"));
+        $filters->price = (object)[
+            'min'=>$price_min,
+            'max'=>$price_max
+        ];
+        return $this->show($category, $filters);
     }
 }

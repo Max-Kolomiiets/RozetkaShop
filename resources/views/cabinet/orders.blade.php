@@ -1,6 +1,6 @@
 @extends('layouts/main')
 @section('main_content')
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-md-3 ">
             <div class="list-group ">
                 <a href="{{route("cabinet.index")}}" class="list-group-item list-group-item-action">
@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <h4>Your Profile</h4>
+                            <h4 class="text-center">Orders</h4>
                             <hr>
                         </div>
                     </div>

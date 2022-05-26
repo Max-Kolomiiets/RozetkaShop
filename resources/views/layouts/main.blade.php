@@ -11,6 +11,8 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" 
     integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" 
     crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <body>
     <header>
@@ -30,7 +32,8 @@
                 </li>
               </ul>
               <form class="form-inline my-2 my-md-0">
-                <input class="form-control" type="text" placeholder="Search">
+                @csrf
+                <input class="form-control search-field" type="text" placeholder="Search">
               </form>
             </div>
           </nav>
@@ -51,5 +54,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" 
     crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+        let handleResult = function(response){
+          console.log(response)
+        }
+        let setAjax = function(){
+          let url = "search"
+          let text = $('.search-field').val()
+          let _token = $('input[name="_token"]').val();//searching <input name="_token"/>
+          $.ajax({
+            url: "{{ route('search')}}",
+            type: "POST",
+            data:{
+              text: text,
+              _token: _token
+            },
+            success: handleResult
+          })
+        }
+        $(function(){
+          $('.search-field').on('input', setAjax)
+        })
+    </script>
+    <script>
+        $(function(){
+          if(pageScript != null)
+          {
+            pageScript()
+          }
+        })
+    </script>
 </body>
 </html>

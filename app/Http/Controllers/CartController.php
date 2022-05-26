@@ -2,14 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartProduct;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
 class CartController extends Controller
 {
     public function index()
     {
+        if (Auth::check()) {
+            $user = User::where('id', Auth::id())->first();
+
+            $userCart = $user->cartProducts()->get();
+            $cartDto = [];
+
+            foreach ($userCart as $cart) {
+                $productPrice = $cart->product()->get()[0]->price()->get()[0]->price;
+                $productImage = $cart->product()->get()[0]->images()->get()[0]->url;
+
+                $cartDto[] = array(
+                    'item_id' => $cart->id,
+                    'product_id' => $cart->product()->get()[0]->id,
+                    'item_name' => $cart->product()->get()[0]->name,
+                    'item_quantity' => $cart->qty,
+                    'item_price' => $productPrice,
+                    'item_image' => $productImage
+                );
+            }
+
+            return view('cart.index')
+                    ->with('cart_data',$cartDto);
+        }
         $cookie_data = stripslashes(Cookie::get('shopping_cart'));
         $cart_data = json_decode($cookie_data, true);
         return view('cart.index')
@@ -21,6 +47,21 @@ class CartController extends Controller
         $prod_id = $request->input('product_id');
         $quantity = $request->input('quantity');
 
+        if (Auth::check()) {
+
+            if (CartProduct::where('product_id', $prod_id)->exists())
+                return response()->json(['status'=>'"'. Product::find($prod_id)->name .'" Already Added to Cart','status2'=>'2']);
+
+            $cartProduct = CartProduct::create([
+                'user_id' => Auth::id(),
+                'product_id' => $prod_id,
+                'qty' => $quantity
+            ]);
+
+            if($cartProduct)
+                return response()->json(['status'=>'"'. Product::find($prod_id)->name .'" Added to Cart']);
+        }
+
         if(Cookie::get('shopping_cart'))
         {
             $cookie_data = stripslashes(Cookie::get('shopping_cart'));
@@ -30,6 +71,7 @@ class CartController extends Controller
         {
             $cart_data = array();
         }
+        
         $item_id_list = array_column($cart_data, 'item_id');
         $prod_id_is_there = $prod_id;
 
@@ -45,12 +87,12 @@ class CartController extends Controller
         }
         else
         {
-            $products = Product::find($prod_id);
-            $prod_name = $products->name;
-            $prod_image = $products->images()->first()->url;
-            $priceval = $products->price()->get()[0]->price;
+            $product = Product::find($prod_id);
+            $prod_name = $product->name;
+            $prod_image = $product->images()->first()->url;
+            $priceval = $product->price()->get()[0]->price;
 
-            if($products)
+            if($product)
             {
                 $item_array = array(
                     'item_id' => $prod_id,
@@ -71,6 +113,14 @@ class CartController extends Controller
 
     public function cartloadbyajax()
     {
+        if (Auth::check()) {
+            $user = User::where('id', Auth::id())->first();
+            $totalcart = $user->cartProducts()->get()->count();
+
+            echo json_encode(array('totalcart' => $totalcart)); die;
+            return;
+        }
+
         if(Cookie::get('shopping_cart'))
         {
             $cookie_data = stripslashes(Cookie::get('shopping_cart'));
@@ -92,6 +142,19 @@ class CartController extends Controller
     {
         $prod_id = $request->input('product_id');
         $quantity = $request->input('quantity');
+
+        if (Auth::check()) {
+            $cartProduct = CartProduct::find($prod_id);
+            $product = Product::find($cartProduct->product()->get()[0]->id);
+
+            if ($cartProduct && $product) {
+                $cartProduct->qty = $quantity;
+                $cartProduct->save();
+
+                return response()->json(['status'=>'"'. $product->name .'" Quantity Updated']);
+            }
+
+        }
 
         if(Cookie::get('shopping_cart'))
         {
@@ -122,6 +185,13 @@ class CartController extends Controller
     {
         $prod_id = $request->input('product_id');
 
+        if (Auth::check()) {
+            if (CartProduct::find($prod_id)->delete())
+                return response()->json(['status'=>'Item Removed from Cart']);
+
+            return response()->json(['status'=>'Something went wrong! We are so sorry)']);
+        }
+
         $cookie_data = stripslashes(Cookie::get('shopping_cart'));
         $cart_data = json_decode($cookie_data, true);
 
@@ -146,6 +216,11 @@ class CartController extends Controller
 
     public function clearcart()
     {
+        if (Auth::check()) {
+            CartProduct::truncate();
+            return response()->json(['status'=>'Your Cart is Cleared']);
+        }
+
         Cookie::queue(Cookie::forget('shopping_cart'));
         return response()->json(['status'=>'Your Cart is Cleared']);
     }

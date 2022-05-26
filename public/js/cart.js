@@ -51,6 +51,8 @@ function addToCart() {
             success: function (response) {
                 alertify.set('notifier','position','top-center');
                 alertify.success(response.status);
+
+                cartload();
             },
         });
     });

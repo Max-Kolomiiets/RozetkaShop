@@ -22,7 +22,7 @@
                             <h2>{{$product->name}}</h2>
                         </a>
                         <br> 
-                        <p>1200 ₴</p>
+                        <p>{{ $product->price()->get()[0]->price / 100}} ₴</p>
                         </div>
                 </div>
             @endforeach

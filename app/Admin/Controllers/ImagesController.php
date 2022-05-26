@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Selectable\Products;
 use App\Models\Image;
 use App\Models\Product;
 use Encore\Admin\Controllers\AdminController;
@@ -52,17 +53,15 @@ class ImagesController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('alias', __('Alias'));
-        $show->url()->image();
+        $show->field('url', 'Image')->image();
+        $show->field('url', 'Image path')->label();
         //$show->field('url', '')->label();
         $show->field('alt', 'Alt Text');
         $show->field('title', __('Title'));
         $show->field('product_id', 'Product Name')->as(function ($product_id) {
             return Product::where('id', $product_id)->first()->name ?? "N/A";
         });
-
         $show->field('created_at', __('Created at'));
-        $show->field('id', __('Id'));
-
 
         return $show;
     }
@@ -80,7 +79,8 @@ class ImagesController extends AdminController
         $form->image('url', 'Image Path');
         $form->text('alt', __('Alt'));
         $form->text('title', __('Title'));
-        $form->select('product_id', __('Product id'))->options(Product::all()->pluck('name','id'));
+        // $form->select('product_id', __('Product id'))->options(Product::all()->pluck('name','id'));
+        $form->belongsTo('product_id', Products::class,'Product');
         return $form;
     }
 }

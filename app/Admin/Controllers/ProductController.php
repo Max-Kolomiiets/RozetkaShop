@@ -57,6 +57,40 @@ class ProductController extends AdminController
         $show->field('category_id', __('Category id'));
         $show->field('vendor_id', __('Vendor id'));
 
+        $show->description('Description', function ($author) {
+
+            $author->setResource('#');
+
+            $author->id();
+            $author->state();
+            $author->ean();
+            $author->description();
+
+            $author->panel()
+                ->tools(function ($tools) {
+                    $tools->disableEdit();
+                    $tools->disableList();
+                    $tools->disableDelete();
+                });
+        });
+
+        $show->images('Images', function ($image) {
+            $image->setResource('#');
+
+            $image->title();
+            $image->url()->image();
+        });
+
+        $show->attributes('Attributes', function ($attribute) {
+            $attribute->setResource('#');
+
+            $attribute->id();
+            $attribute->name();
+            $attribute->alias();
+            $attribute->value_type();
+            $attribute->required();
+        });
+
         return $show;
     }
 
@@ -71,42 +105,42 @@ class ProductController extends AdminController
 
         $form->divider();
 
-        $form->tab('Common', function($form) {
+        $form->tab('Common', function ($form) {
             $form->text('name', __('Name'));
             $form->text('alias', __('Alias'));
             $form->divider();
-        
-            $form->select('category_id', 'Category')->options(Category::where('parent_id', '!=', 'null')->pluck('name','id'));
-            $form->select('vendor_id', 'Vendor')->options(Vendor::all()->pluck('name','id'));
-        
+
+            $form->select('category_id', 'Category')->options(Category::pluck('name', 'id'));
+            $form->select('vendor_id', 'Vendor')->options(Vendor::all()->pluck('name', 'id'));
+
             $form->divider();
             $form->number('price.price', 'Price');
         });
-        
+
         $form->divider();
-        $form->tab('Description', function($form) {
+        $form->tab('Description', function ($form) {
             $form->switch('availability.availability', 'Available');
             $form->switch('availability.hiden', 'Hiden');
             $form->number('availability.quantity', 'Quantity')->rules('required|min:1|max:1000');
-    
+
             $form->divider();
             $form->textarea('description.description', 'Description')->rows(10);
             $form->divider();
-            $form->select('description.state', 'State')->options(['new' => 'New' ,'used' => 'Used', 'refurb' => 'Refurb']);
+            $form->select('description.state', 'State')->options(['new' => 'New', 'used' => 'Used', 'refurb' => 'Refurb']);
             $form->text('description.ean', 'EAN')->rules('min:13|max:13|required');
-    
+
             $form->divider();
             $form->select('description.country_id', 'Country')->options(Country::all()->pluck('name', 'id'));
         });
 
+        // $form->divider();
+        // $form->tab('Media', function($form) {
+        //     $form->multipleImage('images','Images')->pathColumn('url')->removable();
+
+        // });
+
         $form->divider();
-        $form->tab('Media', function($form) {
-            $form->multipleImage('images','Images')->pathColumn('url')->removable();
-            
-        });
-        
-        $form->divider();
-        $form->tab('Attributes', function($form) {
+        $form->tab('Attributes', function ($form) {
             $form->belongsToMany('attributes', Attributes::class, 'Attributes');
         });
         // $form->tab('Guarantee', function($form) {
@@ -122,6 +156,7 @@ class ProductController extends AdminController
             $footer->disableEditingCheck();
             $footer->disableCreatingCheck();
         });
+
         return $form;
     }
 }

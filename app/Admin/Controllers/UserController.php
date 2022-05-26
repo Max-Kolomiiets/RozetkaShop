@@ -36,6 +36,9 @@ class UserController extends AdminController
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
+        $grid->column('contacts.address', 'Address');
+        $grid->column('contacts.phone', 'Phone');
+
         return $grid;
     }
 
@@ -58,6 +61,12 @@ class UserController extends AdminController
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
+        $show->contacts('Contacts', function ($contacts) {
+
+            $contacts->address();
+            $contacts->phone();
+        });
+
         return $show;
     }
 
@@ -75,6 +84,10 @@ class UserController extends AdminController
         $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
         $form->password('password', __('Password'));
         $form->text('remember_token', __('Remember token'));
+
+        $form->divider('Contacts');
+        $form->text('contacts.address');
+        $form->text('contacts.phone');
 
         $form->saving(function (Form $form) {
             $form->password = Hash::make($form->password);

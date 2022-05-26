@@ -28,7 +28,7 @@ class AttributeController extends AdminController
         $grid = new Grid(new Attribute());
 
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('name', __('Name'));
+        $grid->column('name', __('Name'))->sortable();
         $grid->column('alias', __('Alias'));
         $grid->column('value_type', __('Value type'));
         $grid->column('filter', __('Filter'));

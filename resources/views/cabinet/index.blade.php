@@ -1,6 +1,6 @@
 @extends('layouts/main')
 @section('main_content')
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-md-3 ">
             <div class="list-group ">
                 <a href="{{route("cabinet.index")}}" class="list-group-item list-group-item-action active">

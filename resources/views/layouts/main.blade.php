@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <header class="mb-4">
+    <header>
         <nav class="navbar navbar-expand navbar-dark bg-success">
             @auth
                 <a class="navbar-brand" href="{{ route('cabinet.index') }}">Cabinet</a>
@@ -72,10 +72,8 @@
             @endif
         </nav>
     </header>
-    <main>
-        <div style="margin: 0% 8%; margin-top: 3%">
-            @yield('main_content')
-        </div>
+    <main class="m-3">
+        @yield('main_content')
     </main>
     <!-- Footer -->
     <footer class="page-footer font-small indigo">

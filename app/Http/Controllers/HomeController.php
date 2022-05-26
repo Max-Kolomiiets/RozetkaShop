@@ -23,7 +23,7 @@ class HomeController extends Controller
             }
         }
         
-        $products = Product::paginate(24);
+        $products = Product::paginate(25);
 
         return view("home", compact("categories", "products"));
     }

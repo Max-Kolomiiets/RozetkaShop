@@ -18,7 +18,7 @@
                             </a> 
                         </div>          
                         <br> 
-                        <a href="{{route("product.show", 12)}}" class="icon-link d-inline-flex align-items-center product-name">
+                        <a href="{{route("product.show", $product->id)}}" class="icon-link d-inline-flex align-items-center product-name">
                             <h2>{{$product->name}}</h2>
                         </a>
                         <br> 

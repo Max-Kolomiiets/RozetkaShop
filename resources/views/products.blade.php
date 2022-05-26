@@ -51,7 +51,7 @@
             <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
                 @foreach ($products as $product)
                     <div class="border border-info product">
-                        <div class="feature col">
+                        <div class="feature col product">
                             <input type="hidden" class="product_id" value="{{ $product->id }}">
                             <input type="hidden" class="qty-input" value="1">
                             <div

@@ -27,4 +27,17 @@ class HomeController extends Controller
 
         return view("home", compact("categories", "products"));
     }
+
+    public function search(Request $request)
+    {
+        $text = $request->text;
+        $products = Product::cursor()->filter(function($product) use($text){
+            $metaphone_check = (levenshtein(metaphone($text), metaphone($product->name)) < mb_strlen(metaphone($text))/2); 
+            $check = (levenshtein($text, $product->name) < mb_strlen($text)/2);
+            $substring = strripos(' '.$product->name, (string)$text);
+            $substring = [false, $substring <= strlen($text)][$substring != false];
+            return $substring || $metaphone_check && $check;
+        }); 
+        return response()->json(["saccess"=>$products]);
+    }
 }

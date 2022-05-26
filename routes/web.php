@@ -29,10 +29,11 @@ Route::get('/main', "HomeController@index")->name("main.index");
 Route::get('/categories/{category}', "CategoryController@show")->name("category.show");
 Route::get('/products/{product}', "ProductsController@show")->name("product.show");
 
-Route::post('/categories/{category}/filtering', "CategoryController@filtering")->name("category.filtering");
+Route::post('/categories/{category}/filltering', "CategoryController@filltering")->name("category.filltering");
+Route::post('/search', "HomeController@search")->name('search');
+
 
 // for cookies cart
-// NEEDS REFACTORING
 Route::get('/load-cart-data','CartController@cartloadbyajax');
 Route::get('/cart','CartController@index')->name('cart.index');
 
@@ -43,7 +44,6 @@ Route::delete('delete-from-cart','CartController@deletefromcart');
 Route::get('clear-cart','CartController@clearcart');
 
 // for user cabinet
-
 function userCabinetRoute() {
     Route::get('/cabinet', 'UserCabinetController@index')->name('cabinet.index');
     Route::get('/cabinet/orders', 'UserCabinetController@orders')->name('cabinet.orders');

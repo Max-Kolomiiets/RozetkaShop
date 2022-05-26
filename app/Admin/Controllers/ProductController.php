@@ -110,7 +110,7 @@ class ProductController extends AdminController
             $form->text('alias', __('Alias'));
             $form->divider();
 
-            $form->select('category_id', 'Category')->options(Category::where('parent_id', '!=', 'null')->pluck('name', 'id'));
+            $form->select('category_id', 'Category')->options(Category::pluck('name', 'id'));
             $form->select('vendor_id', 'Vendor')->options(Vendor::all()->pluck('name', 'id'));
 
             $form->divider();

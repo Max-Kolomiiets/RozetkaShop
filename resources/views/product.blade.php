@@ -185,16 +185,28 @@
 			<div class="container-fliud">
 				<div class="wrapper row">
 					<div class="preview col-md-6">
+                        <?php
+                            $imagePath = $product_info->main_image->url;
+                            if (strpos($imagePath, "images") !== false) {
+                                $imagePath = url('storage/' . $imagePath);
+                            }
+                        ?>
 						
                         <div class="images" >
                             <div class="preview-pic tab-content">
                                 <div class="tab-pane active" id="pic-{{$product_info->main_image->id}}">
-                                    <img src="{{$product_info->main_image->url}}" />
+                                    <img src="{{$imagePath}}" />
                                 </div>
                              
                                 @foreach($product_info->images as $image)
+                                    <?php
+                                        $subImagePath = $image["url"];
+                                        if (strpos($subImagePath, "images") !== false) {
+                                            $subImagePath = url('storage/' . $subImagePath);
+                                        }
+                                    ?>
                                     <div class="tab-pane" id="pic-{{$image["id"]}}">
-                                        <img src="{{$image["url"]}}" />
+                                        <img src="{{$subImagePath}}" />
                                     </div>
                                 @endforeach
     
@@ -203,13 +215,19 @@
                             <ul class="preview-thumbnail nav nav-tabs">
                                 <li class="active">
                                     <a data-target="#pic-{{$product_info->main_image->id}}" data-toggle="tab">
-                                        <img src="{{$product_info->main_image->url}}" />
+                                        <img src="{{$subImagePath}}" />
                                     </a>
                                 </li>
                                 @foreach($product_info->images as $image)
                                     <li>
+                                        <?php
+                                            $sub2ImagePath = $image["url"];
+                                            if (strpos($sub2ImagePath, "images") !== false) {
+                                                $sub2ImagePath = url('storage/' . $sub2ImagePath);
+                                            }
+                                        ?>
                                         <a data-target="#pic-{{$image["id"]}}" data-toggle="tab">
-                                            <img src="{{$image["url"]}}" />
+                                            <img src="{{$sub2ImagePath}}" />
                                         </a>
                                     </li>
                                 @endforeach

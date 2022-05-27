@@ -132,13 +132,7 @@ class ProductController extends AdminController
             $form->divider();
             $form->select('description.country_id', 'Country')->options(Country::all()->pluck('name', 'id'));
         });
-
-        // $form->divider();
-        // $form->tab('Media', function($form) {
-        //     $form->multipleImage('images','Images')->pathColumn('url')->removable();
-
-        // });
-
+        
         $form->divider();
         $form->tab('Attributes', function ($form) {
             $form->belongsToMany('attributes', Attributes::class, 'Attributes');

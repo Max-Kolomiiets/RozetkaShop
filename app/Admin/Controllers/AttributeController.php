@@ -79,6 +79,7 @@ class AttributeController extends AdminController
         $form->text('name', __('Name'));
         $form->text('alias', __('Alias'));
         $form->text('value_type', __('Value type'));
+        $form->select('value_type', 'Value Type')->options(['checkbox' => 'Checkbox', 'radio' => 'Radio']);
         $form->switch('filter', __('Filter'));
         $form->switch('required', __('Required'));
         $form->multipleSelect('categories','Categories')->options(Category::all()->pluck('name','id'));

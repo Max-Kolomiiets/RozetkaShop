@@ -50,6 +50,12 @@
         <div class="col-10">
             <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
                 @foreach ($products as $product)
+                    <?php
+                        $imagePath = $product->image_url;
+                        if (strpos($imagePath, "images") !== false) {
+                            $imagePath = url('storage/' . $imagePath);
+                        }
+                    ?>
                     <div class="border border-info product">
                         <div class="feature col product">
                             <input type="hidden" class="product_id" value="{{ $product->id }}">
@@ -59,7 +65,7 @@
                                 <a href="{{ route('product.show', $product->id) }}"
                                     class="icon-link d-inline-flex align-items-center">
                                     <img class="bi" width="100em" height="100em"
-                                        src="{{ $product->image_url }}" alt="">
+                                        src="{{ $imagePath }}" alt="">
                                 </a>
                             </div>
                             <br>

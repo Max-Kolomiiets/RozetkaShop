@@ -28,13 +28,17 @@
                                             @foreach ($cart_data as $data)
                                                 <?php
                                                     $product_id = isset($data['product_id']) ? $data['product_id'] : $data['item_id'];
+                                                    $imagePath = $data['item_image'];
+                                                    if (strpos($imagePath, "images") !== false) {
+                                                        $imagePath = url('storage/' . $imagePath);
+                                                    }
                                                 ?>
                                                 <tr class="cartpage">
                                                     <input type="hidden" class="product_id"
                                                         value="{{ $data['item_id'] }}">
                                                     <td class="cart-image">
                                                         <a class="entry-thumbnail" href="javascript:void(0)">
-                                                            <img src="{{ $data['item_image'] }}" width="70px" alt="">
+                                                            <img src="{{ $imagePath }}" width="70px" alt="">
                                                         </a>
                                                     </td>
                                                     <td class="cart-product-name-info">

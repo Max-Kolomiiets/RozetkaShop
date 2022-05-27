@@ -22,7 +22,7 @@ class CreateCharacteristicsTable extends Migration
             $table->foreignId("attribute_id");
             $table->foreign("attribute_id")->references("id")->on("attributes")->onDelete("cascade")->onUpdate("cascade");
 
-            $table->string("value", 2048);
+            $table->string("value", 2048)->default("def val");
             $table->timestamps();
         });
     }

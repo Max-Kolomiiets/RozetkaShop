@@ -56,10 +56,10 @@
                         <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-md-0">
-                    @csrf
-                    <input class="form-control search-field" type="text" placeholder="Search">
-                </form>
+              <form class="form-inline my-2 my-md-0" method="get" action="{{route('products.search')}}">
+                {{-- @csrf --}}
+                <input class="form-control search-field" name="word" type="text" onchange="this.form.submit()" placeholder="Search">
+              </form>
             </div>
             @if (Route::has('login'))
                 <div class="ml-3">
@@ -222,28 +222,6 @@
     <script src="{{ asset('js/cart.js') }}"></script>
 
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <script>
-        let handleResult = function(response) {
-            console.log(response)
-        }
-        let setAjax = function() {
-            let url = "search"
-            let text = $('.search-field').val()
-            let _token = $('input[name="_token"]').val(); //searching <input name="_token"/>
-            $.ajax({
-                url: "{{ route('search') }}",
-                type: "POST",
-                data: {
-                    text: text,
-                    _token: _token
-                },
-                success: handleResult
-            })
-        }
-        $(function() {
-            $('.search-field').on('input', setAjax)
-        })
-    </script>
     <script>
         $(function() {
             if (pageScript != null) {

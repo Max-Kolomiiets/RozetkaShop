@@ -49,3 +49,5 @@ function userCabinetRoute() {
     Route::get('/cabinet/orders', 'UserCabinetController@orders')->name('cabinet.orders');
     Route::get('/cabinet/wishlist', 'UserCabinetController@index')->name('cabinet.wishlist');
 }
+
+Route::get('/categories', "CategoryController@index")->name("category.index");

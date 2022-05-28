@@ -16,9 +16,11 @@ class UserCabinetController extends Controller
     }
 
     public function orders() {
-        $user = User::where('id', Auth::id())->first(); //
+        $user = User::where('id', Auth::id())->first();
 
         $orders = $user->orders()->get();
+        $products = $orders[0]->products()->get();
+
         return view('cabinet.orders', ['user'=> $user,'orders' => $orders]);
     }
 }

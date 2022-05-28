@@ -1,29 +1,48 @@
 @extends('layouts.main')
 @section('main_content')
     <style>
-        .filltres {
+        .filtres {
             width: 10%
         }
 
+        .nonemssage{
+            justify-self: right
+        }
     </style>
-    <h1>{{ $category->name }}</h1>
+    @if($view_info->query_type != 'none')
+
+    <h1>{{$view_info->title}}</h1>
     <div class="row justify-content-md-center">
-        <div class="flex-column col filltres">
-            <form action="{{ route('category.filltering', $category->id) }}" method="POST">
+        <div class="flex-column col filtres">
+            <form 
+                @if($view_info->query_type == 'search')
+
+                action="{{ route('products.search.filtering')}}"
+
+                @else
+
+                action="{{ route('category.filtering', $view_info->{'url part'}) }}" 
+
+                @endif
+
+                method="POST">
                 @csrf
+
+                @if($view_info->query_type == 'search')
+                <input type="hidden" name="title" value="{{$view_info->title}}">
+                @endif
+
                 <div class="form-group">
                     <h5>Ціна</h5>
                     <label for="price-min">від</label>
-                    <input type="number" name="price-min" onchange="this.form.submit()"
-                        value="{{ $formstates->prices->value_min }}">
+                    <input type="number" name="price-min" onchange="this.form.submit()" value="{{$view_info->prices->value_min}}">
                     <br>
                     <label for="price-max">до</label>
-                    <input type="number" name="price-max" onchange="this.form.submit()"
-                        value="{{ $formstates->prices->value_max }}">
+                    <input type="number" name="price-max" onchange="this.form.submit()" value="{{$view_info->prices->value_max}}">
                 </div>
                 <div class="form-group">
                     <h5>Виробник</h5>
-                    @foreach ($formstates->vendors as $vendor)
+                    @foreach($view_info->vendors as $vendor)
                         <div class="custom-control custom-checkbox form-group">
                             <input @if ($vendor->state) checked @endif type="checkbox"
                                 class="custom-control-input" onclick="this.form.submit()" id="vendor#{{ $vendor->alias }}"
@@ -32,16 +51,20 @@
                         </div>
                     @endforeach
                 </div>
-                @foreach ($formstates->attributes as $attribut)
-                    <h5>{{ $attribut->name }}</h5>
-                    @foreach ($attribut->values as $value)
+                @foreach($view_info->characteristics as $key=>$values)
+                    <h5>{{$key}}</h5>
+                    @foreach($values as $value)
                         <div class="custom-control custom-checkbox form-group">
-                            <input @if ($value->state) checked @endif type="checkbox"
-                                class="custom-control-input" onclick="this.form.submit()"
-                                id="{{ $attribut->name }}#{{ $value->alias }}"
-                                name="{{ $attribut->name }}#{{ $value->alias }}">
-                            <label class="custom-control-label"
-                                for="{{ $attribut->name }}#{{ $value->alias }}">{{ $value->alias }}</label>
+                            <input 
+                                @if($value->state)
+                                   checked 
+                                @endif
+                                type="checkbox" 
+                                class="custom-control-input"
+                                onclick="this.form.submit()" 
+                                id="{{$key}}#{{$value->alias}}" 
+                                name="{{$key}}#{{$value->alias}}">
+                            <label class="custom-control-label" for="{{$key}}#{{$value->alias}}">{{$value->alias}}</label>
                         </div>
                     @endforeach
                 @endforeach
@@ -49,7 +72,7 @@
         </div>
         <div class="col-10">
             <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-                @foreach ($products as $product)
+                @foreach ($view_info->products as $product)
                     <?php
                         $imagePath = $product->image_url;
                         if (strpos($imagePath, "images") !== false) {
@@ -84,6 +107,13 @@
             </div>
         </div>
     </div>
+
+    @else
+    
+    <h5>Жодного товару за заданим ім'ям не знайдено !</h5>
+
+    @endif
+
     <script>
         let pageScript = function() {
             $(window).scroll(function() {

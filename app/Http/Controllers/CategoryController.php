@@ -22,57 +22,6 @@ class CategoryController extends Controller
     {
         $category_id = 1;
     }
-    
-    private function getMinMaxPrices($products)
-    {
-        $prices = [];
-        foreach ($products as $product) {
-            array_push($prices, Price::firstWhere("product_id", $product->id)->price);
-        }
-        $min_max_prices = (object)[
-            'min' => min($prices)/100.0,
-            'max' => max($prices)/100.0
-        ];
-        return $min_max_prices;
-    }
-
-    private function getVendors($products)
-    {
-        $vendors = [];
-        foreach ($products as $product) {
-            array_push($vendors, Vendor::find($product->vendor_id));
-        }
-        return array_unique($vendors);
-    }
-
-    private function getProductData(Product $product)
-    {
-        return (object)[
-            'id'=>$product->id,
-            'name'=> $product->name,
-            'vendor_id'=>$product->vendor_id,
-            'image_url'=> Image::firstWhere("product_id", $product->id)->url,
-            'price' => Price::firstWhere("product_id", $product->id)->price / 100.0,
-            'description' => Description::firstWhere("product_id", $product->id)->description
-        ];
-    }
-
-    private function getFiltersValues($attribute_id, $products)
-    {
-        $selected_characteristics = Characteristic::where("attribute_id", $attribute_id)->get();
-        $values = [];
-        foreach ($selected_characteristics as $characteristic){
-            $filter = function($product) use ($characteristic){
-                return $characteristic->product_id == $product->id;
-            };
-            $filtred_products = array_filter($products, $filter);
-            $filtred_products_cnt = count($filtred_products);
-            if($filtred_products_cnt > 0){
-                array_push($values, $characteristic->value);
-            }
-        }
-        return array_unique($values);
-    }
 
     private function filteringProductByPrice($product_id, $prices)
     {
@@ -105,44 +54,22 @@ class CategoryController extends Controller
         $filtered_products = [];
         foreach ($products as $product) {
             $isInFilter = true;
-            if(property_exists($filters, 'vendor') && count((array)$filters->vendor)>0)
+            if(property_exists($filters, 'vendors') && count((array)$filters->vendors)>0)
             {
-                $isInFilter &= $this->filteringProductByVendors($product->vendor_id, $filters->vendor);
+                $isInFilter &= $this->filteringProductByVendors($product->vendor_id, $filters->vendors);
             }
-            if(property_exists($filters, 'filters') && count((array)$filters->filters)>0)
+            if(property_exists($filters, 'attributes') && count((array)$filters->attributes)>0)
             {
-                $isInFilter &= $this->filteringProductByAttrbutes($product->id, $filters->filters);
+                $isInFilter &= $this->filteringProductByAttrbutes($product->id, $filters->attributes);
             }
-            $isInFilter &= $this->filteringProductByPrice($product->id, $filters->price);
+            $isInFilter &= $this->filteringProductByPrice($product->id, $filters->prices);
             if($isInFilter)
             {
-                array_push($filtered_products, $product);
+                $DBcollector = new ProductsViewsInformationCollector();
+                array_push($filtered_products, $DBcollector->ConvertProductToProductData($product));
             }
         }
         return $filtered_products;
-    }
-
-    private function getCategoriesProducts($category_id)
-    {
-        $selected_products = Product::where("category_id", $category_id)->get();
-        $products = [];
-        foreach ($selected_products as $sproduct) {
-            array_push($products, $this->getProductData($sproduct));
-        }
-        return $products;
-    }
-
-    private function uncheckAllFilterValues($values_list, $mask = null)
-    {
-        $values_states = [];
-        foreach ($values_list as $value) {
-            $value_state = (object)[
-                'alias' => $value,
-                'state' => ($mask != null && in_array($value, $mask))
-            ];
-            array_push($values_states , $value_state);
-        }
-        return $values_states;
     }
 
     private function convertStringListToListsArray($keysvalues_in_string)
@@ -162,109 +89,66 @@ class CategoryController extends Controller
         return $keyvalues;
     }
 
-    private function getFiltersForm($category_id, $products, $filters = null)
+    private function tempBugFixingMethod($attributs_array)
     {
-        $prices = $this->getMinMaxPrices($products);
-
-        if($filters == null){
-            $prices->value_min = $prices->min;
-            $prices->value_max = $prices->max;
+        $new_array = (object)[];
+        foreach ($attributs_array as $key=>$value) {
+            $new_key = str_replace('_', ' ', $key);
+            $new_velue = str_replace('_',' ', $value);
+            $new_array->$new_key = $new_velue;
         }
-        else{
-            $prices->value_min = $filters->price->min;
-            $prices->value_max = $filters->price->max;
-        }
-
-        $vendors = $this->getVendors($products);
-        $vendors_forms = [];
-        foreach ($vendors as $vendor) {
-            array_push($vendors_forms, (object)[
-                'name' => $vendor->name,
-                'alias' => $vendor->alias,
-                'state' => ($filters != null && property_exists($filters, 'vendor') && in_array($vendor->alias, $filters->vendor))
-            ]);
-        }
-
-        $selected_attributes = CategoryAttribute::where("category_id", $category_id)->get();
-        $attributes = [];
-        foreach ($selected_attributes as $sattribute) {
-            $values = $this->getFiltersValues($sattribute->attribute_id, $products);
-            $attribute = Attribute::find($sattribute->attribute_id);
-            $key = $attribute->name;
-            if($filters != null && property_exists($filters, 'filters') && property_exists($filters->filters, $key)){
-                $values = $this->uncheckAllFilterValues($values, $filters->filters->$key);
-            }else{
-                $values = $this->uncheckAllFilterValues($values);
-            }
-            if(count($values) != 0){
-                array_push($attributes, (object)[
-                    'name'=>Attribute::find($sattribute->attribute_id)->name,
-                    'values'=>$values,
-                ]);
-            }
-        }
-
-        $formstates = (object)[
-            'prices' => $prices,
-            'vendors' => $vendors_forms,
-            'attributes' => $attributes
-        ];
-
-        return $formstates;
+        return $new_array;
     }
 
     public function show(Category $category, $filters = null)
     {
-        $products = $this->getCategoriesProducts($category->id);
-        $formstates = $this->getFiltersForm($category->id, $products, $filters);
+        $products = Product::where("category_id", $category->id)->get();
+
+        $DBcollector = new ProductsViewsInformationCollector();
+        $view_info = $DBcollector->GetProductsViewInfo('show', $category->name, $category->id, $products, $filters);
 
         if($filters != null)
         {
-            $products = $this->filteringProducts($products, $filters);
+            $view_info->products = $this->filteringProducts($products, $filters);
         }
-
-        return view("products", compact("category", "products", "formstates"));
+        return view("products", compact("view_info"));
     }
 
-    public function filltering(Category $category)
+    public function filtering(Category $category)
     {
-        //приймає данні з форми
         $request_data = request()->all();
-
-        //видалаяє данні токена з масива
         array_shift($request_data);
 
         $price_min = array_shift($request_data);
         $price_max = array_shift($request_data);
 
-        //бере ключі з масива (так як значення завжди має бути "on")
         $changes = array_keys($request_data);
 
-        //примає масив строк типу [key1#value1, key1#value2, key2#value1] 
-        //і перетворює його в обєкт типу [key1= [value1, value2], key2 = [value1]]
         $mask = $this->convertStringListToListsArray($changes);
 
-        //відділяє "vendor" фільтри від фітрів по атрибутам 
         $filters = (object)[];
-        $vendor = [];
         if(property_exists($mask, 'vendor')){
             $vendor = $mask->vendor;
-            $filters->vendor = $vendor;
+            $filters->vendors = $vendor;
             $mask_array = (array)$mask;
             if(count($mask_array) > 1)
             {
                 array_shift($mask_array);
-                $filters->filters = (object)$mask_array;
+                $filters->attributes = (object)$mask_array;
             }
         }
         else {
-            $filters->filters = $mask;
+            $filters->attributes = $mask;
         }
-
-        $filters->price = (object)[
+        if(property_exists($filters, 'attributes'))
+        {
+            $filters->attributes = $this->tempBugFixingMethod($filters->attributes);
+        }
+        $filters->prices = (object)[
             'min'=>$price_min,
             'max'=>$price_max
         ];
+
         return $this->show($category, $filters);
     }
 }

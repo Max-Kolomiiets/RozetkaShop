@@ -27,11 +27,11 @@ Route::middleware([
 Route::get('/main', "HomeController@index")->name("main.index");
 
 Route::get('/categories/{category}', "CategoryController@show")->name("category.show");
+Route::post('/categories/{category}/filtering', "CategoryController@filtering")->name("category.filtering");
+
+Route::get('/products/search', "ProductsController@search")->name('products.search');
+Route::post('/products/search/filtering', "ProductsController@filtering")->name('products.search.filtering');
 Route::get('/products/{product}', "ProductsController@show")->name("product.show");
-
-Route::post('/categories/{category}/filltering', "CategoryController@filltering")->name("category.filltering");
-Route::post('/search', "HomeController@search")->name('search');
-
 
 // for cookies cart
 Route::get('/load-cart-data','CartController@cartloadbyajax');

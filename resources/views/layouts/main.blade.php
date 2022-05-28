@@ -47,9 +47,9 @@
                         </span>
                     </li>
                 </ul>
-              <form class="form-inline my-2 my-md-0">
-                @csrf
-                <input class="form-control search-field" type="text" placeholder="Search">
+              <form class="form-inline my-2 my-md-0" method="get" action="{{route('products.search')}}">
+                {{-- @csrf --}}
+                <input class="form-control search-field" name="word" type="text" onchange="this.form.submit()" placeholder="Search">
               </form>
             </div>
             @if (Route::has('login'))
@@ -213,7 +213,8 @@
     <script src="{{ asset('js/cart.js') }}"></script>
 
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <script>
+    <script src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js"></script>
+    {{-- <script>
         let handleResult = function(response){
           console.log(response)
         }
@@ -234,7 +235,7 @@
         $(function(){
           $('.search-field').on('input', setAjax)
         })
-    </script>
+    </script> --}}
     <script>
         $(function(){
           if(pageScript != null)

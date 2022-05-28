@@ -50,5 +50,8 @@ function userCabinetRoute() {
     Route::get('/cabinet/wishlist', 'UserCabinetController@index')->name('cabinet.wishlist');
 }
 
+
+Route::get('/categories', "CategoryController@index")->name("category.index");
+
 Route::get('/checkout', 'CartController@checkout')->name('checkout');
 Route::post('make-order','CartController@makeOrder');

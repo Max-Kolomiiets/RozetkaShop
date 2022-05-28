@@ -49,6 +49,12 @@
                         <span class="nav-item basket-item-count nav-link">
                         </span>
                     </li>
+                     <li class="nav-item active">
+                        <a class="nav-link" 
+                        href="{{ route('category.index') }}">
+                        Categories 
+                        <span class="sr-only">(current)</span></a>
+                    </li>
                 </ul>
                 <form class="form-inline my-2 my-md-0">
                     @csrf

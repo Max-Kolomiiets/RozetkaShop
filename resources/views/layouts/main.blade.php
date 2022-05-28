@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>RozetkaShop</title>
+    <title>UkrMarket</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('icons/favicon.ico') }}">
 
     {{-- bootstrap --}}
     <!-- CSS -->
@@ -14,10 +15,8 @@
     <!-- Default theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
     <link rel="stylesheet" href="{{ asset('css/rozetka-styles.css') }}">
-    <link rel="stylesheet" 
-    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" 
-    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" 
-    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
@@ -25,9 +24,6 @@
 <body>
     <header>
         <nav class="navbar navbar-expand navbar-dark bg-success">
-            @auth
-                <a class="navbar-brand" href="{{ route('cabinet.index') }}">Cabinet</a>
-            @endauth
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02"
                 aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -35,21 +31,34 @@
 
             <div class="collapse navbar-collapse" id="navbarsExample02">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('main.index') }}">Home <span
-                                class="sr-only">(current)</span></a>
+                    <li class="nav-item active mr-3">
+                        <a href="/" class="navbar-left" style="display: flex">
+                            <img class="main-icon" src="{{ asset('icons/main-icon.png') }}">
+                            <h5 class="text-light">UkrMarket</h5>
+                        </a>
                     </li>
-                    <li class="nav-item active">
+                    @auth
+                    <li>
+                        <a class="navbar-brand" href="{{ route('cabinet.index') }}">Cabinet</a>
+                    </li>
+                    @endauth
+                    <li>
                         <a class="nav-link" href="{{ route('cart.index') }}">Cart</a>
                     </li>
                     <li>
                         <span class="nav-item basket-item-count nav-link">
                         </span>
                     </li>
+                     <li class="nav-item active">
+                        <a class="nav-link" 
+                        href="{{ route('category.index') }}">
+                        Categories 
+                        <span class="sr-only">(current)</span></a>
+                    </li>
                 </ul>
-              <form class="form-inline my-2 my-md-0">
-                @csrf
-                <input class="form-control search-field" type="text" placeholder="Search">
+              <form class="form-inline my-2 my-md-0" method="get" action="{{route('products.search')}}">
+                {{-- @csrf --}}
+                <input class="form-control search-field" name="word" type="text" onchange="this.form.submit()" placeholder="Search">
               </form>
             </div>
             @if (Route::has('login'))
@@ -214,33 +223,10 @@
 
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script>
-        let handleResult = function(response){
-          console.log(response)
-        }
-        let setAjax = function(){
-          let url = "search"
-          let text = $('.search-field').val()
-          let _token = $('input[name="_token"]').val();//searching <input name="_token"/>
-          $.ajax({
-            url: "{{ route('search')}}",
-            type: "POST",
-            data:{
-              text: text,
-              _token: _token
-            },
-            success: handleResult
-          })
-        }
-        $(function(){
-          $('.search-field').on('input', setAjax)
-        })
-    </script>
-    <script>
-        $(function(){
-          if(pageScript != null)
-          {
-            pageScript()
-          }
+        $(function() {
+            if (pageScript != null) {
+                pageScript()
+            }
         })
     </script>
 </body>

@@ -120,11 +120,11 @@
                                                 <div class="col-md-12">
                                                     <div class="cart-checkout-btn text-center">
                                                         @if (Auth::user())
-                                                            <a href="{{ url('checkout') }}"
+                                                            <a href="{{ route('checkout') }}"
                                                                 class="btn btn-success btn-block checkout-btn">PROCCED TO
                                                                 CHECKOUT</a>
                                                         @else
-                                                            <a href="{{ url('login') }}"
+                                                            <a href="{{ route('checkout') }}"
                                                                 class="btn btn-success btn-block checkout-btn">PROCCED TO
                                                                 CHECKOUT</a>
                                                             {{-- you add a pop modal for making a login --}}

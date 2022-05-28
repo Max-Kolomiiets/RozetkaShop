@@ -5,10 +5,10 @@ $(document).ready(function () {
     changeQuantity();
     handleDeleteItem();
     handleClearCookiesCart();
+    handleMakeOrder();
 });
 
-function cartload()
-{
+function cartload() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -22,7 +22,7 @@ function cartload()
             $('.basket-item-count').html('');
             var parsed = jQuery.parseJSON(response)
             var value = parsed; //Single Data Viewing
-            $('.basket-item-count').append($('<span class="badge badge-pill red">'+ value['totalcart'] +'</span>'));
+            $('.basket-item-count').append($('<span class="badge badge-pill red">' + value['totalcart'] + '</span>'));
         }
     });
 }
@@ -49,7 +49,7 @@ function addToCart() {
                 'product_id': product_id,
             },
             success: function (response) {
-                alertify.set('notifier','position','top-center');
+                alertify.set('notifier', 'position', 'top-center');
                 alertify.success(response.status);
 
                 cartload();
@@ -64,7 +64,7 @@ function handleIncrementDecrementCart() {
         var incre_value = $(this).parents('.quantity').find('.qty-input').val();
         var value = parseInt(incre_value, 10);
         value = isNaN(value) ? 0 : value;
-        if(value<10){
+        if (value < 10) {
             value++;
             $(this).parents('.quantity').find('.qty-input').val(value);
         }
@@ -76,7 +76,7 @@ function handleIncrementDecrementCart() {
         var decre_value = $(this).parents('.quantity').find('.qty-input').val();
         var value = parseInt(decre_value, 10);
         value = isNaN(value) ? 0 : value;
-        if(value>1){
+        if (value > 1) {
             value--;
             $(this).parents('.quantity').find('.qty-input').val(value);
         }
@@ -94,8 +94,8 @@ function changeQuantity() {
 
         var data = {
             '_token': $('input[name=_token]').val(),
-            'quantity':quantity,
-            'product_id':product_id,
+            'quantity': quantity,
+            'product_id': product_id,
         };
 
         $.ajax({
@@ -103,7 +103,7 @@ function changeQuantity() {
             type: 'POST',
             data: data,
             success: function (response) {
-                alertify.set('notifier','position','top-center');
+                alertify.set('notifier', 'position', 'top-center');
                 alertify.warning(response.status);
 
                 setTimeout(() => {
@@ -131,7 +131,7 @@ function handleDeleteItem() {
             type: 'DELETE',
             data: data,
             success: function (response) {
-                alertify.set('notifier','position','top-center');
+                alertify.set('notifier', 'position', 'top-center');
                 alertify.error(response.status);
 
                 setTimeout(() => {
@@ -150,7 +150,7 @@ function handleClearCookiesCart() {
             url: '/clear-cart',
             type: 'GET',
             success: function (response) {
-                alertify.set('notifier','position','top-center');
+                alertify.set('notifier', 'position', 'top-center');
                 alertify.error(response.status);
 
                 setTimeout(() => {
@@ -159,5 +159,41 @@ function handleClearCookiesCart() {
             }
         });
 
+    });
+}
+
+function handleMakeOrder() {
+    $('.btn-checkout').click(function (e) {
+        e.preventDefault();
+        console.log('btn-checkout ==.> ', this);
+
+        // let name = $(this).closest(".cartpage").find('.qty-input').val();
+        // let lastname = $(this).closest(".cartpage").find('.qty-input').val();
+        // let patronymic = $(this).closest(".cartpage").find('.qty-input').val();
+        // let phone = $(this).closest(".cartpage").find('.qty-input').val();
+
+        // let product_id = $(this).closest(".cartpage").find('.product_id').val();
+
+        let data = {
+            '_token': $('input[name=_token]').val(),
+            'name': 'name',
+            'lastname': 'lastname',
+            'patronymic': 'patronymic',
+            'phone': 'phone',
+        };
+
+        $.ajax({
+            url: '/make-order',
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                alertify.set('notifier', 'position', 'top-center');
+                alertify.warning(response.status);
+
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 6000);
+            }
+        });
     });
 }

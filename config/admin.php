@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Rozetka Admin Panel',
+    'name' => 'Ukrmarket Admin Panel',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>Rozetka</b> Admin',
+    'logo' => '<b>Ukrmarket</b> Admin',
 
     /*
     |--------------------------------------------------------------------------

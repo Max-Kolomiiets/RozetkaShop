@@ -20,7 +20,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $category_id = 1;
+        return view('categories.index')->with('categories', Category::all());
     }
 
     private function filteringProductByPrice($product_id, $prices)

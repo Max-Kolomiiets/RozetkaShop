@@ -1,0 +1,62 @@
+[
+    {
+        "name":"Комп'ютери",
+        "alias": "computers",
+        "attributes":[
+            {
+                "name": "Процесор",
+                "alias": "cpu",
+                "filtered": true,
+                "required": false
+            },
+            {
+                "name": "Діагональ екрану",
+                "alias": "screen_diagonal",
+                "filtered": true,
+                "required": false
+            },
+            {
+                "name": "Відеокарта",
+                "alias": "video_card",
+                "filtered": true,
+                "required": false
+            },
+            {
+                "name": "Тип накопичувача",
+                "alias": "drive_type",
+                "filtered": true,
+                "required": false
+            },
+            {
+                "name": "Об'єм SSD",
+                "alias": "ssd_capacity",
+                "filtered": true,
+                "required": false
+            },
+            {
+                "name": "Об'єм HDD",
+                "alias": "hdd_capacity",
+                "filtered": true,
+                "required": false
+            },
+            {
+                "name": "Кількість слотів оперативної пам'яті",
+                "alias": "number_of_ram_slots",
+                "filtered": true,
+                "required": false
+            },
+            {
+                "name": "Тип оперативної пам'яті",
+                "alias": "type_of_ram",
+                "filtered": true,
+                "required": false
+            },
+            {
+                "name": "Об'єм оперативної пам'яті",
+                "alias": "amount_of_ram",
+                "filtered": true,
+                "required": false
+            }
+        ]
+    }
+]

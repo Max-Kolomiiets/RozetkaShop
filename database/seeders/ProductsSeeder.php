@@ -90,9 +90,20 @@ class ProductsSeeder extends Seeder
         return $images_pathes;
     }
 
-    public function run()
+    public function run($path = 'database\seeders\products.json')
     {
-        $json_data = File::get("database\seeders\products.json");
+        $this->seedFromJson($path);
+    }
+
+    private function seedFromJson($path) {
+
+        if (str_contains($path, 'database')) {
+            $json_data = File::get($path);
+         } else {
+            $json_data = Storage::get($path);
+
+         }
+         
         $products = json_decode($json_data);
         foreach ($products as $product) {
             $product_data = [

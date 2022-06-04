@@ -15,21 +15,12 @@ class HomeController extends Controller
         return $content
             ->title('Dashboard')
             ->description('Welcome to Ukrmarket admin part')
-            //->row(Dashboard::title())
-            ->row("<div class='title'>Ukrmarket.com - Admin</div>")
-            
+            ->row("<div class='title'>Ukrmarket.com - Admin panel</div>")
+
             ->row(function (Row $row) {
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::environment());
-                });
-
-                $row->column(4, function (Column $column) {
+                $row->column(6, function (Column $column) {
                     $column->append(Dashboard::extensions());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
                 });
             });
     }

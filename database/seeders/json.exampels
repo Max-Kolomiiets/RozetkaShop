@@ -1,0 +1,125 @@
+################################################################################
+product
+{
+    "name": "Ноутбук Lenovo V17 G2 ITL",
+    "alias": "82NX00DERA",
+    "category": "Комп'ютери",
+    "vendor": "Lenovo",
+    "quantity": 0,
+    "availability": true,
+    "hiden": false,
+    "price": 23099.00,
+    "state": "new",
+    "ean": "0123456789123",
+    "country": "Китай",
+    "description": "Экран 17.3\" TN+film (1600x900) HD+, матовый / Intel Core i5-1135G7 (4.2 ГГц) / RAM 8 ГБ / SSD 256 ГБ / Intel Iris Xe / без ОД / Wi-Fi / Bluetooth / веб-камера / без ОС / 2.2 кг / серый",
+    "images_directory":"",
+    "attributes":[
+        {
+            "name": "Процесор",
+            "value": "Intel Core i5"
+        },
+        {
+            "name": "Діагональ екрану",
+            "value": "17.3\" (1600x900) HD+"
+        },
+        {
+            "name": "Відеокарта",
+            "value": "8 ГБ"
+        },
+        {
+            "name": "Тип накопичувача",
+            "value": "8 ГБ"
+        },
+        {
+            "name": "Об'єм SSD",
+            "value": "8 ГБ"
+        },
+        {
+            "name": "Об'єм HDD",
+            "value": "8 ГБ"
+        },
+        {
+            "name": "Кількість слотів оперативної пам'яті",
+            "value": "8 ГБ"
+        },
+        {
+            "name": "Тип оперативної пам'яті",
+            "value": "8 ГБ"
+        },
+        {
+            "name": "Об'єм оперативної пам'яті",
+            "value": "8 ГБ"
+        }
+    ],
+    "guaranty":{
+        "term": 0,
+        "url": ""
+    }
+}
+################################################################################
+
+
+################################################################################
+category
+{
+    "name":"Комп'ютери",
+    "alias": "computers",
+    "attributes":[
+        {
+            "name": "Процесор",
+            "alias": "cpu",
+            "filtered": true,
+            "required": false
+        },
+        {
+            "name": "Діагональ екрану",
+            "alias": "screen_diagonal",
+            "filtered": true,
+            "required": false
+        },
+        {
+            "name": "Відеокарта",
+            "alias": "video_card",
+            "filtered": true,
+            "required": false
+        },
+        {
+            "name": "Тип накопичувача",
+            "alias": "drive_type",
+            "filtered": true,
+            "required": false
+        },
+        {
+            "name": "Об'єм SSD",
+            "alias": "ssd_capacity",
+            "filtered": true,
+            "required": false
+        },
+        {
+            "name": "Об'єм HDD",
+            "alias": "hdd_capacity",
+            "filtered": true,
+            "required": false
+        },
+        {
+            "name": "Кількість слотів оперативної пам'яті",
+            "alias": "number_of_ram_slots",
+            "filtered": true,
+            "required": false
+        },
+        {
+            "name": "Тип оперативної пам'яті",
+            "alias": "type_of_ram",
+            "filtered": true,
+            "required": false
+        },
+        {
+            "name": "Об'єм оперативної пам'яті",
+            "alias": "amount_of_ram",
+            "filtered": true,
+            "required": false
+        }
+    ]
+}
+################################################################################

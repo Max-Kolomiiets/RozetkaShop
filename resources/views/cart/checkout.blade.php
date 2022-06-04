@@ -3,7 +3,11 @@
 @section('main_content')
     <h1 class="text-center">Making an order</h1>
 
+    <h3>Total sum: 2000 $</h3>
+
     <div class="col-6">
+        <h2>Contact information: </h2>
+        <hr>
         @auth
             <form class="form m-3">
                 <div class="form-group">
@@ -45,8 +49,9 @@
         @endauth
     </div>
 
+    <h2>Goods:</h2>
     <hr>
-    <h4 class="text-center">Goods</h4>
+
     <div class="row">
         @foreach ($cart_data as $data)
             <?php
@@ -71,6 +76,42 @@
             </div>
         @endforeach
 
+    </div>
+
+    <h2>Delivery:</h2>
+    <hr>
+
+    <form class="form m-3">
+        <div class="form-group">
+            <label for="">Address:</label>
+            <input type="text" class="form-control name">
+        </div>
+        <div class="">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="delivery-method" id="delivery-method-1" checked/>
+                <label class="form-check-label" for="delivery-method-1">Самовивіз з Нової Пошти</label>
+            </div>
+        
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="delivery-method" id="delivery-method-2"  />
+                <label class="form-check-label" for="delivery-method-2">Кур'єр Нова пошта</label>
+            </div>
+        </div>
+    </form>
+
+    <h2>Payment:</h2>
+    <hr>
+
+    <div class="m-3">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="payment-method" id="payment-method-1" checked/>
+            <label class="form-check-label" for="payment-method-1"> Оплата під час отримання товару </label>
+        </div>
+    
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="payment-method" id="payment-method-2"  />
+            <label class="form-check-label" for="payment-method-2"> Оплатити зараз </label>
+        </div>
     </div>
 
     <div class="text-center">

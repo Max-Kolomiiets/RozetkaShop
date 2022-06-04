@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Attribute;
 use App\Models\Availability;
 use App\Models\Category;
 use App\Models\CategoryAttribute;
@@ -14,6 +15,8 @@ use App\Models\Price;
 use App\Models\Product;
 use App\Models\Vendor;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Console\Descriptor\Descriptor;
 
 class ProductsSeeder extends Seeder
@@ -25,8 +28,8 @@ class ProductsSeeder extends Seeder
      */
     public $products_cnt = 150;
     public $images_cnt = [3, 16];
-    public function run()
-    {
+
+    private function fakeSeed(){
         $categories = Category::all();
         $vendors = Vendor::all();
         $countires = Country::all();
@@ -56,6 +59,105 @@ class ProductsSeeder extends Seeder
                 }
             }
 
+        }
+    }
+
+    private function getCategory($category)
+    {
+        return Category::firstWhere('name', $category)->id;
+    }
+    private function getVendor($vendor)
+    {
+        return Vendor::firstWhere('name', $vendor)->id;
+    }
+    private function getCountry($country)
+    {
+        return Country::firstWhere("name", $country)->id;
+    }
+    private function getAttribute($attribute)
+    {
+        return Attribute::firstWhere("name", $attribute)->id;
+    }
+    public function getImages($folderName)
+    {
+        $fullPath = "public\\images\\".$folderName;
+        $pathes = Storage::files($fullPath);
+        $images_pathes = [];
+        foreach ($pathes as $path) {
+            $new_path = substr_replace($path, "", 0, 7);
+            array_push($images_pathes, $new_path);
+        }
+        return $images_pathes;
+    }
+
+    public function run($path = 'database\seeders\products.json')
+    {
+        $this->seedFromJson($path);
+    }
+
+    private function seedFromJson($path) {
+
+        if (str_contains($path, 'database')) {
+            $json_data = File::get($path);
+         } else {
+            $json_data = Storage::get($path);
+
+         }
+         
+        $products = json_decode($json_data);
+        foreach ($products as $product) {
+            $product_data = [
+                'name' =>$product->name,
+                'alias' =>$product->article,
+                'category_id'=>$this->getCategory($product->category),
+                'vendor_id'=>$this->getVendor($product->vendor),
+            ];
+            $product_id = Product::factory()->create($product_data)->id;
+            $price_data = [
+                'product_id'=>$product_id,
+                'price'=>$product->price * 100
+            ];
+            Price::factory()->create($price_data);
+
+            $availability_data = [
+                'product_id'=>$product_id,
+                'quantity'=>$product->quantity
+            ];
+            Availability::factory()->create($availability_data);
+
+            $description_data = [
+                'product_id'=>$product_id,
+                'state'=>$product->state,
+                'ean'=>$product->ean,
+                'description'=>$product->description,
+                'country_id' => $this->getCountry($product->country)
+            ];
+            Description::factory()->create($description_data);
+
+            $guaranty_data = [
+                'product_id' => $product_id,
+                'term' => $product->guaranty->term,
+                'vendor_id' => $product_data['vendor_id']
+            ];
+            Guaranty::factory()->create($guaranty_data);
+
+            foreach ($product->attributes as $attribute) {
+                $characteristic_data = [
+                    'product_id'=>$product_id,
+                    'attribute_id'=> $this->getAttribute($attribute->name),
+                    'value'=>$attribute->value
+                ];
+                Characteristic::factory()->create($characteristic_data);
+            }
+            
+            $pathes = $this->getImages($product->images_directory);
+            foreach ($pathes as $path) {
+                $image = [
+                    'product_id' => $product_id,
+                    'url' => $path
+                ];
+                Image::factory()->create($image);
+            }
         }
     }
 }

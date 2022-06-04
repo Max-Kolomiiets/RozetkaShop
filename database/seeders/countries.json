@@ -1,0 +1,662 @@
+[
+    {
+        "name": "Аргентина",
+        "alias": "argentina"
+    },
+    {
+        "name": "Вірменія",
+        "alias": "armenia"
+    },
+    {
+        "name": "Аруба",
+        "alias": "aruba"
+    },
+    {
+        "name": "Австралія",
+        "alias": "australia"
+    },
+    {
+        "name": "Австрія",
+        "alias": "austria"
+    },
+    {
+        "name": "Азербайджан",
+        "alias": "azerbaijan"
+    },
+    {
+        "name": "Багами",
+        "alias": "bahamas"
+    },
+    {
+        "name": "Бангладеш",
+        "alias": "bangladesh"
+    },
+    {
+        "name": "Республіка Білорусь",
+        "alias": "belarus"
+    },
+    {
+        "name": "Бельгія",
+        "alias": "belgium"
+    },
+    {
+        "name": "Белізувати",
+        "alias": "belize"
+    },
+    {
+        "name": "Бермудські острови",
+        "alias": "bermuda"
+    },
+    {
+        "name": "Болівія",
+        "alias": "bolivia"
+    },
+    {
+        "name": "Боснія і Герцеговина",
+        "alias": "bosnia_and_herzegovina"
+    },
+    {
+        "name": "Ботсвана",
+        "alias": "botswana"
+    },
+    {
+        "name": "Бразилія",
+        "alias": "brazil"
+    },
+    {
+        "name": "Болгарія",
+        "alias": "bulgaria"
+    },
+    {
+        "name": "Бурунді",
+        "alias": "burundi"
+    },
+    {
+        "name": "Камбоджа",
+        "alias": "cambodia"
+    },
+    {
+        "name": "Канада",
+        "alias": "canada"
+    },
+    {
+        "name": "Кабо-Верде",
+        "alias": "cape_verde"
+    },
+    {
+        "name": "Центральноафриканська республіка",
+        "alias": "central_african_republic"
+    },
+    {
+        "name": "Чад",
+        "alias": "chad"
+    },
+    {
+        "name": "Чилі",
+        "alias": "chile"
+    },
+    {
+        "name": "Китай",
+        "alias": "china"
+    },
+    {
+        "name": "Колумбія",
+        "alias": "colombia"
+    },
+    {
+        "name": "Комор",
+        "alias": "comoros"
+    },
+    {
+        "name": "Коста-Ріка",
+        "alias": "costa_rica"
+    },
+    {
+        "name": "Куба",
+        "alias": "cuba"
+    },
+    {
+        "name": "Кіпр",
+        "alias": "cyprus"
+    },
+    {
+        "name": "Чеська Республіка",
+        "alias": "czech_republic"
+    },
+    {
+        "name": "Данія",
+        "alias": "denmark"
+    },
+    {
+        "name": "Еквадор",
+        "alias": "ecuador"
+    },
+    {
+        "name": "Єгипет",
+        "alias": "egypt"
+    },
+    {
+        "name": "Сальвадор",
+        "alias": "el_salvador"
+    },
+    {
+        "name": "Екваторіальна Гвінея",
+        "alias": "equatorial_guinea"
+    },
+    {
+        "name": "Еритрея",
+        "alias": "eritrea"
+    },
+    {
+        "name": "Естонія",
+        "alias": "estonia"
+    },
+    {
+        "name": "Ефіопія",
+        "alias": "ethiopia"
+    },
+    {
+        "name": "Фарерські острови",
+        "alias": "faroe_islands"
+    },
+    {
+        "name": "Фінляндія",
+        "alias": "finland"
+    },
+    {
+        "name": "Франція",
+        "alias": "france"
+    },
+    {
+        "name": "Грузія",
+        "alias": "georgia"
+    },
+    {
+        "name": "Німеччина",
+        "alias": "germany"
+    },
+    {
+        "name": "Гібралтар",
+        "alias": "gibraltar"
+    },
+    {
+        "name": "Греція",
+        "alias": "greece"
+    },
+    {
+        "name": "Гренландія",
+        "alias": "greenland"
+    },
+    {
+        "name": "Гренада",
+        "alias": "grenada"
+    },
+    {
+        "name": "Гваделуп",
+        "alias": "guadeloupe"
+    },
+    {
+        "name": "Гватемала",
+        "alias": "guatemala"
+    },
+    {
+        "name": "Гернсі",
+        "alias": "guernsey"
+    },
+    {
+        "name": "Гвінея",
+        "alias": "guinea"
+    },
+    {
+        "name": "Гайана",
+        "alias": "guyana"
+    },
+    {
+        "name": "Гаїті",
+        "alias": "haiti"
+    },
+    {
+        "name": "Гондурас",
+        "alias": "honduras"
+    },
+    {
+        "name": "Гонконг",
+        "alias": "hong_kong"
+    },
+    {
+        "name": "Угорщина",
+        "alias": "hungary"
+    },
+    {
+        "name": "Ісландія",
+        "alias": "iceland"
+    },
+    {
+        "name": "Індія",
+        "alias": "india"
+    },
+    {
+        "name": "Індонезія",
+        "alias": "indonesia"
+    },
+    {
+        "name": "Ісламська Республіка Іран",
+        "alias": "iran_islamic_republic_of"
+    },
+    {
+        "name": "Ірак",
+        "alias": "iraq"
+    },
+    {
+        "name": "Ірландія",
+        "alias": "ireland"
+    },
+    {
+        "name": "Ізраїль",
+        "alias": "israel"
+    },
+    {
+        "name": "Італія",
+        "alias": "italy"
+    },
+    {
+        "name": "Ямайка",
+        "alias": "jamaica"
+    },
+    {
+        "name": "Японія",
+        "alias": "japan"
+    },
+    {
+        "name": "Казахстан",
+        "alias": "kazakhstan"
+    },
+    {
+        "name": "Кенія",
+        "alias": "kenya"
+    },
+    {
+        "name": "Кірібаті",
+        "alias": "kiribati"
+    },
+    {
+        "name": "Корейська Народно-Демократична Республіка",
+        "alias": "korea_democratic_peoples_republic_of"
+    },
+    {
+        "name": "Республіка Корея",
+        "alias": "korea_republic_of"
+    },
+    {
+        "name": "Кувейт",
+        "alias": "kuwait"
+    },
+    {
+        "name": "Киргизстан",
+        "alias": "kyrgyzstan"
+    },
+    {
+        "name": "Латвія",
+        "alias": "latvia"
+    },
+    {
+        "name": "Ліван",
+        "alias": "lebanon"
+    },
+    {
+        "name": "Лесото",
+        "alias": "lesotho"
+    },
+    {
+        "name": "Ліберія",
+        "alias": "liberia"
+    },
+    {
+        "name": "Лівійська арабська Джамахірія",
+        "alias": "libyan_arab_jamahiriya"
+    },
+    {
+        "name": "Ліхтенштейн",
+        "alias": "liechtenstein"
+    },
+    {
+        "name": "Литва",
+        "alias": "lithuania"
+    },
+    {
+        "name": "Люксембург",
+        "alias": "luxembourg"
+    },
+    {
+        "name": "Макао",
+        "alias": "macao"
+    },
+    {
+        "name": "Македонія",
+        "alias": "macedonia"
+    },
+    {
+        "name": "Мадагаскар",
+        "alias": "madagascar"
+    },
+    {
+        "name": "Малаві",
+        "alias": "malawi"
+    },
+    {
+        "name": "Малайзія",
+        "alias": "malaysia"
+    },
+    {
+        "name": "Мальдіви",
+        "alias": "maldives"
+    },
+    {
+        "name": "Малі",
+        "alias": "mali"
+    },
+    {
+        "name": "Мальта",
+        "alias": "malta"
+    },
+    {
+        "name": "Мавританія",
+        "alias": "mauritania"
+    },
+    {
+        "name": "Маврикій",
+        "alias": "mauritius"
+    },
+    {
+        "name": "Майотта",
+        "alias": "mayotte"
+    },
+    {
+        "name": "Мексика",
+        "alias": "mexico"
+    },
+    {
+        "name": "Республіка Молдова",
+        "alias": "moldova_republic_of"
+    },
+    {
+        "name": "Монако",
+        "alias": "monaco"
+    },
+    {
+        "name": "Монголія",
+        "alias": "mongolia"
+    },
+    {
+        "name": "Монтсеррат",
+        "alias": "montserrat"
+    },
+    {
+        "name": "Марокко",
+        "alias": "morocco"
+    },
+    {
+        "name": "Мозамбік",
+        "alias": "mozambique"
+    },
+    {
+        "name": "М'янма",
+        "alias": "myanmar"
+    },
+    {
+        "name": "Намібія",
+        "alias": "namibia"
+    },
+    {
+        "name": "Науру",
+        "alias": "nauru"
+    },
+    {
+        "name": "Непал",
+        "alias": "nepal"
+    },
+    {
+        "name": "Нідерланди",
+        "alias": "netherlands"
+    },
+    {
+        "name": "Нова Каледонія",
+        "alias": "new_caledonia"
+    },
+    {
+        "name": "Нова Зеландія",
+        "alias": "new_zealand"
+    },
+    {
+        "name": "Нікарагуа",
+        "alias": "nicaragua"
+    },
+    {
+        "name": "Нігер",
+        "alias": "niger"
+    },
+    {
+        "name": "Нігерія",
+        "alias": "nigeria"
+    },
+    {
+        "name": "Норвегія",
+        "alias": "norway"
+    },
+    {
+        "name": "Пакистан",
+        "alias": "pakistan"
+    },
+    {
+        "name": "Палау",
+        "alias": "palau"
+    },
+    {
+        "name": "Панама",
+        "alias": "panama"
+    },
+    {
+        "name": "Папуа нова Гвінея",
+        "alias": "papua_new_guinea"
+    },
+    {
+        "name": "Парагвай",
+        "alias": "paraguay"
+    },
+    {
+        "name": "Перу",
+        "alias": "peru"
+    },
+    {
+        "name": "Філіппіни",
+        "alias": "philippines"
+    },
+    {
+        "name": "Піткерн",
+        "alias": "pitcairn"
+    },
+    {
+        "name": "Польща",
+        "alias": "poland"
+    },
+    {
+        "name": "Португалія",
+        "alias": "portugal"
+    },
+    {
+        "name": "Пуерто-Рико",
+        "alias": "puerto_rico"
+    },
+    {
+        "name": "Катар",
+        "alias": "qatar"
+    },
+    {
+        "name": "Румунія",
+        "alias": "romania"
+    },
+    {
+        "name": "Руанда",
+        "alias": "rwanda"
+    },
+    {
+        "name": "Самоа",
+        "alias": "samoa"
+    },
+    {
+        "name": "Сан-Маріно",
+        "alias": "san_marino"
+    },
+    {
+        "name": "Саудівська Аравія",
+        "alias": "saudi_arabia"
+    },
+    {
+        "name": "Сербія та Чорногорія",
+        "alias": "serbia_and_montenegro"
+    },
+    {
+        "name": "Сейшель",
+        "alias": "seychelles"
+    },
+    {
+        "name": "Сінгапур",
+        "alias": "singapore"
+    },
+    {
+        "name": "Словаччина",
+        "alias": "slovakia"
+    },
+    {
+        "name": "Словенія",
+        "alias": "slovenia"
+    },
+    {
+        "name": "Соломонські острови",
+        "alias": "solomon_islands"
+    },
+    {
+        "name": "Сомалі",
+        "alias": "somalia"
+    },
+    {
+        "name": "Південна Африка",
+        "alias": "south_africa"
+    },
+    {
+        "name": "Іспанія",
+        "alias": "spain"
+    },
+    {
+        "name": "Шрі Ланка",
+        "alias": "sri_lanka"
+    },
+    {
+        "name": "Судан",
+        "alias": "sudan"
+    },
+    {
+        "name": "Сурінам",
+        "alias": "suriname"
+    },
+    {
+        "name": "Швеція",
+        "alias": "sweden"
+    },
+    {
+        "name": "Швейцарія",
+        "alias": "switzerland"
+    },
+    {
+        "name": "Таджикистан",
+        "alias": "tajikistan"
+    },
+    {
+        "name": "Об'єднана республіка Танзанія",
+        "alias": "tanzania_united_republic_of"
+    },
+    {
+        "name": "Таїланд",
+        "alias": "thailand"
+    },
+    {
+        "name": "Тайвань",
+        "alias": "taiwan"
+    },
+    {
+        "name": "Тимор",
+        "alias": "timor_leste"
+    },
+    {
+        "name": "Токелау",
+        "alias": "tokelau"
+    },
+    {
+        "name": "Тонга",
+        "alias": "tonga"
+    },
+    {
+        "name": "Тринідад і Тобаго",
+        "alias": "trinidad_and_tobago"
+    },
+    {
+        "name": "Туніс",
+        "alias": "tunisia"
+    },
+    {
+        "name": "Туречина",
+        "alias": "turkey"
+    },
+    {
+        "name": "Туркменістан",
+        "alias": "turkmenistan"
+    },
+    {
+        "name": "Тувалу",
+        "alias": "tuvalu"
+    },
+    {
+        "name": "Уганда",
+        "alias": "uganda"
+    },
+    {
+        "name": "Україна",
+        "alias": "ukraine"
+    },
+    {
+        "name": "Об'єднані Арабські Емірати",
+        "alias": "united_arab_emirates"
+    },
+    {
+        "name": "Велиика Британія",
+        "alias": "united_kingdom"
+    },
+    {
+        "name": "Сполучені Штати Америки",
+        "alias": "united_states"
+    },
+    {
+        "name": "Уругвай",
+        "alias": "uruguay"
+    },
+    {
+        "name": "Узбекистан",
+        "alias": "uzbekistan"
+    },
+    {
+        "name": "Вануату",
+        "alias": "vanuatu"
+    },
+    {
+        "name": "Венесуела",
+        "alias": "venezuela"
+    },
+    {
+        "name": "В'єтнам",
+        "alias": "viet_nam"
+    },
+    {
+        "name": "Зімбабве",
+        "alias": "zimbabwe"
+    }
+]

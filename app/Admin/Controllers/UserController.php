@@ -67,6 +67,17 @@ class UserController extends AdminController
             $contacts->phone();
         });
 
+        $show->orders('Orders', function ($orders) {
+            $orders->resource('/admin/orders');
+            $orders->order_number()->label();
+            $orders->column('order_date', __('Order date'));
+            $orders->column('orderStatus.status', 'Order Status')->label();
+        
+            $orders->filter(function ($filter) {
+                $filter->like('content');
+            });
+        });
+        
         return $show;
     }
 

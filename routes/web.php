@@ -55,3 +55,7 @@ Route::get('/categories', "CategoryController@index")->name("category.index");
 
 Route::get('/checkout', 'CartController@checkout')->name('checkout');
 Route::post('make-order','CartController@makeOrder');
+
+// upload json for products
+
+Route::post('/upload-products', 'UploadController@uploadProductsJson')->name('upload.products');

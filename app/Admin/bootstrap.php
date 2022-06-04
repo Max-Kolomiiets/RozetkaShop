@@ -19,12 +19,31 @@
  */
 
 use Encore\Admin\Facades\Admin;
+use Encore\Admin\Form;
 use Encore\Admin\Grid\Column;
 
 Encore\Admin\Form::forget(['map', 'editor']);
-
+Admin::favicon('./icons/favicon.ico');
 Admin::css('./css/admin-styles.css');
+Admin::js('./js/app.js');
 
 Column::extend('color', function ($value, $color) {
     return "<span style='color: $color'>$value</span>";
 });
+
+Form::init(function (Form $form) {
+
+    $form->disableEditingCheck();
+
+    $form->disableCreatingCheck();
+
+    $form->disableViewCheck();
+
+    $form->tools(function (Form\Tools $tools) {
+        $tools->disableDelete();
+        $tools->disableView();
+        $tools->disableList();
+    });
+});
+
+app('view')->prependNamespace('admin', resource_path('views/admin'));

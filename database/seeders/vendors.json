@@ -1,0 +1,27 @@
+[
+    {
+        "name": "ASUS",
+        "alias": "asus",
+        "country": "Тайвань"
+    },
+    {
+        "name": "Acer",
+        "alias": "acer",
+        "country": "Тайвань"
+    },
+    {
+        "name": "Samsung",
+        "alias": "samsung",
+        "country": "Республіка Корея"
+    },
+    {
+        "name": "Apple",
+        "alias": "apple",
+        "country": "Сполучені Штати Америки"
+    },
+    {
+        "name":"Lenovo",
+        "alias": "lenovo",
+        "country": "Китай"
+    }
+]

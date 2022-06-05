@@ -2,13 +2,16 @@
 
 namespace App\Admin\Controllers;
 
+use App\Mail\MailService;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Product;
+use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\Request;
 
 class OrderController extends AdminController
 {
@@ -18,7 +21,13 @@ class OrderController extends AdminController
      * @var string
      */
     protected $title = 'Order';
+    private $sendEmail = false;
+    private $mailService;
 
+    public function __construct()
+    {
+        $this->mailService = new MailService();
+    }
     /**
      * Make a grid builder.
      *
@@ -82,10 +91,6 @@ class OrderController extends AdminController
 
             $products->column('product.id', 'Product Id');
             $products->column('product.name', 'Product name');
-           
-            dd( $products->column('qty', 'Quantity')
-        );
-
             $products->column('qty', 'Quantity');
 
             $products->filter(function ($filter) {
@@ -102,14 +107,26 @@ class OrderController extends AdminController
      *
      * @return Form
      */
+
     protected function form()
     {
         $form = new Form(new Order());
 
-        $form->number('order_number', __('Order number'));
-        $form->datetime('order_date', __('Order date'))->default(date('Y-m-d H:i:s'));
-        $form->number('user_id', __('User id'));
-        $form->number('order_status_id', __('Order status id'));
+        $form->hidden('id');
+        $form->hidden('user_id');
+        $form->text('user.name')->disable();
+        $form->select('order_status_id', 'Status')->options(OrderStatus::all()->pluck('status', 'id'));
+
+        $form->saved(function (Form $form) {
+            $userId = $form->user_id;
+            $orderStatus = OrderStatus::find($form->order_status_id)->status;
+
+            $this->mailService->sendEmail($userId, $orderStatus);
+        });
+
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableDelete();
+        });
 
         return $form;
     }

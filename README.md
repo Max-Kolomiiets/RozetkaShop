@@ -1,5 +1,7 @@
 ## To run project use next commands:
 
+- composer install or composer update
+
 - php artisan migrate:fresh --seed
 - php artisan admin:generate-menu
 - php artisan db:seed --class=AdminTablesSeeder

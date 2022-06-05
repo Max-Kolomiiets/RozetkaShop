@@ -59,3 +59,5 @@ Route::post('make-order','CartController@makeOrder');
 // upload json for products
 
 Route::post('/upload-products', 'UploadController@uploadProductsJson')->name('upload.products');
+
+Route::post('/upload-images', 'UploadController@uploadImages')->name('upload.images');

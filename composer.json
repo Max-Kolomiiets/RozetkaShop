@@ -9,6 +9,7 @@
         "encore/laravel-admin": "1.*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "laravel-admin-ext/helpers": "^2.0",
         "laravel/framework": "^8.75",
         "laravel/jetstream": "^2.8",
         "laravel/sanctum": "^2.11",

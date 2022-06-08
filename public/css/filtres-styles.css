@@ -1,0 +1,66 @@
+.filtres {
+    width: 10%
+}
+
+.nonemssage{
+    justify-self: right
+}
+
+.cart-btn{
+    width: 45px;
+    height: 45px;
+    background: url('../icons/cart-add.png') no-repeat 50% 50%;
+    background-size: auto 55%;
+}
+
+.bottom-row{
+    position: absolute;
+    bottom: 0%;
+    left: 0%;
+    display: inline-flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.price-text-filltres{
+    margin: auto 0%;
+    font-size: 18px;
+}
+
+.product-filltres{
+    max-width: 210px;
+    max-height: 300px;
+}
+
+#priceSection input{
+    font-family: 'Exo 2';
+    font-size: 14px;
+    width: 40%;
+}
+
+#main-content-filtring{
+    margin-left: 1%;
+}
+
+.accordion{
+    --bs-accordion-color: #252525;
+    --bs-accordion-bg: #fff;
+    --bs-accordion-transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out,border-radius 0.15s ease;
+    --bs-accordion-border-color: #BCBCBC;
+    --bs-accordion-border-width: 1px;
+    --bs-accordion-border-radius: none;
+    --bs-accordion-inner-border-radius: none;
+    --bs-accordion-btn-padding-x: 1.25rem;
+    --bs-accordion-btn-padding-y: 1rem;
+    --bs-accordion-btn-color: var(--bs-body-color);
+    --bs-accordion-btn-bg: var(--bs-accordion-bg);
+    --bs-accordion-btn-icon-transform: rotate(-180deg);
+    --bs-accordion-btn-icon-transition: transform 0.2s ease-in-out;
+    --bs-accordion-btn-active-icon: var(--bs-accordion-btn-icon);
+    --bs-accordion-btn-focus-border-color: #F6F6F6;
+    --bs-accordion-btn-focus-box-shadow: none;
+    --bs-accordion-body-padding-x: 1.25rem;
+    --bs-accordion-body-padding-y: 1rem;
+    --bs-accordion-active-color: #FFA000;
+    --bs-accordion-active-bg: #F6F6F6;
+}

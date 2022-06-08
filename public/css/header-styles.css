@@ -1,0 +1,174 @@
+#profile-icon{
+    width: 32px;
+    height: 32px;
+}
+#cart-icon{
+    width: 32px;
+    height: 32px;
+}
+
+.header-background{
+    background-color: #252525;
+    position: fixed;  
+    top: 0;  
+    z-index: 100;  
+    width: 100%; 
+}
+
+.search-button{
+    border: none;
+    border-radius: 0;
+
+    height: 100%;
+    padding: .375rem .75rem;
+
+    background-color: #51A468;
+    color: white;
+
+    font-family: 'Exo 2';
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 9%;
+
+    text-align: center;
+    transition-property: background-color;
+    transition-duration: 0.3s;
+}
+.search-button:hover{ 
+    background-color: #9AC4A6;
+    /* background-color: rgba( 81, 164, 104, 0.5); */
+}
+.search-button:focus {
+    border: none;
+    outline:none;
+}
+.search-button::-webkit-input-placeholder {
+    border: none;
+    outline:none;
+}
+
+.search-input{
+    border: none;
+    border-radius: 0;
+
+    /* height: calc(1.5em + .75rem + 2px); */
+    height: 100%;
+    width: 100%;
+    padding: 0% 0% 0% 6%;
+    color: white;
+
+    font-family: 'Exo 2';
+    font-size: 18px;
+    font-weight: 300;
+
+    background: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.2939 12.5786H13.3905L13.0703 12.2699C14.191 10.9663 14.8656 9.27387 14.8656 7.43282C14.8656 3.32762 11.538 0 7.43282 0C3.32762 0 0 3.32762 0 7.43282C0 11.538 3.32762 14.8656 7.43282 14.8656C9.27387 14.8656 10.9663 14.191 12.2699 13.0703L12.5786 13.3905V14.2939L18.2962 20L20 18.2962L14.2939 12.5786V12.5786ZM7.43282 12.5786C4.58548 12.5786 2.28702 10.2802 2.28702 7.43282C2.28702 4.58548 4.58548 2.28702 7.43282 2.28702C10.2802 2.28702 12.5786 4.58548 12.5786 7.43282C12.5786 10.2802 10.2802 12.5786 7.43282 12.5786Z" fill="white"/></svg>') no-repeat 2% 50% #313131;
+    background-size: auto 50%;
+    
+}
+.search-input:focus {
+    border: none;
+    outline:none;
+}
+.search-input::-webkit-input-placeholder { 
+    color: white; 
+}
+.search-input:-webkit-autofill  {
+    background: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.2939 12.5786H13.3905L13.0703 12.2699C14.191 10.9663 14.8656 9.27387 14.8656 7.43282C14.8656 3.32762 11.538 0 7.43282 0C3.32762 0 0 3.32762 0 7.43282C0 11.538 3.32762 14.8656 7.43282 14.8656C9.27387 14.8656 10.9663 14.191 12.2699 13.0703L12.5786 13.3905V14.2939L18.2962 20L20 18.2962L14.2939 12.5786V12.5786ZM7.43282 12.5786C4.58548 12.5786 2.28702 10.2802 2.28702 7.43282C2.28702 4.58548 4.58548 2.28702 7.43282 2.28702C10.2802 2.28702 12.5786 4.58548 12.5786 7.43282C12.5786 10.2802 10.2802 12.5786 7.43282 12.5786Z" fill="white"/></svg>') no-repeat 2% 50% #313131;
+    background-size: auto 50%;
+}
+
+#logo{
+    width: 100%;
+    padding: 0% 10%;
+    justify-content: space-around;
+}
+#logo h4{
+    color: white;
+    font-family: 'Exo 2';
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 30px;
+    letter-spacing: 0.09em;
+}
+
+
+#header-layout{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+}
+
+#header-layout div{
+    display: flex;
+    align-items: center;
+}
+
+#header-layout a{
+    text-decoration: none;
+}
+
+#header-layout img{
+    width: 100%;
+    height: 100%;   
+}
+
+#layout-logo{
+    flex-grow: 2;
+}
+#layout-categories{
+    flex-grow: 1;
+}
+#layout-search{
+    flex-grow: 10;
+}
+#layout-actions{
+    flex-grow: 2;
+}
+
+#search{
+    width: 100%;
+    height: 75%;
+}
+
+#actions{
+    width: 100%;
+    height: 75%;
+    justify-content: space-evenly;
+}
+#actions a{
+    display: block;
+    text-align: center;
+    padding: 5%;
+    border-radius: 5%;
+    transition-property: background-color;
+    transition-duration: 0.3s;
+}
+#actions a:hover{
+    background-color: #313131;
+}
+
+#categories{
+    display: block;
+    width: 80%;
+    height: 75%;
+    padding: .375rem .75rem;
+
+    background-color: #313131;
+    color: white;
+
+    font-family: 'Exo 2';
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.09em;
+    text-align: center;
+
+    transition-property: background-color;
+    transition-duration: 0.3s;
+}
+#categories:hover{
+    background-color: #BCBCBC;
+}

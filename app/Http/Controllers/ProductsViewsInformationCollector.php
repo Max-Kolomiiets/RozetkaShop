@@ -57,6 +57,7 @@ class ProductsViewsInformationCollector
 
         return $min_max_prices;
     }
+
     private function getVendorsData($products, $filters=null)
     {
         $vendors_list = [];
@@ -75,6 +76,7 @@ class ProductsViewsInformationCollector
         }
         return $vendors_list;
     }
+
     private function getCharacteristicsData($products, $filters=null)
     {
         $characteristics_list = (object)[];
@@ -83,18 +85,18 @@ class ProductsViewsInformationCollector
             $products_characteristics = Characteristic::where('product_id', $product->id)->get();
             foreach ($products_characteristics as $characteristic) {
                 $attribute = Attribute::find($characteristic->attribute_id);
-                $key = $attribute->name;
-                if(!property_exists($characteristics_list, $attribute->name)){                    
-                        
-                        $characteristics_list->$key = [];
+                $key = $attribute->id;
+                if(!property_exists($characteristics_list, $attribute->id)){                                
+                    $characteristics_list->$key = [];
                 }
-                if(!in_array($characteristic->value, $unique_control_array))
+                if(!in_array($characteristic->alias, $unique_control_array))
                 {
-                    array_push($unique_control_array, $characteristic->value);
+                    array_push($unique_control_array, $characteristic->alias);
                     array_push($characteristics_list->$key, (object)[
-                        'alias'=> $characteristic->value,
-                        'name'=>$characteristic->value,
-                        'state'=>$this->checkCharacteristicInFilters($characteristic->value, $attribute->name, $filters)
+                        'id'=> $characteristic->id,
+                        'alias'=> $characteristic->alias,
+                        'name'=> $characteristic->value,
+                        'state'=>$this->checkCharacteristicInFilters($characteristic->alias, $attribute->alias, $filters)
                     ]);
                 }
 
@@ -104,7 +106,7 @@ class ProductsViewsInformationCollector
     }
 
     //tools
-    private function checkCharacteristicInFilters($characteristic_alias, $attribut_name, $filters=null)
+    private function checkCharacteristicInFilters($characteristic_alias, $attribut_alias, $filters=null)
     {
         if($filters==null)
         {
@@ -114,11 +116,11 @@ class ProductsViewsInformationCollector
         {
             return false;
         }
-        if(!property_exists($filters->attributes, $attribut_name))
+        if(!property_exists($filters->attributes, $attribut_alias))
         {
             return false;
         }
-        if(in_array($characteristic_alias, $filters->attributes->$attribut_name))
+        if(in_array($characteristic_alias, $filters->attributes->$attribut_alias))
         {
             return true;
         }
@@ -153,11 +155,11 @@ class ProductsViewsInformationCollector
     public function ConvertProductToProductData(Product $product)
     {
         return (object)[
-            'id'=>$product->id,
-            'name'=> $product->name,
-            'vendor_id'=>$product->vendor_id,
-            'category_id'=>$product->category_id,
-            'image_url'=> Image::firstWhere("product_id", $product->id)->url,
+            'id' => $product->id,
+            'name' => $product->name,
+            'vendor_id' => $product->vendor_id,
+            'category_id' => $product->category_id,
+            'image_url' => Image::firstWhere("product_id", $product->id)->url,
             'price' => Price::firstWhere("product_id", $product->id)->price / 100.0,
             'description' => Description::firstWhere("product_id", $product->id)->description
         ];

@@ -108,7 +108,7 @@ function changeQuantity() {
 
                 setTimeout(() => {
                     window.location.reload();
-                }, 2000);
+                }, 500);
             }
         });
     });

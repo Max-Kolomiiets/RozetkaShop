@@ -44,9 +44,9 @@ class ProductsController extends Controller
     {
         $characteristics = Characteristic::where('product_id', $product_id)->get();
         foreach ($characteristics as $characteristic) {
-            $attribute_name = Attribute::find($characteristic->attribute_id)->name;
-            if(property_exists($attributes, $attribute_name) &&
-                in_array($characteristic->value, $attributes->$attribute_name))
+            $attribute_alias = Attribute::find($characteristic->attribute_id)->alias;
+            if(property_exists($attributes, $attribute_alias) &&
+                in_array($characteristic->alias, $attributes->$attribute_alias))
             {
                 return true;
             }
@@ -77,16 +77,13 @@ class ProductsController extends Controller
         return $filtered_products;
     }
 
-    private function convertStringListToListsArray($keysvalues_in_string)
+    private function sortValuesIntoListsByAttributes($values)
     {
         $keyvalues = (object)[];
-        $keys = [];
-        foreach ($keysvalues_in_string as $kvstring) {
-            $keyvalue = explode( "#", $kvstring);
+        foreach ($values as $key=>$value) {
+            $keyvalue = explode( "-", $key);
             $key = $keyvalue[0];
-            $value = $keyvalue[1];
-            if(!in_array($key, $keys)){
-                array_push($keys, $key);
+            if(!property_exists($keyvalues, $key)){
                 $keyvalues ->$key = [];
             }
             array_push($keyvalues ->$key, $value);
@@ -94,22 +91,11 @@ class ProductsController extends Controller
         return $keyvalues;
     }
 
-    private function tempBugFixingMethod($attributs_array)
-    {
-        $new_array = (object)[];
-        foreach ($attributs_array as $key=>$value) {
-            $new_key = str_replace('_', ' ', $key);
-            $new_velue = str_replace('_',' ', $value);
-            $new_array->$new_key = $new_velue;
-        }
-        return $new_array;
-    }
-
     public function show($id)
     {
         $product_id = $id;
         $product = Product::find($product_id);
-        $images = Image::Where("product_id", $product_id)->limit(5)->get()->toArray();
+        $images = Image::Where("product_id", $product_id)->limit(8)->get()->toArray();
         $image = (object)array_shift($images);
         $price = Price::firstWhere("product_id", $product_id)->price / 100.0;
         $availabulity = Availability::firstWhere("product_id", $product_id);
@@ -167,20 +153,16 @@ class ProductsController extends Controller
         $request_data = request()->all();
 
         array_shift($request_data);
-
         $title = array_shift($request_data);
         $price_min = array_shift($request_data);
         $price_max = array_shift($request_data);
 
-        $changes = array_keys($request_data);
-
-        $mask = $this->convertStringListToListsArray($changes);
-
+        $sortedList = $this->sortValuesIntoListsByAttributes($request_data);
         $filters = (object)[];
-        if(property_exists($mask, 'vendor')){
-            $vendor = $mask->vendor;
+        if(property_exists($sortedList, 'vendor')){
+            $vendor = $sortedList->vendor;
             $filters->vendors = $vendor;
-            $mask_array = (array)$mask;
+            $mask_array = (array)$sortedList;
             if(count($mask_array) > 1)
             {
                 array_shift($mask_array);
@@ -188,19 +170,13 @@ class ProductsController extends Controller
             }
         }
         else {
-            $filters->attributes = $mask;
-        }
-
-        if(property_exists($filters, 'attributes'))
-        {
-            $filters->attributes = $this->tempBugFixingMethod($filters->attributes);
+            $filters->attributes = $sortedList;
         }
 
         $filters->prices = (object)[
             'min'=>$price_min,
             'max'=>$price_max
         ];
-
         return $this->search($title, $filters);
     }
 }

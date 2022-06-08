@@ -17,6 +17,7 @@ use App\Models\Vendor;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Descriptor\Descriptor;
 
 class ProductsSeeder extends Seeder
@@ -92,6 +93,7 @@ class ProductsSeeder extends Seeder
 
     public function run()
     {
+        $this->fakeSeed();
         $json_data = File::get("database\seeders\products.json");
         $products = json_decode($json_data);
         foreach ($products as $product) {
@@ -134,7 +136,8 @@ class ProductsSeeder extends Seeder
                 $characteristic_data = [
                     'product_id'=>$product_id,
                     'attribute_id'=> $this->getAttribute($attribute->name),
-                    'value'=>$attribute->value
+                    'value'=>$attribute->value,
+                    'alias'=>Str::slug(strtolower($attribute->value), "_")
                 ];
                 Characteristic::factory()->create($characteristic_data);
             }

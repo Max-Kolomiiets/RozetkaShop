@@ -1,299 +1,153 @@
 @extends('layouts.main')
 @section('main_content')
-<style>
-    .preview {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-        flex-direction: column; 
-    }
-    @media screen and (max-width: 996px) {
-        .preview { margin-bottom: 20px; } 
-    }
-
-    .preview-pic {
-        -webkit-box-flex: 1;
-        -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-        flex-grow: 1; 
-    }
-
-    .preview-thumbnail.nav-tabs {
-        border: none;
-        margin-top: 15px; 
-    }
-    .preview-thumbnail.nav-tabs li {
-        width: 18%;
-        margin-right: 2.5%; 
-    }
-    .preview-thumbnail.nav-tabs li img {
-        max-width: 100%;
-        display: block; 
-    }
-    .preview-thumbnail.nav-tabs li a {
-        padding: 0;
-        margin: 0; 
-    }
-    .preview-thumbnail.nav-tabs li:last-of-type {
-        margin-right: 0; 
-    }
-
-    .tab-content {
-        overflow: hidden; 
-    }
-    .tab-content img {
-        width: 100%;
-        -webkit-animation-name: opacity;
-                animation-name: opacity;
-        -webkit-animation-duration: .3s;
-                animation-duration: .3s; 
-    }
-
-    .card {
-        margin-top: 50px;
-        background: #eee;
-        padding: 3em;
-        line-height: 1.5em; 
-    }
-
-    @media screen and (min-width: 997px) {
-        .wrapper {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex; } 
-    }
-
-    .details {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-        flex-direction: column; 
-    }
-
-    .colors {
-        -webkit-box-flex: 1;
-        -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-        flex-grow: 1; 
-    }
-
-    .product-title, .price, .sizes, .colors {
-        text-transform: UPPERCASE;
-        font-weight: bold; 
-    }
-
-    .checked, .price span {
-        color: #ff9f1a; 
-    }
-
-    .product-title, .rating, .product-description, .price, .vote, .sizes {
-        margin-bottom: 15px; 
-    }
-
-    .product-title {
-        margin-top: 0; 
-    }
-
-    .size {
-        margin-right: 10px; 
-    }
-    .size:first-of-type {
-        margin-left: 40px; 
-    }
-
-    .color {
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 10px;
-        height: 2em;
-        width: 2em;
-        border-radius: 2px; 
-    }
-    .color:first-of-type {
-        margin-left: 20px; 
-    }
-
-    .add-to-cart, .like {
-    background: #ff9f1a;
-    padding: 1.2em 1.5em;
-    border: none;
-    text-transform: UPPERCASE;
-    font-weight: bold;
-    color: #fff;
-    -webkit-transition: background .3s ease;
-            transition: background .3s ease; }
-    .add-to-cart:hover, .like:hover {
-        background: #b36800;
-        color: #fff; }
-
-    .not-available {
-    text-align: center;
-    line-height: 2em; }
-    .not-available:before {
-        font-family: fontawesome;
-        content: "\f00d";
-        color: #fff; }
-
-    .orange {
-    background: #ff9f1a; }
-
-    .green {
-    background: #85ad00; }
-
-    .blue {
-    background: #0076ad; }
-
-    .tooltip-inner {
-    padding: 1.3em; }
-
-    @-webkit-keyframes opacity {
-    0% {
-        opacity: 0;
-        -webkit-transform: scale(3);
-                transform: scale(3); }
-    100% {
-        opacity: 1;
-        -webkit-transform: scale(1);
-                transform: scale(1); } }
-
-    @keyframes opacity {
-    0% {
-        opacity: 0;
-        -webkit-transform: scale(3);
-                transform: scale(3); }
-    100% {
-        opacity: 1;
-        -webkit-transform: scale(1);
-                transform: scale(1); } }
-
-</style>
-<div>
-    <div >
-
-        <div class="card">
-			<div class="container-fliud">
-				<div class="wrapper row">
-					<div class="preview col-md-6">
-                        <?php
-                            $imagePath = $product_info->main_image->url;
-                            if (strpos($imagePath, "images") !== false) {
-                                $imagePath = url('storage/' . $imagePath);
-                            }
-                        ?>
-						
-                        <div class="images" >
-                            <div class="preview-pic tab-content">
-                                <div class="tab-pane active" id="pic-{{$product_info->main_image->id}}">
-                                    <img src="{{$imagePath}}" />
-                                </div>
-                             
-                                @foreach($product_info->images as $image)
-                                    <?php
-                                        $subImagePath = $image["url"];
-                                        if (strpos($subImagePath, "images") !== false) {
-                                            $subImagePath = url('storage/' . $subImagePath);
-                                        }
-                                    ?>
-                                    <div class="tab-pane" id="pic-{{$image["id"]}}">
-                                        <img src="{{$subImagePath}}" />
-                                    </div>
-                                @endforeach
+<div class="product-card">
+    <h3 class="product-title">{{$product_info->name}}</h3>
+    <div class="products-info">
+        <div class="left">
+            <div class="preview">
+                <?php
+                    $imagePath = $product_info->main_image->url;
+                    if (strpos($imagePath, "images") !== false) {
+                        $imagePath = url('storage/' . $imagePath);
+                    }
+                ?>
+                
+                <div class="images" >
+                    <!-- Carousel wrapper -->
+                    <div id="carouselIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <!-- Slides -->
+                    <div class="carousel-inner mb-5">
+                        @foreach($product_info->images as $image)
+                            <?php
+                                $subImagePath = $image["url"];
+                                if (strpos($subImagePath, "images") !== false) {
+                                    $subImagePath = url('storage/' . $subImagePath);
+                                }
+                            ?>
+                            
+                            @if($loop->first)
     
+                            <div class="carousel-item active">
+                                <img src="{{$subImagePath}}" class="d-block"/>
                             </div>
     
-                            <ul class="preview-thumbnail nav nav-tabs">
-                                <li class="active">
-                                    <a data-target="#pic-{{$product_info->main_image->id}}" data-toggle="tab">
-                                        <img src="{{$subImagePath}}" />
-                                    </a>
-                                </li>
-                                @foreach($product_info->images as $image)
-                                    <li>
-                                        <?php
-                                            $sub2ImagePath = $image["url"];
-                                            if (strpos($sub2ImagePath, "images") !== false) {
-                                                $sub2ImagePath = url('storage/' . $sub2ImagePath);
-                                            }
-                                        ?>
-                                        <a data-target="#pic-{{$image["id"]}}" data-toggle="tab">
-                                            <img src="{{$sub2ImagePath}}" />
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-
-						<div class="description">
-                            <h3>Опис</h3>
-                            <p class="product-description">
-                                {{$product_info->description}}
-                            </p>
-                        </div>
-
-                        <div class="characteristic">
-                            <h3>Характеристики</h3>
-                            <div>
-                                <table>
-                                    @foreach($product_info->characteristics as $characteristic)
-                                        <tr>
-                                            <td>{{$characteristic->name}}</td>
-                                            <td>{{$characteristic->value}}</td>
-                                        </tr>
-                                    @endforeach
-                                </table>
+                            @else
+    
+                            <div class="carousel-item">
+                                <img src="{{$subImagePath}}" class="d-block"/>
                             </div>
-                        </div>  
-                        
-					</div>
-					<div class="details col-md-6">
-						<h3 class="product-title">{{$product_info->name}}</h3>
-						<div class="rating">
-							<div class="stars">
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star checked"></span>
-								<span class="fa fa-star"></span>
-								<span class="fa fa-star"></span>
-							</div>
-							{{-- <span class="review-no">41 reviews</span> --}}
-						</div>
+    
+                            @endif
+                                
+                        @endforeach
+                    </div>
+                    <!-- Slides -->
+    
+                    <!-- Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    <!-- Controls -->
+    
+                    <!-- Thumbnails -->
+                    <div class="carousel-indicators" style="margin-bottom: -100px;">                                
+                        @foreach($product_info->images as $image)
+                            <li>
+                                <?php
+                                    $sub2ImagePath = $image["url"];
+                                    if (strpos($sub2ImagePath, "images") !== false) {
+                                        $sub2ImagePath = url('storage/' . $sub2ImagePath);
+                                    }
+                                ?>
+    
+                                @if($loop->first)
+    
+                                <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="{{$loop->index}}" class="active"
+                                aria-current="true" aria-label="Slide {{$loop->index + 1}}" style="width: 100px;">
+                                    <img class="d-block img-fluid" src="{{$sub2ImagePath}}"/>
+                                </button>
+    
+                                @else
+    
+                                <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="{{$loop->index}}"
+                                aria-label="Slide {{$loop->index + 1}}" style="width: 100px;">
+                                    <img class="d-block img-fluid" src="{{$sub2ImagePath}}"/>
+                                </button>
+                                
+                                @endif
+    
+                            </li>
+                        @endforeach
+                    </div>
+                    <!-- Thumbnails -->
+                    </div>
+                    <!-- Carousel wrapper -->
+                </div> 
+            </div>
+        </div>
+        <div class="right">
+            <div class="details">
+                <div class="bay-section">
+                    <h4 class="price"><span>{{$product_info->price}} ₴</span></h4>
+                    <div class="action feature">
+                        <button class="bay-btn add-to-cart-btn" type="button">Купити</button>
+                        <input type="hidden" class="product_id" value="{{ $product_info->id }}"> <!-- Your Product ID -->
+                        <input type="hidden" class="qty-input" value="1">
+                        {{-- <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button> --}}
+                    </div>
+                </div>
 
-						<h4 class="price">current price: <span>{{$product_info->price}} ₴</span></h4>
-						{{-- <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-						<h5 class="sizes">sizes:
-							<span class="size" data-toggle="tooltip" title="small">s</span>
-							<span class="size" data-toggle="tooltip" title="medium">m</span>
-							<span class="size" data-toggle="tooltip" title="large">l</span>
-							<span class="size" data-toggle="tooltip" title="xtra large">xl</span>
-						</h5>
-						<h5 class="colors">colors:
-							<span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
-							<span class="color green"></span>
-							<span class="color blue"></span>
-						</h5> --}}
-						<div class="action feature">
-							<button class="add-to-cart btn btn-default add-to-cart-btn" type="button">add to cart</button>
-                            <input type="hidden" class="product_id" value="{{ $product_info->id }}"> <!-- Your Product ID -->
-                            <input type="hidden" class="qty-input" value="1">
-							{{-- <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button> --}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                <div class="description">
+                    <h3>Опис</h3>
+                    <p class="product-description">
+                        {{$product_info->description}}
+                    </p>
+                </div>
+    
+                <div class="characteristic">
+                    <h3>Характеристики</h3>
+                    <div>
+                        <table>
+                            @foreach($product_info->characteristics as $characteristic)
+                                <tr>
+                                    <td class="characteristic-name">{{$characteristic->name}}</td>
+                                    <td>{{$characteristic->value}}</td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                </div> 
+                {{-- <div class="rating">
+                    <div class="stars">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    <span class="review-no">41 reviews</span>
+                </div> --}}
+                {{-- <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+                <h5 class="sizes">sizes:
+                    <span class="size" data-toggle="tooltip" title="small">s</span>
+                    <span class="size" data-toggle="tooltip" title="medium">m</span>
+                    <span class="size" data-toggle="tooltip" title="large">l</span>
+                    <span class="size" data-toggle="tooltip" title="xtra large">xl</span>
+                </h5>
+                <h5 class="colors">colors:
+                    <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+                    <span class="color green"></span>
+                    <span class="color blue"></span>
+                </h5> --}}
+            </div>
+        </div>
     </div>
-</div>
-
 </div>
 @endsection

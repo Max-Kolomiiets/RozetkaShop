@@ -1,15 +1,18 @@
 @extends('layouts.main')
 @section('main_content')
-    <div class="row justify-content-md-center">
-        <div class="g-4 py-5 col">
-            <ul class="">
+    <div class="row" id="main-content">
+        <div class="col">
+            <ul id="categories-list">
                 @foreach ($categories as $category)
-                    <li class="category_li"><a class="text-dark"
-                            href="{{ route('category.show', $category->id) }}">{{ $category->name }}</a></li>
+                    <li class="category_li">
+                        <a
+                            href="{{ route('category.show', $category->id) }}">{{ $category->name }}
+                        </a>
+                    </li>
                 @endforeach
             </ul>
         </div>
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 col-10">
+        <div class="row row-cols-1 row-cols-lg-3 col-10" id="products">
             @foreach ($products as $product)
                 <?php
                     $imagePath = $product->images()->get()[0]->url;
@@ -17,28 +20,28 @@
                         $imagePath = url('storage/' . $imagePath);
                     }
                 ?>
-                <div class="border border-info product">
-                    <div class="feature col">
-                        <div
-                            class="feature-icon d-inline-flex align-items-center justify-content-center bg-primary bg-gradient text-white fs-2 mb-3">
-                            <a href="{{ route('product.show', $product->id) }}"
-                                class="icon-link d-inline-flex align-items-center">
-                                <img class="bi" width="100em" height="100em"
-                                    src="{{ $imagePath }}" alt="">
-                            </a>
-                        </div>
-                        <br>
+                <div class="product">
+                    <div
+                        class="feature-icon d-inline-flex align-items-center justify-content-center bg-primary bg-gradient text-white fs-2 mb-3">
+                        <a href="{{ route('product.show', $product->id) }}"
+                            class="icon-link d-inline-flex align-items-center">
+                            <img class="bi" width="100em" height="100em"
+                                src="{{ $imagePath }}" alt="">
+                        </a>
+                    </div>
+                    <div>
                         <a href="{{ route('product.show', $product->id) }}"
                             class="icon-link d-inline-flex align-items-center product-name">
-                            <h2>{{ $product->name }}</h2>
+                            <p>{{ $product->name }}</p>
                         </a>
-                        <br>
-                        <p>{{ $product->price()->get()[0]->price / 100 }} ₴</p>
+                    </div>
+                    <div>
+                        <h3 class="product-price price-text">{{ $product->price()->get()[0]->price / 100 }} ₴</h3>
                     </div>
                 </div>
             @endforeach
         </div>
-        <div class="text-center">
+        <div class="text-center" id="pages">
             {{ $products->links() }}
         </div>
     </div>

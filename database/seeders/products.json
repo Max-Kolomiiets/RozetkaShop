@@ -58,7 +58,7 @@
         "country": "Китай",
         "description": "Экран 17.3\" TN+film (1600x900) HD+, матовый / Intel Core i5-1135G7 (4.2 ГГц) / RAM 8 ГБ / SSD 256 ГБ / Intel Iris Xe / без ОД / Wi-Fi / Bluetooth / веб-камера / без ОС / 2.2 кг / серый",
         "images_directory":"lenovo_v17_g2_itl_82NX00DERA",
-        "attributes":[
+        "attributes":[ 
             {
                 "name": "Процесор",
                 "value": "Intel Core i5"
@@ -89,7 +89,7 @@
             }
         ],
         "guaranty":{
-            "term": 0,
+            "term": 10,
             "url": ""
         }
     }

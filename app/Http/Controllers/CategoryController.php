@@ -20,7 +20,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return view('categories.index')->with('categories', Category::all());
+        $categories = Category::tree()->get()->toTree();
+        return view('categories.index')->with('categories', $categories);
     }
 
     private function filteringProductByPrice($product_id, $prices)

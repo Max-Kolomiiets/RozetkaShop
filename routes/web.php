@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,5 +60,13 @@ Route::post('/make-order','CartController@makeOrder');
 // upload json for products
 
 Route::post('/upload-products', 'UploadController@uploadProductsJson')->name('upload.products');
-
 Route::post('/upload-images', 'UploadController@uploadImagesAndJsonFile')->name('upload.images');
+
+// categories test
+Route::get('/categories', function () {
+    $categories = Category::tree()->get()->toTree();
+ 
+    return view('categories', [
+        'categories' => $categories
+    ]);
+});

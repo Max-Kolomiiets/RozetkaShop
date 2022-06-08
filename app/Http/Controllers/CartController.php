@@ -39,13 +39,15 @@ class CartController extends Controller
             return view('cart.index')
                 ->with('cart_data', $cartDto);
         }
+
         $cookie_data = stripslashes(Cookie::get('shopping_cart'));
         $cart_data = json_decode($cookie_data, true);
+
         return view('cart.index')
             ->with('cart_data', $cart_data);
     }
 
-    public function addtocart(Request $request)
+    public function addToCart(Request $request)
     {
         $prod_id = $request->input('product_id');
         $quantity = $request->input('quantity');
@@ -53,7 +55,7 @@ class CartController extends Controller
         if (Auth::check()) {
 
             if (CartProduct::where('product_id', $prod_id)->exists())
-                return response()->json(['status' => '"' . Product::find($prod_id)->name . '" Already Added to Cart', 'status2' => '2']);
+                return response()->json(['status' => '"' . Product::find($prod_id)->name . '" Already Added to Cart', 'code' => -1]);
 
             $cartProduct = CartProduct::create([
                 'user_id' => Auth::id(),
@@ -62,115 +64,111 @@ class CartController extends Controller
             ]);
 
             if ($cartProduct)
-                return response()->json(['status' => '"' . Product::find($prod_id)->name . '" Added to Cart']);
+                return response()->json(['status' => '"' . Product::find($prod_id)->name . '" Added to Cart', 'code' => 1]);
         }
 
-        if (Cookie::get('shopping_cart')) {
-            $cookie_data = stripslashes(Cookie::get('shopping_cart'));
-            $cart_data = json_decode($cookie_data, true);
-        } else {
-            $cart_data = array();
-        }
+        if (Cookie::get('shopping_cart'))
+            $cart = json_decode(stripslashes(Cookie::get('shopping_cart')), true);
+        else 
+            $cart = array();
 
-        $item_id_list = array_column($cart_data, 'item_id');
-        $prod_id_is_there = $prod_id;
+        $ids = array_column($cart, 'item_id');
 
-        if (in_array($prod_id_is_there, $item_id_list)) {
-            foreach ($cart_data as $keys => $values) {
-                if ($cart_data[$keys]["item_id"] == $prod_id) {
-                    return response()->json(['status' => '"' . $cart_data[$keys]["item_name"] . '" Already Added to Cart', 'status2' => '2']);
-                }
+        if (in_array($prod_id, $ids)) {
+            foreach ($cart as $cartItem) {
+                if ($cartItem["item_id"] == $prod_id) 
+                    return response()->json(['status' => '"' . $cartItem["item_name"] . '" Already Added to Cart', 'code' => -1]);
             }
-        } else {
-            $product = Product::find($prod_id);
-            $prod_name = $product->name;
-            $prod_image = $product->images()->first()->url;
-            $priceval = $product->price()->get()[0]->price;
+        } 
 
-            if ($product) {
-                $item_array = array(
-                    'item_id' => $prod_id,
-                    'item_name' => $prod_name,
-                    'item_quantity' => $quantity,
-                    'item_price' => $priceval,
-                    'item_image' => $prod_image
-                );
-                $cart_data[] = $item_array;
+        $product = Product::find($prod_id);
+        $prod_name = $product->name;
+        $prod_image = $product->images()->first()->url;
+        $price = $product->price()->get()[0]->price;
 
-                $item_data = json_encode($cart_data);
-                $minutes = 60;
-                Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
-                return response()->json(['status' => '"' . $prod_name . '" Added to Cart']);
-            }
+        if ($product) {
+            $newCartItem = array(
+                'item_id' => $prod_id,
+                'item_name' => $prod_name,
+                'item_quantity' => $quantity,
+                'item_price' => $price,
+                'item_image' => $prod_image
+            );
+            $cart[] = $newCartItem;
+            Cookie::queue(Cookie::make('shopping_cart', json_encode($cart), 1440));
+
+            return response()->json(['status' => '"' . $prod_name . '" Added to Cart', 'code' => 1]);
         }
+
+        return response()->json(['status' => 'Something sent wrong', 'code' => -1]);
     }
 
-    public function cartloadbyajax()
+    public function getCartTotal()
     {
+        $response = array();
+
         if (Auth::check()) {
             $user = User::where('id', Auth::id())->first();
-            $totalcart = $user->cartProducts()->get()->count();
+            $cartTotal = $user->cartProducts()->get()->count();
 
-            echo json_encode(array('totalcart' => $totalcart));
-            die;
-            return;
+            $response['cartTotal'] = $cartTotal;
+            return response()->json($response);
         }
 
         if (Cookie::get('shopping_cart')) {
             $cookie_data = stripslashes(Cookie::get('shopping_cart'));
             $cart_data = json_decode($cookie_data, true);
-            $totalcart = count($cart_data);
+            $cartTotal = count($cart_data);
 
-            echo json_encode(array('totalcart' => $totalcart));
-            die;
-            return;
-        } else {
-            $totalcart = "0";
-            echo json_encode(array('totalcart' => $totalcart));
-            die;
-            return;
-        }
+            $response['cartTotal'] = $cartTotal;
+        } else
+            $response['cartTotal'] = 0;
+
+        return response()->json($response);
     }
 
-    public function updatetocart(Request $request)
+    public function changeCartQuantity(Request $request)
     {
         $prod_id = $request->input('product_id');
         $quantity = $request->input('quantity');
 
         if (Auth::check()) {
             $cartProduct = CartProduct::find($prod_id);
-            $product = Product::find($cartProduct->product()->get()[0]->id);
+            if ($cartProduct == null) 
+                return response()->json(['status' => 'Something went wrong!',  'code' => -1]);
 
-            if ($cartProduct && $product) {
+            $product = Product::find($cartProduct->product()->first()->id);
+
+            if ($product) {
                 $cartProduct->qty = $quantity;
                 $cartProduct->save();
 
-                return response()->json(['status' => '"' . $product->name . '" Quantity Updated']);
+                return response()->json(['status' => '"' . $product->name . '" Quantity Updated',  'code' => 1]);
             }
         }
 
         if (Cookie::get('shopping_cart')) {
-            $cookie_data = stripslashes(Cookie::get('shopping_cart'));
-            $cart_data = json_decode($cookie_data, true);
+            $cart = json_decode(stripslashes(Cookie::get('shopping_cart')), true);
+            $ids = array_column($cart, 'item_id');
 
-            $item_id_list = array_column($cart_data, 'item_id');
-            $prod_id_is_there = $prod_id;
+            if (in_array($prod_id, $ids)) {
 
-            if (in_array($prod_id_is_there, $item_id_list)) {
-                foreach ($cart_data as $keys => $values) {
-                    if ($cart_data[$keys]["item_id"] == $prod_id) {
-                        $cart_data[$keys]["item_quantity"] =  $quantity;
-                        $item_data = json_encode($cart_data);
-                        $minutes = 60;
-                        Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
-                        return response()->json(['status' => '"' . $cart_data[$keys]["item_name"] . '" Quantity Updated']);
+                foreach ($cart as $index => $cartItem) {
+
+                    if ($cart[$index]["item_id"] == $prod_id) {
+
+                        $cart[$index]["item_quantity"] =  $quantity;
+                        Cookie::queue(Cookie::make('shopping_cart', json_encode($cart), 1440));
+
+                        return response()->json(['status' => '"' . $cart[$index]["item_name"] . '" Quantity Updated',  'code' => 1]);
                     }
                 }
             }
         }
+        return response()->json(['status' => 'Something went wrong',  'code' => -1]);
     }
 
-    public function deletefromcart(Request $request)
+    public function removeCartItem(Request $request)
     {
         $prod_id = $request->input('product_id');
 
@@ -181,26 +179,23 @@ class CartController extends Controller
             return response()->json(['status' => 'Something went wrong! We are so sorry)']);
         }
 
-        $cookie_data = stripslashes(Cookie::get('shopping_cart'));
-        $cart_data = json_decode($cookie_data, true);
+        $cart = json_decode(stripslashes(Cookie::get('shopping_cart')), true);
+        $ids = array_column($cart, 'item_id');
 
-        $item_id_list = array_column($cart_data, 'item_id');
-        $prod_id_is_there = $prod_id;
+        if (in_array($prod_id, $ids)) {
+            foreach ($cart as $index => $cartItem) {
+                if ($cartItem["item_id"] == $prod_id) {
 
-        if (in_array($prod_id_is_there, $item_id_list)) {
-            foreach ($cart_data as $keys => $values) {
-                if ($cart_data[$keys]["item_id"] == $prod_id) {
-                    unset($cart_data[$keys]);
-                    $item_data = json_encode($cart_data);
-                    $minutes = 60;
-                    Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
+                    unset($cart[$index]);
+                    Cookie::queue(Cookie::make('shopping_cart', json_encode($cart), 1440));
+
                     return response()->json(['status' => 'Item Removed from Cart']);
                 }
             }
         }
     }
 
-    public function clearcart()
+    public function clearCart()
     {
         if (Auth::check()) {
             CartProduct::truncate();
@@ -244,17 +239,15 @@ class CartController extends Controller
             ->with('cart_data', $cart_data);
     }
 
-    public function makeOrder(Request $request) {
+    public function makeOrder(Request $request)
+    {
         if (Auth::check()) {
-            // create new order for user 
-            // take data from the cart!
-
             $user = User::where('id', Auth::id())->first();
             $userCart = $user->cartProducts()->get();
 
             if (is_null($userCart) || empty($userCart))
-                return;
-            
+                return response()->json(['status' => "No cart items!", 'code' => -1]);
+
             $orderNumber = Order::exists() ? Order::latest('id')->first()->id + 1 : 1;
 
             $order = new Order;
@@ -264,8 +257,7 @@ class CartController extends Controller
             $order->order_status_id = 1;
             $order->save();
 
-            foreach ($userCart as $cart) 
-            {
+            foreach ($userCart as $cart) {
                 $orderProduct = new OrderProduct;
                 $orderProduct->order_id = $order->id;
                 $orderProduct->product_id = $cart->product_id;
@@ -274,8 +266,8 @@ class CartController extends Controller
             }
 
             CartProduct::truncate();
-            return response()->json(['status' => "Thank you for your order! We'll be in touch"]);
+            return response()->json(['status' => "Thank you for your order! We'll be in touch", 'code' => 1]);
         }
-        return response()->json(['status' => 'Thank you for your order!']);
+        return response()->json(['status' => 'Thank you for your order!', 'code' => 1]);
     }
 }

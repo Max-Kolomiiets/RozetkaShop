@@ -34,14 +34,14 @@ Route::post('/products/search/filtering', "ProductsController@filtering")->name(
 Route::get('/products/{product}', "ProductsController@show")->name("product.show");
 
 // for cookies cart
-Route::get('/load-cart-data','CartController@cartloadbyajax');
+Route::get('/cart-total','CartController@getCartTotal');
 Route::get('/cart','CartController@index')->name('cart.index');
 
-Route::post('/add-to-cart','CartController@addtocart');
-Route::post('update-to-cart','CartController@updatetocart');
+Route::post('/add-to-cart','CartController@addToCart');
+Route::post('update-cart','CartController@changeCartQuantity');
 
-Route::delete('delete-from-cart','CartController@deletefromcart');
-Route::get('clear-cart','CartController@clearcart');
+Route::delete('delete-from-cart','CartController@removeCartItem');
+Route::get('clear-cart','CartController@clearCart');
 
 // for user cabinet
 function userCabinetRoute() {
@@ -54,10 +54,10 @@ function userCabinetRoute() {
 Route::get('/categories', "CategoryController@index")->name("category.index");
 
 Route::get('/checkout', 'CartController@checkout')->name('checkout');
-Route::post('make-order','CartController@makeOrder');
+Route::post('/make-order','CartController@makeOrder');
 
 // upload json for products
 
 Route::post('/upload-products', 'UploadController@uploadProductsJson')->name('upload.products');
 
-Route::post('/upload-images', 'UploadController@uploadImages')->name('upload.images');
+Route::post('/upload-images', 'UploadController@uploadImagesAndJsonFile')->name('upload.images');

@@ -65,9 +65,16 @@ $(document).ready(function () {
       cache: false,
       contentType: false,
       processData: false,
-      success: (data) => {
+      success: (response) => {
+        if (response.code === -1) {
+          alertify.set('notifier', 'position', 'top-center');
+          alertify.error(response.status);
+          return;
+        }
         this.reset();
-        alert('Multiple Images has been uploaded using jQuery ajax with preview');
+
+        alertify.set('notifier', 'position', 'top-center');
+        alertify.success(response.status);
         $('.preview-image').html("")
       },
       error: function (data) {

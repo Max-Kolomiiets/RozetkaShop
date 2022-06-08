@@ -44,12 +44,21 @@ class UploadController extends Controller
         return response()->json($response);
     }
 
-    public function uploadImages(Request $request)
+    public function uploadImagesAndJsonFile(Request $request)
     {
-        $validatedData = $request->validate([
+        $response = array();
+        $validator = Validator::make($request->all(), [
             'images' => 'required',
-            'images.*' => 'mimes:jpg,png,jpeg,gif,svg'
+            'images.*' => 'mimes:jpg,png,jpeg,gif,svg',
+            'file' => 'required|file|mimetypes:application/json'
         ]);
+
+        if ($validator->fails()) {
+            $response['status'] = 'Failed! Something went wrong';
+            $response['code'] = -1;
+            return response()->json($response);
+        }
+
         if ($request->TotalImages > 0 && $request->jsonFile != null) {
 
             $folderName = Str::random(30);
@@ -58,7 +67,6 @@ class UploadController extends Controller
                 if ($request->hasFile('images' . $x)) {
                     $file = $request->file('images' . $x);
                     $path = $file->store('public/images/' . $folderName);
-                    $name = $file->getClientOriginalName();
                 }
             }
 
@@ -69,9 +77,12 @@ class UploadController extends Controller
 
             Storage::delete($path);
 
-            return response()->json(['success' => 'Multiple Image has been uploaded into db and storage directory']);
+            $response['status'] = 'Products with images have been uploaded!';
+            $response['code'] = 1;
+
+            return response()->json($response);
         }
 
-        return response()->json(["message" => "Please try again."]);
+        return response()->json($response);
     }
 }

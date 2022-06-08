@@ -29,36 +29,35 @@ class ProductsSeeder extends Seeder
     public $products_cnt = 150;
     public $images_cnt = [3, 16];
 
-    private function fakeSeed(){
+    private function fakeSeed()
+    {
         $categories = Category::all();
         $vendors = Vendor::all();
         $countires = Country::all();
-        for ($i=0; $i < $this->products_cnt; $i++) { 
+        for ($i = 0; $i < $this->products_cnt; $i++) {
             $category_id = $categories[rand(0, count($categories) - 1)]->id;
             $vendor_id = $vendors[rand(0, count($vendors) - 1)]->id;
             $countiry_id = $countires[rand(0, count($countires) - 1)]->id;
 
             $product = Product::factory()->create([
-                'vendor_id'=> $vendor_id, 
-                'category_id'=>$category_id
+                'vendor_id' => $vendor_id,
+                'category_id' => $category_id
             ]);
-            Price::factory()->create(['product_id'=>$product->id]);
-            Availability::factory()->create(['product_id'=>$product->id]);
-            Image::factory()->count(rand($this->images_cnt[0], $this->images_cnt[1]))->create(['product_id'=>$product->id]);
-            Description::factory()->create(['product_id'=>$product->id, 'country_id'=>$countiry_id]);
-            Guaranty::factory()->create(['product_id'=>$product->id, 'vendor_id'=> $vendor_id]);
+            Price::factory()->create(['product_id' => $product->id]);
+            Availability::factory()->create(['product_id' => $product->id]);
+            Image::factory()->count(rand($this->images_cnt[0], $this->images_cnt[1]))->create(['product_id' => $product->id]);
+            Description::factory()->create(['product_id' => $product->id, 'country_id' => $countiry_id]);
+            Guaranty::factory()->create(['product_id' => $product->id, 'vendor_id' => $vendor_id]);
 
             $category_attributes = CategoryAttribute::where('category_id', $category_id)->get();
             foreach ($category_attributes as $attr) {
-                if(rand(0, 6))
-                {
+                if (rand(0, 6)) {
                     Characteristic::factory()->create([
-                        'product_id'=>$product->id,
-                        'attribute_id'=>$attr->id
+                        'product_id' => $product->id,
+                        'attribute_id' => $attr->id
                     ]);
                 }
             }
-
         }
     }
 
@@ -80,7 +79,7 @@ class ProductsSeeder extends Seeder
     }
     public function getImages($folderName)
     {
-        $fullPath = "public\\images\\".$folderName;
+        $fullPath = "public\\images\\" . $folderName;
         $pathes = Storage::files($fullPath);
         $images_pathes = [];
         foreach ($pathes as $path) {
@@ -90,46 +89,46 @@ class ProductsSeeder extends Seeder
         return $images_pathes;
     }
 
-    public function run($path = 'database\seeders\products.json')
+    public function run($path = 'database\seeders\products.json', $folderName = null)
     {
-        $this->seedFromJson($path);
+        $this->seedFromJson($path, $folderName);
     }
 
-    private function seedFromJson($path) {
+    private function seedFromJson($path, $folderName = null)
+    {
 
         if (str_contains($path, 'database')) {
             $json_data = File::get($path);
-         } else {
+        } else {
             $json_data = Storage::get($path);
+        }
 
-         }
-         
         $products = json_decode($json_data);
         foreach ($products as $product) {
             $product_data = [
-                'name' =>$product->name,
-                'alias' =>$product->article,
-                'category_id'=>$this->getCategory($product->category),
-                'vendor_id'=>$this->getVendor($product->vendor),
+                'name' => $product->name,
+                'alias' => $product->article,
+                'category_id' => $this->getCategory($product->category),
+                'vendor_id' => $this->getVendor($product->vendor),
             ];
             $product_id = Product::factory()->create($product_data)->id;
             $price_data = [
-                'product_id'=>$product_id,
-                'price'=>$product->price * 100
+                'product_id' => $product_id,
+                'price' => $product->price * 100
             ];
             Price::factory()->create($price_data);
 
             $availability_data = [
-                'product_id'=>$product_id,
-                'quantity'=>$product->quantity
+                'product_id' => $product_id,
+                'quantity' => $product->quantity
             ];
             Availability::factory()->create($availability_data);
 
             $description_data = [
-                'product_id'=>$product_id,
-                'state'=>$product->state,
-                'ean'=>$product->ean,
-                'description'=>$product->description,
+                'product_id' => $product_id,
+                'state' => $product->state,
+                'ean' => $product->ean,
+                'description' => $product->description,
                 'country_id' => $this->getCountry($product->country)
             ];
             Description::factory()->create($description_data);
@@ -143,14 +142,18 @@ class ProductsSeeder extends Seeder
 
             foreach ($product->attributes as $attribute) {
                 $characteristic_data = [
-                    'product_id'=>$product_id,
-                    'attribute_id'=> $this->getAttribute($attribute->name),
-                    'value'=>$attribute->value
+                    'product_id' => $product_id,
+                    'attribute_id' => $this->getAttribute($attribute->name),
+                    'value' => $attribute->value
                 ];
                 Characteristic::factory()->create($characteristic_data);
             }
-            
-            $pathes = $this->getImages($product->images_directory);
+
+            if ($folderName != null)
+                $pathes = $this->getImages($folderName);
+            else
+                $pathes = $this->getImages($product->images_directory);
+
             foreach ($pathes as $path) {
                 $image = [
                     'product_id' => $product_id,

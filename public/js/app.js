@@ -3,9 +3,9 @@ $(document).ready(function () {
 
   $('#upload_products').on('submit', function (event) {
     event.preventDefault();
-    
+
     $.ajaxSetup({
-      headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()}
+      headers: { 'X-CSRF-TOKEN': $('input[name=_token]').val() }
     });
     $.ajax({
       url: '/upload-products',
@@ -16,7 +16,7 @@ $(document).ready(function () {
       cache: false,
       processData: false,
       success: function (response) {
-        
+
         if (response.code === -1) {
           alertify.set('notifier', 'position', 'top-center');
           alertify.error(response.status);
@@ -27,13 +27,79 @@ $(document).ready(function () {
         alertify.success('Products have been uploaded!');
         setTimeout(() => {
           window.location.href = "/admin/products";
-      }, 2000);
+        }, 2000);
       },
       error: function (error) {
         alertify.set('notifier', 'position', 'top-center');
         alertify.error('Something went wrong :)');
       }
     })
+  });
+
+
+
+
+
+
+
+  $('#multiple-image-upload-preview-ajax').submit(function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    let TotalImages = $('#images')[0].files.length; //Total Images
+    let images = $('#images')[0];
+    let jsonFile = $('#inputJsonFile').prop('files')[0];
+
+
+    for (let i = 0; i < TotalImages; i++) {
+      formData.append('images' + i, images.files[i]);
+    }
+
+    formData.append('TotalImages', TotalImages);
+    formData.append('jsonFile', jsonFile);
+
+    $.ajax({
+      type: 'POST',
+      url: "/upload-images",
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: (response) => {
+        if (response.code === -1) {
+          alertify.set('notifier', 'position', 'top-center');
+          alertify.error(response.status);
+          return;
+        }
+        this.reset();
+
+        alertify.set('notifier', 'position', 'top-center');
+        alertify.success(response.status);
+        $('.preview-image').html("")
+      },
+      error: function (data) {
+        console.log(data);
+      }
+    });
+  });
+
+  $(function () {
+    // Multiple images preview with JavaScript
+    var multiImgPreview = function (input, imgPreviewPlaceholder) {
+      if (input.files) {
+        var filesAmount = input.files.length;
+        for (i = 0; i < filesAmount; i++) {
+          var reader = new FileReader();
+          reader.onload = function (event) {
+            $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+          }
+          reader.readAsDataURL(input.files[i]);
+        }
+      }
+    };
+    $('#images').on('change', function () {
+      multiImgPreview(this, 'div.preview-image');
+    });
   });
 
 });
@@ -58,7 +124,7 @@ $(document).ready(function () {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ module_default)
           /* harmony export */
-});
+        });
         // packages/alpinejs/src/scheduler.js
         var flushPending = false;
         var flushing = false;
@@ -2962,7 +3028,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
@@ -2973,7 +3039,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/lib/axios.js");
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/adapters/xhr.js":
 /*!************************************************!*\
@@ -3174,7 +3240,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/axios.js":
 /*!*****************************************!*\
@@ -3242,7 +3308,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/cancel/Cancel.js":
 /*!*************************************************!*\
@@ -3273,7 +3339,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/cancel/CancelToken.js":
 /*!******************************************************!*\
@@ -3342,7 +3408,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/cancel/isCancel.js":
 /*!***************************************************!*\
@@ -3359,7 +3425,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/core/Axios.js":
 /*!**********************************************!*\
@@ -3519,7 +3585,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/core/InterceptorManager.js":
 /*!***********************************************************!*\
@@ -3585,7 +3651,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/core/buildFullPath.js":
 /*!******************************************************!*\
@@ -3617,7 +3683,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/core/createError.js":
 /*!****************************************************!*\
@@ -3647,7 +3713,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/core/dispatchRequest.js":
 /*!********************************************************!*\
@@ -3741,7 +3807,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/core/enhanceError.js":
 /*!*****************************************************!*\
@@ -3795,7 +3861,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/core/mergeConfig.js":
 /*!****************************************************!*\
@@ -3894,7 +3960,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/core/settle.js":
 /*!***********************************************!*\
@@ -3931,7 +3997,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/core/transformData.js":
 /*!******************************************************!*\
@@ -3965,7 +4031,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/defaults.js":
 /*!********************************************!*\
@@ -4112,7 +4178,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/bind.js":
 /*!************************************************!*\
@@ -4135,7 +4201,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/buildURL.js":
 /*!****************************************************!*\
@@ -4217,7 +4283,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/combineURLs.js":
 /*!*******************************************************!*\
@@ -4243,7 +4309,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/cookies.js":
 /*!***************************************************!*\
@@ -4308,7 +4374,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/isAbsoluteURL.js":
 /*!*********************************************************!*\
@@ -4334,7 +4400,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/isAxiosError.js":
 /*!********************************************************!*\
@@ -4357,7 +4423,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/isURLSameOrigin.js":
 /*!***********************************************************!*\
@@ -4437,7 +4503,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/normalizeHeaderName.js":
 /*!***************************************************************!*\
@@ -4461,7 +4527,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/parseHeaders.js":
 /*!********************************************************!*\
@@ -4526,7 +4592,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/spread.js":
 /*!**************************************************!*\
@@ -4565,7 +4631,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/helpers/validator.js":
 /*!*****************************************************!*\
@@ -4682,7 +4748,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/lib/utils.js":
 /*!*****************************************!*\
@@ -5043,7 +5109,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
@@ -5061,7 +5127,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 
         /***/
-}),
+      }),
 
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
@@ -5093,7 +5159,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         // });
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/lodash/lodash.js":
 /*!***************************************!*\
@@ -22306,7 +22372,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./resources/css/app.css":
 /*!*******************************!*\
@@ -22320,7 +22386,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
@@ -22515,7 +22581,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
 
         /***/
-}),
+      }),
 
 /***/ "./node_modules/axios/package.json":
 /*!*****************************************!*\
@@ -22527,10 +22593,10 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"axios@^0.21","name":"axios","escapedName":"axios","rawSpec":"^0.21","saveSpec":null,"fetchSpec":"^0.21"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_shasum":"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575","_spec":"axios@^0.21","_where":"C:\\\\php\\\\RozetkaShop","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundleDependencies":false,"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"deprecated":false,"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
 
         /***/
-})
+      })
 
     /******/
-});
+  });
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
@@ -22542,14 +22608,14 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 		if (cachedModule !== undefined) {
 /******/ 			return cachedModule.exports;
       /******/
-}
+    }
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
 /******/ 			id: moduleId,
 /******/ 			loaded: false,
 /******/ 			exports: {}
       /******/
-};
+    };
 /******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
@@ -22560,7 +22626,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
     /******/
-}
+  }
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
@@ -22576,7 +22642,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 				deferred[i] = [chunkIds, fn, priority];
 /******/ 				return;
         /******/
-}
+      }
 /******/ 			var notFulfilled = Infinity;
 /******/ 			for (var i = 0; i < deferred.length; i++) {
 /******/ 				var [chunkIds, fn, priority] = deferred[i];
@@ -22585,26 +22651,26 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
 /******/ 						chunkIds.splice(j--, 1);
             /******/
-} else {
+          } else {
 /******/ 						fulfilled = false;
 /******/ 						if (priority < notFulfilled) notFulfilled = priority;
             /******/
-}
+          }
           /******/
-}
+        }
 /******/ 				if (fulfilled) {
 /******/ 					deferred.splice(i--, 1)
 /******/ 					var r = fn();
 /******/ 					if (r !== undefined) result = r;
           /******/
-}
+        }
         /******/
-}
+      }
 /******/ 			return result;
       /******/
-};
+    };
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
@@ -22614,13 +22680,13 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 				if (__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
           /******/
-}
+        }
         /******/
-}
+      }
       /******/
-};
+    };
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
@@ -22629,20 +22695,20 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 			try {
 /******/ 				return this || new Function('return this')();
         /******/
-} catch (e) {
+      } catch (e) {
 /******/ 				if (typeof window === 'object') return window;
         /******/
-}
+      }
       /******/
-})();
+    })();
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
@@ -22651,12 +22717,12 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 			if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
         /******/
-}
+      }
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
       /******/
-};
+    };
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
@@ -22665,9 +22731,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 			if (!module.children) module.children = [];
 /******/ 			return module;
       /******/
-};
+    };
     /******/
-})();
+  })();
 /******/
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
@@ -22680,7 +22746,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0
       /******/
-};
+    };
 /******/
 /******/ 		// no chunk on demand loading
 /******/
@@ -22705,31 +22771,31 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 /******/ 					if (__webpack_require__.o(moreModules, moduleId)) {
 /******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
             /******/
-}
+          }
           /******/
-}
+        }
 /******/ 				if (runtime) var result = runtime(__webpack_require__);
         /******/
-}
+      }
 /******/ 			if (parentChunkLoadingFunction) parentChunkLoadingFunction(data);
 /******/ 			for (; i < chunkIds.length; i++) {
 /******/ 				chunkId = chunkIds[i];
 /******/ 				if (__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
 /******/ 					installedChunks[chunkId][0]();
           /******/
-}
+        }
 /******/ 				installedChunks[chunkId] = 0;
         /******/
-}
+      }
 /******/ 			return __webpack_require__.O(result);
       /******/
-}
+    }
 /******/
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
     /******/
-})();
+  })();
 /******/
 /************************************************************************/
 /******/

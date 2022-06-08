@@ -2,7 +2,7 @@ $(document).ready(function () {
     cartload();
     addToCart();
     handleIncrementDecrementCart();
-    changeQuantity();
+    handleChangeQuantity();
     handleDeleteItem();
     handleClearCookiesCart();
     handleMakeOrder();
@@ -16,13 +16,11 @@ function cartload() {
     });
 
     $.ajax({
-        url: '/load-cart-data',
+        url: '/cart-total',
         method: "GET",
         success: function (response) {
             $('.basket-item-count').html('');
-            var parsed = jQuery.parseJSON(response)
-            var value = parsed; //Single Data Viewing
-            $('.basket-item-count').append($('<span class="badge badge-pill red">' + value['totalcart'] + '</span>'));
+            $('.basket-item-count').append($('<span class="badge badge-pill red">' + response['cartTotal'] + '</span>'));
         }
     });
 }
@@ -49,6 +47,12 @@ function addToCart() {
                 'product_id': product_id,
             },
             success: function (response) {
+                if (response.code === -1) {
+                    alertify.set('notifier', 'position', 'top-center');
+                    alertify.error(response.status);
+                    return;
+                }
+
                 alertify.set('notifier', 'position', 'top-center');
                 alertify.success(response.status);
 
@@ -64,7 +68,7 @@ function handleIncrementDecrementCart() {
         var incre_value = $(this).parents('.quantity').find('.qty-input').val();
         var value = parseInt(incre_value, 10);
         value = isNaN(value) ? 0 : value;
-        if (value < 10) {
+        if (value > 0) {
             value++;
             $(this).parents('.quantity').find('.qty-input').val(value);
         }
@@ -83,34 +87,24 @@ function handleIncrementDecrementCart() {
     });
 }
 
-function changeQuantity() {
+function handleChangeQuantity() {
+
     $('.changeQuantity').click(function (e) {
         e.preventDefault();
 
         var quantity = $(this).closest(".cartpage").find('.qty-input').val();
         var product_id = $(this).closest(".cartpage").find('.product_id').val();
 
-        console.log(quantity, product_id);
+        changeQuantity(quantity, product_id);
+    });
 
-        var data = {
-            '_token': $('input[name=_token]').val(),
-            'quantity': quantity,
-            'product_id': product_id,
-        };
+    $(".qty-input").change(function() {
+        var quantity = $(this).closest(".cartpage").find('.qty-input').val();
+        var product_id = $(this).closest(".cartpage").find('.product_id').val();
 
-        $.ajax({
-            url: '/update-to-cart',
-            type: 'POST',
-            data: data,
-            success: function (response) {
-                alertify.set('notifier', 'position', 'top-center');
-                alertify.warning(response.status);
+        if (quantity <= 0) return;
 
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
-            }
-        });
+        changeQuantity(quantity, product_id);
     });
 }
 
@@ -187,13 +181,49 @@ function handleMakeOrder() {
             type: 'POST',
             data: data,
             success: function (response) {
+                if (response.code === -1) {
+                    alertify.set('notifier', 'position', 'top-center');
+                    alertify.error(response.status);
+                    return;
+                }
+
                 alertify.set('notifier', 'position', 'top-center');
                 alertify.warning(response.status);
 
                 setTimeout(() => {
                     window.location.href = "/";
-                }, 6000);
+                }, 3000);
             }
         });
+    });
+}
+
+// private
+
+function changeQuantity (qty, prod_id) {
+    let data = {
+        '_token': $('input[name=_token]').val(),
+        'quantity': qty,
+        'product_id': prod_id,
+    };
+
+    $.ajax({
+        url: '/update-cart',
+        type: 'POST',
+        data: data,
+        success: function (response) {
+            if (response.code === -1) {
+                alertify.set('notifier', 'position', 'top-center');
+                alertify.error(response.status);
+                return;
+            }
+
+            alertify.set('notifier', 'position', 'top-center');
+            alertify.warning(response.status);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
     });
 }

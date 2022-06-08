@@ -33,8 +33,8 @@ class CategoryController extends AdminController
 
         $grid->column('id', __('Id'))->sortable();
         $grid->column('parent_id', 'Parent Name')->display(function ($parent_id) {
-            return Category::where('id', $parent_id)->first()->name ?? "No parent";
-        })->sortable();
+            return Category::where('id', $parent_id)->first()->name ?? "N/A";
+        })->label()->sortable();
         
         $grid->column('name', __('Name'))->sortable();
         $grid->column('alias', __('Alias'));
@@ -67,8 +67,8 @@ class CategoryController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('parent_id', 'Parent Category')->as(function ($parent_id) {
-            return Category::where('id', $parent_id)->first()->name ?? "No parent";
-        });
+            return Category::where('id', $parent_id)->first()->name ?? "N/A";
+        })->label();
         $show->field('name', __('Name'));
         $show->field('alias', __('Alias'));
 

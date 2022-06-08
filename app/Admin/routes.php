@@ -27,4 +27,9 @@ Route::group([
     $router->resource('attributes', AttributeController::class);
     $router->resource('characteristics', CharacteristicsController::class);
     $router->resource('category-attributes', CategoryAttributeController::class);
+    
+    $router->resource('orders', OrderController::class);
+    $router->resource('order-statuses', OrderStatusController::class);
+    $router->resource('delivery-methods', DeliveryMethodController::class);
+    $router->resource('payment-methods', PaymentMethodsController::class);
 });

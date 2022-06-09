@@ -26,3 +26,7 @@ max-height: 30px;
 header{
     height: 8.5vh;
 }
+
+main{
+    min-height: 91.5vh;
+}

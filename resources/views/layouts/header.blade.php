@@ -97,7 +97,14 @@
                             </svg> --}}
                         </div>
                     </a>
-                    <a id="profile" href="{{ route('login') }}" class="icon-link align-items-center">
+                    <a  
+                        id="profile" 
+                        @auth
+                            href="{{ route('cabinet.index') }}"
+                        @else
+                            href="{{ route('login') }}" 
+                        @endauth    
+                        class="icon-link align-items-center">
                         <div id="profile-icon">
                             <img src="{{asset('icons/profile.png')}}" alt="cart">
                             {{-- <object id="profile-svg" 

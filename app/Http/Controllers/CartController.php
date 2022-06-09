@@ -222,7 +222,6 @@ class CartController extends Controller
             foreach ($userCart as $cart) {
                 $productPrice = $cart->product()->get()[0]->price()->get()[0]->price;
                 $productImage = $cart->product()->get()[0]->images()->get()[0]->url;
-
                 $cartDto[] = array(
                     'item_id' => $cart->id,
                     'product_id' => $cart->product()->get()[0]->id,

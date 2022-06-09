@@ -43,6 +43,11 @@ class CartController extends Controller
         $cookie_data = stripslashes(Cookie::get('shopping_cart'));
         $cart_data = json_decode($cookie_data, true);
 
+        foreach ($cart_data as $index => $cart_item) {
+            $prod_id = $cart_data[$index]['item_id'];
+            $cart_data[$index]['item_name'] = Product::find($prod_id)->name;
+        }
+
         return view('cart.index')
             ->with('cart_data', $cart_data);
     }
@@ -55,7 +60,7 @@ class CartController extends Controller
         if (Auth::check()) {
 
             if (CartProduct::where('product_id', $prod_id)->exists())
-                return response()->json(['status' => '"' . Product::find($prod_id)->name . '" Already Added to Cart', 'code' => -1]);
+                return response()->json(['status' => '"' . Product::find($prod_id)->name . '" вже є в кошику!', 'code' => -1]);
 
             $cartProduct = CartProduct::create([
                 'user_id' => Auth::id(),
@@ -64,7 +69,7 @@ class CartController extends Controller
             ]);
 
             if ($cartProduct)
-                return response()->json(['status' => '"' . Product::find($prod_id)->name . '" Added to Cart', 'code' => 1]);
+                return response()->json(['status' => '"' . Product::find($prod_id)->name . '" був доданий до корзини!', 'code' => 1]);
         }
 
         if (Cookie::get('shopping_cart'))
@@ -77,7 +82,7 @@ class CartController extends Controller
         if (in_array($prod_id, $ids)) {
             foreach ($cart as $cartItem) {
                 if ($cartItem["item_id"] == $prod_id) 
-                    return response()->json(['status' => '"' . $cartItem["item_name"] . '" Already Added to Cart', 'code' => -1]);
+                    return response()->json(['status' => '"' . Product::find($prod_id)->name . '" вже є в кошику!', 'code' => -1]);
             }
         } 
 
@@ -97,10 +102,10 @@ class CartController extends Controller
             $cart[] = $newCartItem;
             Cookie::queue(Cookie::make('shopping_cart', json_encode($cart), 1440));
 
-            return response()->json(['status' => '"' . $prod_name . '" Added to Cart', 'code' => 1]);
+            return response()->json(['status' => '"' . $prod_name . '" був доданий до корзини!', 'code' => 1]);
         }
 
-        return response()->json(['status' => 'Something sent wrong', 'code' => -1]);
+        return response()->json(['status' => 'Щось пішло не так', 'code' => -1]);
     }
 
     public function getCartTotal()
@@ -147,7 +152,7 @@ class CartController extends Controller
                 $cartProduct->qty = $quantity;
                 $cartProduct->save();
 
-                return response()->json(['status' => '"' . $product->name . '" Quantity Updated',  'code' => 1]);
+                return response()->json(['status' => '"' . $product->name . '" Кількість товару була змінена',  'code' => 1]);
             }
         }
 
@@ -164,7 +169,7 @@ class CartController extends Controller
                         $cart[$index]["item_quantity"] =  $quantity;
                         Cookie::queue(Cookie::make('shopping_cart', json_encode($cart), 1440));
 
-                        return response()->json(['status' => '"' . $cart[$index]["item_name"] . '" Quantity Updated',  'code' => 1]);
+                        return response()->json(['status' => '"' . Product::find($prod_id)->name . '" Кількість товару була змінена',  'code' => 1]);
                     }
                 }
             }
@@ -193,7 +198,7 @@ class CartController extends Controller
                     unset($cart[$index]);
                     Cookie::queue(Cookie::make('shopping_cart', json_encode($cart), 1440));
 
-                    return response()->json(['status' => 'Item Removed from Cart']);
+                    return response()->json(['status' => 'Товар був видалений з корзини!']);
                 }
             }
         }
@@ -203,11 +208,11 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             CartProduct::truncate();
-            return response()->json(['status' => 'Your Cart is Cleared']);
+            return response()->json(['status' => 'Ваша корзина порожня!']);
         }
 
         Cookie::queue(Cookie::forget('shopping_cart'));
-        return response()->json(['status' => 'Your Cart is Cleared']);
+        return response()->json(['status' => 'Ваша корзина порожня!']);
     }
 
     public function checkout()

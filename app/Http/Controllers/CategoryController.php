@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Description;
-use App\Models\Image;
 use App\Models\Price;
 use App\Models\Product;
-use App\Models\CategoryAttribut;
 use App\Models\Characteristic;
 use App\Models\Attribute;
-use App\Models\CategoryAttribute;
 use App\Models\Vendor;
-use Exception;
-use Illuminate\Http\Request;
+use App\Http\Services\CommonService;
 
 class CategoryController extends Controller
 {
+    private CommonService $service;
+
+    public function __construct() {
+        $this->service = new CommonService();
+    }
+
     public function index()
     {
         return view('categories.index')->with('categories', Category::all());
@@ -96,6 +97,11 @@ class CategoryController extends Controller
         {
             $view_info->products = $this->filteringProducts($products, $filters);
         }
+
+        foreach ($view_info->products as $product) {
+            $product->inCart = $this->service->existsInCart($product->id);
+        }
+
         return view("products", compact("view_info"));
     }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99d8b028ef57bd98cb4ead2eeae79c7f",
+    "content-hash": "ab0971bb35e7478b7096f3d08e9e0713",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1669,6 +1669,63 @@
                 "source": "https://github.com/laravel-admin-extensions/helpers/tree/v2.0.2"
             },
             "time": "2021-10-11T09:41:51+00:00"
+        },
+        {
+            "name": "laravel-admin-ext/media-manager",
+            "version": "v2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-admin-extensions/media-manager.git",
+                "reference": "5460de965849a0723289f610beec479755d4ec1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-admin-extensions/media-manager/zipball/5460de965849a0723289f610beec479755d4ec1e",
+                "reference": "5460de965849a0723289f610beec479755d4ec1e",
+                "shasum": ""
+            },
+            "require": {
+                "encore/laravel-admin": "~1.6",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Encore\\Admin\\Media\\MediaServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Encore\\Admin\\Media\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "z-song",
+                    "email": "zosong@126.com"
+                }
+            ],
+            "description": "Media manager for laravel",
+            "homepage": "https://github.com/laravel-admin-extensions/media-manager",
+            "keywords": [
+                "laravel-admin",
+                "manager",
+                "media"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel-admin-extensions/media-manager/issues",
+                "source": "https://github.com/laravel-admin-extensions/media-manager/tree/v2.0.3"
+            },
+            "time": "2021-12-07T02:03:27+00:00"
         },
         {
             "name": "laravel/fortify",

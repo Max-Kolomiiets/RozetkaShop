@@ -83,6 +83,8 @@
             <div id="layout-actions">
                 <div id="actions" class="d-inline-flex">
                     <a id="cart" href="{{ route('cart.index') }}" class="icon-link align-items-center">
+                        <span class="nav-item basket-item-count nav-link cart-item-count">
+                        </span>
                         <div id="cart-icon">
                             <img src="{{asset('icons/cart.png')}}" alt="cart">
                             {{-- <object id="cart-svg" 

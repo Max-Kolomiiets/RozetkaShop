@@ -30,7 +30,7 @@ class ProductsController extends Controller
 
     private function filteringProductByPrice($product_id, $prices)
     {
-        $price = Price::firstWhere("product_id", $product_id)->price/100.0;
+        $price = Price::firstWhere("product_id", $product_id)->price;
         return $prices->min <= $price && $price <= $prices->max;
     }
 
@@ -97,7 +97,7 @@ class ProductsController extends Controller
         $product = Product::find($product_id);
         $images = Image::Where("product_id", $product_id)->limit(8)->get()->toArray();
         $image = (object)array_shift($images);
-        $price = Price::firstWhere("product_id", $product_id)->price / 100.0;
+        $price = Price::firstWhere("product_id", $product_id)->price;
         $availabulity = Availability::firstWhere("product_id", $product_id);
         $description = Description::firstWhere("product_id", $product_id)->description;
 

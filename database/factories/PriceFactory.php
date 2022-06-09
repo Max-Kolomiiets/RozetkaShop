@@ -22,7 +22,7 @@ class PriceFactory extends Factory
      */
     public function definition()
     {
-        $price = rand(50, 1000000);
+        $price = rand(1, 10000);
         return [
             'price' => $price,
             'product_id' => Product::factory()

@@ -27,8 +27,8 @@ class ProductsSeeder extends Seeder
      *
      * @return void
      */
-    public $products_cnt = 150;
-    public $images_cnt = [3, 16];
+    public $products_cnt = 55;
+    public $images_cnt = [3, 6];
 
     private function fakeSeed()
     {
@@ -114,8 +114,8 @@ class ProductsSeeder extends Seeder
             ];
             $product_id = Product::factory()->create($product_data)->id;
             $price_data = [
-                'product_id' => $product_id,
-                'price' => $product->price * 100
+                'product_id'=>$product_id,
+                'price'=>$product->price
             ];
             Price::factory()->create($price_data);
 

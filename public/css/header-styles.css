@@ -172,3 +172,21 @@
 #categories:hover{
     background-color: #BCBCBC;
 }
+#cart{
+    position: relative;
+}
+.cart-item-count{
+    background-color: #51A468;
+    position:absolute;
+    top:1%;
+    right: 1%;
+
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+
+    border-radius: 50%;
+}
+.cart-item-count span{
+    margin: auto;
+}

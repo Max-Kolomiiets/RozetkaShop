@@ -29,7 +29,7 @@
                                                     $imagePath = url('storage/' . $imagePath);
                                                 }
                                             ?>
-                                            <tr class="cart-section">
+                                            <tr class="cart-section cartpage">
                                                 <td class="cart-image">
                                                     <a class="entry-thumbnail" href="{{ route('product.show', $product_id) }}">
                                                         <img src="{{ $imagePath }}" width="70px" alt="">
@@ -58,7 +58,7 @@
                                                 <td class="cart-product-grand-total product-price-text">
                                                     <span
                                                         class="cart-grand-total-price">
-                                                        {{ ($data['item_quantity'] * $data['item_price']) / 100.0 }} ₴
+                                                        {{ ($data['item_quantity'] * $data['item_price'])}} ₴
                                                     </span>
                                                 </td>
                                                 <td class="remove-btn">
@@ -67,7 +67,7 @@
                                                         Видалити
                                                     </button>
                                                 </td>
-                                                @php $total += (($data["item_quantity"] * $data["item_price"]) / 100.0) @endphp
+                                                @php $total += (($data["item_quantity"] * $data["item_price"])) @endphp
                                             </tr>
                                         @endforeach
                                     </table>
@@ -78,36 +78,30 @@
                         <div class="row">
 
                             <div class="col-md-8 col-sm-12 estimate-ship-tax">
-                                <div>
+                                <div class="continue_text">
                                     <a href="{{ route('main.index') }}"
-                                        class="btn btn-upper btn-warning outer-left-xs mt-3">Продовжити покупки</a>
+                                        class="continue_action">Продовжити покупки</a>
                                 </div>
                             </div><!-- /.estimate-ship-tax -->
 
                             <div class="col-md-4">
                                 <div class="cart-shopping-total">
-                                    <div class="row">
-                                        <div class="">
-                                            <h6 class="cart-grand-price">
-                                                <span class="cart-grand-price-viewajax">{{ $total }}$</span>
-                                            </h6>
-                                        </div>
-                                        <div class="">
-                                            <div class="cart-checkout-btn text-center">
-                                                @if (Auth::user())
-                                                    <a href="{{ route('checkout') }}"
-                                                        class="btn btn-success btn-block checkout-btn">
-                                                        Оформити замовлення
-                                                    </a>
-                                                @else
-                                                    <a href="{{ route('checkout') }}"
-                                                        class="btn btn-success btn-block checkout-btn">
-                                                        Оформити замовлення
-                                                    </a>
-                                                    {{-- you add a pop modal for making a login --}}
-                                                @endif
-                                            </div>
-                                        </div>
+                                    <div class="cart-grand-price">
+                                        <span class="cart-grand-price-viewajax">{{ $total }}₴</span>
+                                    </div>
+                                    <div class="cart-checkout-btn text-center">
+                                        @if (Auth::user())
+                                                <a href="{{ route('checkout') }}"
+                                                    class="btn btn-block checkout-btn">
+                                                    Оформити замовлення
+                                                </a>
+                                            @else
+                                                <a href="{{ route('checkout') }}"
+                                                    class="btn btn-block checkout-btn">
+                                                    Оформити замовлення
+                                                </a>
+                                                {{-- you add a pop modal for making a login --}}
+                                            @endif
                                     </div>
                                 </div>
                             </div>

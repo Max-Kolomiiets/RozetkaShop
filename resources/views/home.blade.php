@@ -36,7 +36,7 @@
                         </a>
                     </div>
                     <div>
-                        <h3 class="product-price price-text">{{ $product->price()->get()[0]->price / 100 }} ₴</h3>
+                        <h3 class="product-price price-text">{{ $product->price()->get()[0]->price}} ₴</h3>
                     </div>
                 </div>
             @endforeach

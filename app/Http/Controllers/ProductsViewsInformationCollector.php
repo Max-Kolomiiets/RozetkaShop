@@ -35,14 +35,14 @@ class ProductsViewsInformationCollector
 
         if(count($products)>1){
             $min_max_prices = (object)[
-                'min' => min($prices)/100.0,
-                'max' => max($prices)/100.0
+                'min' => min($prices),
+                'max' => max($prices)
             ];
         }
         else{
             $min_max_prices = (object)[
-                'min' => $prices[0]/100.0,
-                'max' => $prices[0]/100.0
+                'min' => $prices[0],
+                'max' => $prices[0]
             ];
         }
 
@@ -160,7 +160,7 @@ class ProductsViewsInformationCollector
             'vendor_id' => $product->vendor_id,
             'category_id' => $product->category_id,
             'image_url' => Image::firstWhere("product_id", $product->id)->url,
-            'price' => Price::firstWhere("product_id", $product->id)->price / 100.0,
+            'price' => Price::firstWhere("product_id", $product->id)->price,
             'description' => Description::firstWhere("product_id", $product->id)->description
         ];
     }

@@ -64,7 +64,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $data['item_name'] }}</h5>
                         <p class="card-text">Count: {{ $data['item_quantity'] }}</p>
-                        <p class="card-text">Price: <small class="text-muted">{{ $data['item_price'] / 100 }}
+                        <p class="card-text">Price: <small class="text-muted">{{ $data['item_price'] }}
                                 $</small></p>
                     </div>
                 </div>

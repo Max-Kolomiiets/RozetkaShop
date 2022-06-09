@@ -25,7 +25,7 @@ class CategoryController extends Controller
 
     private function filteringProductByPrice($product_id, $prices)
     {
-        $price = Price::firstWhere("product_id", $product_id)->price/100.0;
+        $price = Price::firstWhere("product_id", $product_id)->price;
         return $prices->min <= $price && $price <= $prices->max;
     }
 

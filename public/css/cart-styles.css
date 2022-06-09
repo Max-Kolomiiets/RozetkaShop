@@ -11,8 +11,11 @@
 .cart-grand-total-price{
     font-family: 'Exo 2';
     color: #252525;
-    font-size: 16px;
+    font-size: 18px;
     padding: 3%;
+    display: inline-block;
+    width: 100%;
+    text-align: right;
 }
 
 .cart-product-description a{
@@ -49,20 +52,58 @@
     margin: auto;
 }
 
-.cart-grand-total-price{
-    overflow-wrap: normal;
-}
-
 .cart-product-quantity{
     width: 120px;
 }
 
+.remove-btn{
+    padding: 1%;
+}
+
 .remove-btn button{
-    font-size: 20px;
     margin: auto;
 }
 
 .cart-shopping-total{
     border: 1px solid #BCBCBC;   
     border-radius: 7px;
+    display: inline-flex;
+    padding: 5%;
+}
+
+.qty-input{
+    text-align: center;
+}
+
+.cart-grand-price-viewajax{
+    color: #252525;
+    font-size: 32px;
+    font-family: 'Exo 2';
+    font-weight: 500;
+}
+.cart-checkout-btn{
+    display: inline-flex;
+    align-items: center;
+    margin-left: 5%;
+}
+.cart-checkout-btn a{
+    background-color: #51A468;
+    color: white;
+    border-radius: 0%;
+}
+.cart-checkout-btn a:hover{ 
+    background-color: #9AC4A6;
+    color: white;
+    text-decoration: none;
+}
+
+.continue_text{
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    padding: 3%;
+}
+
+.continue_action{
+    color: #252525;
 }

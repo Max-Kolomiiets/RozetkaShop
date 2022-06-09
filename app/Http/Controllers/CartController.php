@@ -109,7 +109,9 @@ class CartController extends Controller
 
         if (Auth::check()) {
             $user = User::where('id', Auth::id())->first();
-            $cartTotal = $user->cartProducts()->get()->count();
+            $cartTotal = $user->cartProducts()->sum('qty');
+
+            if ($cartTotal == 0) $cartTotal = '';
 
             $response['cartTotal'] = $cartTotal;
             return response()->json($response);
@@ -118,11 +120,13 @@ class CartController extends Controller
         if (Cookie::get('shopping_cart')) {
             $cookie_data = stripslashes(Cookie::get('shopping_cart'));
             $cart_data = json_decode($cookie_data, true);
-            $cartTotal = count($cart_data);
+            $cartTotal = array_sum(array_column($cart_data,'item_quantity'));
+
+            if ($cartTotal == 0) $cartTotal = '';
 
             $response['cartTotal'] = $cartTotal;
         } else
-            $response['cartTotal'] = 0;
+            $response['cartTotal'] = '';
 
         return response()->json($response);
     }
@@ -217,7 +221,6 @@ class CartController extends Controller
             foreach ($userCart as $cart) {
                 $productPrice = $cart->product()->get()[0]->price()->get()[0]->price;
                 $productImage = $cart->product()->get()[0]->images()->get()[0]->url;
-
                 $cartDto[] = array(
                     'item_id' => $cart->id,
                     'product_id' => $cart->product()->get()[0]->id,

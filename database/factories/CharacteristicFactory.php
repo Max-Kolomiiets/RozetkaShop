@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use App\Models\Characteristic;
 use App\Models\Attribute;
 use App\Models\Product;
@@ -32,6 +33,7 @@ class CharacteristicFactory extends Factory
         }
         return [
             'value'=>$value, 
+            'alias'=>Str::slug(strtolower($value), "_"),
             'attribute_id'=>Attribute::factory(),
             'product_id'=>Product::factory()
         ];

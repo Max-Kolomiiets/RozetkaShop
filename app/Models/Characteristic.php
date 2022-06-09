@@ -10,6 +10,7 @@ class Characteristic extends Model
     use HasFactory;
     protected $table = 'characteristics';
     protected $fillable = [
+        'alias',
         'value', 
         'attribute_id',
         'product_id'

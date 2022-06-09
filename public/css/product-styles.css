@@ -1,0 +1,95 @@
+.bay-btn{
+    background-color: #FFA000;
+    color: white;
+    padding: 9% 25%;
+    border: none;
+}
+.bay-btn:hover{
+    background-color: #FFC86C;
+    
+}
+.bay-section{
+    display: inline-flex;
+    width: 100%;
+    border: 1px solid #BCBCBC;
+}
+.bay-section, .characteristic, .description{
+    padding: 2%;
+}
+
+.bay-section h4{
+    font-size: 32px;
+    margin: auto 0%;
+}
+.bay-section button{
+    font-size: 24px;
+    margin-left: 15%;
+}
+
+.product-card{
+    margin: 0% 3%;
+}
+
+.products-info{
+    display: inline-flex;
+}
+
+.product-title{
+    font-size: 48px;
+    font-weight: 400;
+}
+
+.characteristic td{
+    font-family: 'Exo 2';
+    font-size: 16px;
+
+}
+.characteristic-name{
+    padding-right: 45px;
+    border-bottom: 1px dotted #BCBCBC;
+}
+
+.left{
+    width: auto;
+}
+.right {
+    padding: 0% 2.5%;
+    width: 40%;
+}
+
+.carousel-inner{
+    width: 640px;
+    height: 480px;
+}
+
+.carousel-inner img{
+    width: 640px;
+    height: 480px;
+    object-fit: scale-down;
+    object-position: center center;
+}
+
+.carousel-indicators button{
+    margin-bottom: 0%;
+}
+.carousel-indicators button{
+    width: 100px;
+    height: 75px !important;
+}
+.carousel-control-next-icon{
+    /* fill='%23fff'%3e%3cpath */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23252525'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+}
+.carousel-control-prev-icon{
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23252525'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e") !important;
+}
+.carousel-indicators img{
+    width: 100px;
+    height: 75px;
+    object-fit: scale-down;
+    object-position: center center;
+}
+
+.images{
+    height: 580px;
+}

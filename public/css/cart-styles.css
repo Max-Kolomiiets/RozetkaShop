@@ -1,0 +1,109 @@
+#cart-content{
+    margin: 0%;
+    padding: 1% 0% 0% 0%; /* top right bottom left*/
+}
+#cart-title span{
+    color: #252525;
+    font-size: 32px;
+    font-family: 'Exo 2';
+    font-weight: 500;
+}
+.cart-grand-total-price{
+    font-family: 'Exo 2';
+    color: #252525;
+    font-size: 18px;
+    padding: 3%;
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+}
+
+.cart-product-description a{
+    color: #252525;
+}
+
+.cart-products{
+    width: 100%;
+}
+
+.cart-boreder{
+    border: 1px solid #BCBCBC;
+    border-radius: 7px;
+}
+
+.clear-cart-section{
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+
+.products-in-cart{
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-image a{
+    display: inline-flex;
+    width: 100%;
+    height: 100%;
+
+}
+.cart-image img{
+    margin: auto;
+}
+
+.cart-product-quantity{
+    width: 120px;
+}
+
+.remove-btn{
+    padding: 1%;
+}
+
+.remove-btn button{
+    margin: auto;
+}
+
+.cart-shopping-total{
+    border: 1px solid #BCBCBC;   
+    border-radius: 7px;
+    display: inline-flex;
+    padding: 5%;
+}
+
+.qty-input{
+    text-align: center;
+}
+
+.cart-grand-price-viewajax{
+    color: #252525;
+    font-size: 32px;
+    font-family: 'Exo 2';
+    font-weight: 500;
+}
+.cart-checkout-btn{
+    display: inline-flex;
+    align-items: center;
+    margin-left: 5%;
+}
+.cart-checkout-btn a{
+    background-color: #51A468;
+    color: white;
+    border-radius: 0%;
+}
+.cart-checkout-btn a:hover{ 
+    background-color: #9AC4A6;
+    color: white;
+    text-decoration: none;
+}
+
+.continue_text{
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    padding: 3%;
+}
+
+.continue_action{
+    color: #252525;
+}

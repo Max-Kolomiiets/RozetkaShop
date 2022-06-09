@@ -17,6 +17,7 @@ use App\Models\Vendor;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Descriptor\Descriptor;
 
 class ProductsSeeder extends Seeder
@@ -26,8 +27,8 @@ class ProductsSeeder extends Seeder
      *
      * @return void
      */
-    public $products_cnt = 150;
-    public $images_cnt = [3, 16];
+    public $products_cnt = 55;
+    public $images_cnt = [3, 6];
 
     private function fakeSeed()
     {
@@ -113,8 +114,8 @@ class ProductsSeeder extends Seeder
             ];
             $product_id = Product::factory()->create($product_data)->id;
             $price_data = [
-                'product_id' => $product_id,
-                'price' => $product->price * 100
+                'product_id'=>$product_id,
+                'price'=>$product->price
             ];
             Price::factory()->create($price_data);
 
@@ -142,9 +143,10 @@ class ProductsSeeder extends Seeder
 
             foreach ($product->attributes as $attribute) {
                 $characteristic_data = [
-                    'product_id' => $product_id,
-                    'attribute_id' => $this->getAttribute($attribute->name),
-                    'value' => $attribute->value
+                    'product_id'=>$product_id,
+                    'attribute_id'=> $this->getAttribute($attribute->name),
+                    'value'=>$attribute->value,
+                    'alias'=>Str::slug(strtolower($attribute->value), "_")
                 ];
                 Characteristic::factory()->create($characteristic_data);
             }

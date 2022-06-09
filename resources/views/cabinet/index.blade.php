@@ -37,5 +37,9 @@
                 </div>
             </div>
         </div>
+        <form action="{{ url('/logout') }}" method="post">
+            @csrf
+            <button class="btn btn-danger headers-links">Вийти</button>
+        </form>
     </div>
 @endsection

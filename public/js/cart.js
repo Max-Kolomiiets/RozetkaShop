@@ -37,7 +37,6 @@ function addToCart() {
 
         var product_id = $(this).closest('.feature').find('.product_id').val();
         var quantity = $(this).closest('.feature').find('.qty-input').val();
-        console.log('quantity', quantity);
 
         $.ajax({
             url: "/add-to-cart",
@@ -47,15 +46,8 @@ function addToCart() {
                 'product_id': product_id,
             },
             success: function (response) {
-                if (response.code === -1) {
-                    alertify.set('notifier', 'position', 'top-center');
-                    alertify.error(response.status);
-                    return;
-                }
-
-                alertify.set('notifier', 'position', 'top-center');
-                alertify.success(response.status);
-
+                onError(response);
+                onSuccess(response.status);
                 cartload();
             },
         });
@@ -98,7 +90,7 @@ function handleChangeQuantity() {
         changeQuantity(quantity, product_id);
     });
 
-    $(".qty-input").change(function() {
+    $(".qty-input").change(function () {
         var quantity = $(this).closest(".cartpage").find('.qty-input').val();
         var product_id = $(this).closest(".cartpage").find('.product_id').val();
 
@@ -113,24 +105,17 @@ function handleDeleteItem() {
         e.preventDefault();
 
         var product_id = $(this).closest(".cartpage").find('.product_id').val();
-        console.log(product_id);
         var data = {
             '_token': $('input[name=_token]').val(),
             "product_id": product_id,
         };
-        //$(this).closest(".cartpage").remove();
 
         $.ajax({
             url: '/delete-from-cart',
             type: 'DELETE',
             data: data,
             success: function (response) {
-                alertify.set('notifier', 'position', 'top-center');
-                alertify.error(response.status);
-
-                setTimeout(() => {
-                    window.location.reload();
-                }, 500);
+                onSuccess(response.status);
             }
         });
     });
@@ -144,12 +129,7 @@ function handleClearCookiesCart() {
             url: '/clear-cart',
             type: 'GET',
             success: function (response) {
-                alertify.set('notifier', 'position', 'top-center');
-                alertify.error(response.status);
-
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
+                onSuccess(response.status);
             }
         });
 
@@ -200,7 +180,7 @@ function handleMakeOrder() {
 
 // private
 
-function changeQuantity (qty, prod_id) {
+function changeQuantity(qty, prod_id) {
     let data = {
         '_token': $('input[name=_token]').val(),
         'quantity': qty,
@@ -212,18 +192,30 @@ function changeQuantity (qty, prod_id) {
         type: 'POST',
         data: data,
         success: function (response) {
-            if (response.code === -1) {
-                alertify.set('notifier', 'position', 'top-center');
-                alertify.error(response.status);
-                return;
-            }
-
-            alertify.set('notifier', 'position', 'top-center');
-            alertify.warning(response.status);
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            onError(response);
+            onSuccess(response.status);
         }
     });
+}
+
+function onSuccess(status, timeForReload = 1000) {
+    alertify.set('notifier', 'position', 'top-center');
+    alertify.success(status);
+
+    setTimeout(() => {
+        window.location.reload();
+    }, timeForReload);
+}
+
+function onError(response, timeForReload = 1000) {
+    if (response.code === -1) {
+        alertify.set('notifier', 'position', 'top-center');
+        alertify.error(response.status);
+
+        setTimeout(() => {
+            window.location.reload();
+        }, timeForReload);
+
+        return;
+    }
 }

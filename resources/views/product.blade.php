@@ -57,7 +57,7 @@
                     <!-- Controls -->
     
                     <!-- Thumbnails -->
-                    <div class="carousel-indicators" style="margin-bottom: -100px;">                                
+                    <div class="carousel-indicators" style="margin-bottom: -100px;">                         
                         @foreach($product_info->images as $image)
                             <li>
                                 <?php
@@ -104,7 +104,7 @@
                         </div>
                     @else
                         <div class="action feature">
-                            <button class="bay-btn add-to-cart-btn" type="button" onClick="window.location.reload();">Купити</button>
+                            <button class="bay-btn add-to-cart-btn" type="button">Купити</button>
                             <input type="hidden" class="product_id" value="{{ $product_info->id }}"> <!-- Your Product ID -->
                             <input type="hidden" class="qty-input" value="1">
                             {{-- <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button> --}}

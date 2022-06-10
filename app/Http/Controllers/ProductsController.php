@@ -101,7 +101,7 @@ class ProductsController extends Controller
         $product_id = $id;
         $product = Product::find($product_id);
         $images = Image::Where("product_id", $product_id)->limit(8)->get()->toArray();
-        $image = (object)array_shift($images);
+        $image = (object)$images[0];
         $price = Price::firstWhere("product_id", $product_id)->price;
         $availabulity = Availability::firstWhere("product_id", $product_id);
         $description = Description::firstWhere("product_id", $product_id)->description;

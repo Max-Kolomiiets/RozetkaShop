@@ -48,6 +48,8 @@ function userCabinetRoute() {
     Route::get('/cabinet', 'UserCabinetController@index')->name('cabinet.index');
     Route::get('/cabinet/orders', 'UserCabinetController@orders')->name('cabinet.orders');
     Route::get('/cabinet/wishlist', 'UserCabinetController@index')->name('cabinet.wishlist');
+
+    Route::post('/update-user-info', 'UserCabinetController@updateUserInfo');
 }
 
 

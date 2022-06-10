@@ -1,0 +1,33 @@
+.logout-btn{
+    padding: 2% 1% 1% 1%;
+}
+
+.logout-btn button{
+    border: none;
+    background-color: #E56655;
+    margin: auto;
+}
+
+.logout-btn button:hover{
+    border: none;
+    background-color: #df9c93;
+}
+
+.items-border{
+    border: 1px solid #BCBCBC;
+    border-radius: 7px;
+    margin: 1%;
+    margin-bottom: 0%;
+    width: 98%;
+}
+.items-border span{
+    color: #252525;
+    font-size: 18px;
+    font-family: 'Exo 2';
+}
+.personal-data-table{
+    margin: 2% 1%;
+}
+.personal-data-value input{
+    margin-left: 8%;
+}

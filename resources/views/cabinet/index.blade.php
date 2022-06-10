@@ -19,37 +19,46 @@
                     <tr>
                         <td class='personal-data-titel'>Логін</td>
                         <td class='personal-data-value'>
-                            <input type="text" name="login">
+                            <input type="text" name="login" readonly class="read-only-input" value="value">
                         </td>
                     </tr>
                     <tr>
                         <td class='personal-data-titel'>Ім'я</td>
                         <td class='personal-data-value'>
-                            <input type="text" name="Name">
+                            <input type="text" name="Name" readonly class="read-only-input" value="value">
                         </td>
                     </tr>
                     <tr>
                         <td class='personal-data-titel'>Прізвище</td>
                         <td class='personal-data-value'>
-                            <input type="text" name="Surname">
+                            <input type="text" name="Surname" readonly class="read-only-input" value="value">
                         </td>
                     </tr>
                     <tr>
                         <td class='personal-data-titel'>Електрона адреса</td>
                         <td class='personal-data-value'>
-                            <input type="text" name="email">
+                            <input type="text" name="email" readonly class="read-only-input" value="value">
                         </td>
                     </tr>
                     <tr>
                         <td class='personal-data-titel'>Телефон</td>
                         <td class='personal-data-value'>
-                            <input type="tel" name="phone">
+                            <input type="tel" name="phone" readonly class="read-only-input" value="value">
                         </td>
                     </tr>
                     <tr>
                         <td class='personal-data-titel'>Адреса</td>
                         <td class='personal-data-value'>
-                            <input type="text" name="address">
+                            <input type="text" name="address" readonly class="read-only-input" value="value">
+                        </td>
+                    </tr>
+                    <tr id="edit-change-content">
+                        <td>
+                            <div class="cart-checkout-btn text-center" id="edit-cabinet-data-btn">
+                                <a class="btn btn-block checkout-btn">
+                                    Редагувати
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     <tr>

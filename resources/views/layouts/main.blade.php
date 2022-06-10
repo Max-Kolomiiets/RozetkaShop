@@ -53,7 +53,7 @@
     <!-- JavaScript -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="{{ asset('js/cart.js') }}"></script>
-
+    <script src="{{ asset('js/cabinet.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
     <script>

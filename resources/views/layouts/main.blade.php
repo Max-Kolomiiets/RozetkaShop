@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="{{ asset('css/filtres-styles.css')}}">
     <link rel="stylesheet" href="{{ asset('css/product-styles.css')}}">
     <link rel="stylesheet" href="{{ asset('css/cart-styles.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/cabinet-styles.css')}}">
 </head>
 
 <body>

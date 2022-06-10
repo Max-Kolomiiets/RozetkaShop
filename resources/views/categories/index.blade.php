@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('main_content')
 
- <h1 class="text-center"> Categories </h1>
+ <h1 class="text-center"> Категорії </h1>
 
   <div class="g-4 py-5 col">
     <ul class="">

@@ -159,14 +159,11 @@
                         </div>
                         <div class="bottom-row feature">
                             <h3 class="price-text price-text-filltres">{{ $product->price}} ₴</h3>
-                            <a class="cart-btn add-to-cart-btn"></a>
-
                             @if ($product->inCart)
-                                <p>Вже в корзині</p>
+                                <span class="already-in-cart"></span>
                             @else
-                                <p>Додати до корзини</p>
-                            @endif
-
+                                <a class="cart-btn add-to-cart-btn" onClick="window.location.reload();"></a>
+                            @endif       
                             <input type="hidden" class="product_id" value="{{ $product->id }}"> <!-- Your Product ID -->
                             <input type="hidden" class="qty-input" value="1">
                         </div>

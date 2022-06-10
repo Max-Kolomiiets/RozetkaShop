@@ -12,6 +12,12 @@
     background: url('../icons/cart-add.png') no-repeat 50% 50%;
     background-size: auto 55%;
 }
+.already-in-cart{
+    width: 45px;
+    height: 45px;
+    background: url('../icons/check.png') no-repeat 50% 50%;
+    background-size: auto 35%;
+}
 
 .bottom-row{
     position: absolute;

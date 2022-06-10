@@ -47,8 +47,7 @@
                                                             style="cursor: pointer">
                                                             <span class="input-group-text">-</span>
                                                         </div>
-                                                        <input type="text" class="qty-input form-control" maxlength="2"
-                                                            max="10" value="{{ $data['item_quantity'] }}">
+                                                        <input type="text" class="qty-input form-control" maxlength="4" value="{{ $data['item_quantity'] }}">
                                                         <div class="input-group-append increment-btn changeQuantity"
                                                             style="cursor: pointer">
                                                             <span class="input-group-text">+</span>
@@ -114,9 +113,9 @@
                         <div class="row">
                             <div class="col-md-12 mycard py-5 text-center">
                                 <div class="mycards">
-                                    <h4>Your cart is currently empty.</h4>
+                                    <h4> Кошик порожній</h4>
                                     <a href="{{ route('main.index') }}"
-                                        class="btn btn-upper btn-primary outer-left-xs mt-5">Continue Shopping</a>
+                                        class="btn btn-upper continue-btn outer-left-xs mt-5 ">Продовжити покупки</a>
                                 </div>
                             </div>
                         </div>

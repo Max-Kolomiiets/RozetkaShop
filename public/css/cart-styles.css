@@ -61,7 +61,13 @@
 }
 
 .remove-btn button{
+    border: none;
+    background-color: #E56655;
     margin: auto;
+}
+.remove-btn button:hover{
+    border: none;
+    background-color: #df9c93;
 }
 
 .cart-shopping-total{
@@ -92,6 +98,17 @@
     border-radius: 0%;
 }
 .cart-checkout-btn a:hover{ 
+    background-color: #9AC4A6;
+    color: white;
+    text-decoration: none;
+}
+
+.continue-btn{
+    background-color: #51A468;
+    color: white;
+    border-radius: 0%;
+}
+.continue-btn:hover{ 
     background-color: #9AC4A6;
     color: white;
     text-decoration: none;

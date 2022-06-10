@@ -93,3 +93,16 @@
 .images{
     height: 580px;
 }
+.product-already-in-cart-block{
+    width: 38%;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+.product-already-in-cart{
+    background: url('../icons/check–orange.png') no-repeat 0% 50%;
+    background-size: auto 90%;
+    padding-left: 20%;
+    color: #252525;
+    margin: auto;
+}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin\Selectable\Products;
 use App\Http\Controllers\Controller;
+use App\Http\Services\CommonService;
 use App\Models\Description;
 use App\Models\Image;
 use App\Models\Price;
@@ -19,6 +20,10 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+    private CommonService $service;
+    public function __construct() {
+        $this->service = new CommonService();
+    }
     public function getProductCharacteristics($characteristic)
     {
         $attribute = Attribute::find($characteristic->attribute_id);
@@ -115,6 +120,7 @@ class ProductsController extends Controller
             'description'=>substr($description, 0, 200),
             'characteristics'=>$characteristics
         ];
+        $product_info->inCart = $this->service->existsInCart($product->id);
         return view("product", compact("product_info"));
     }
 
@@ -131,6 +137,7 @@ class ProductsController extends Controller
         }
 
         $products = Product::where('name', 'LIKE', '%'.$word.'%')->get();
+
         if(count($products) > 0)
         {
             $DBcollector = new ProductsViewsInformationCollector();
@@ -138,6 +145,9 @@ class ProductsController extends Controller
             if($filters != null)
             {
                 $view_info->products = $this->filteringProducts($products, $filters);
+            }
+            foreach ($view_info->products as $product) {
+                $product->inCart = $this->service->existsInCart($product->id);
             }
             return view("products", compact("view_info"));
         }

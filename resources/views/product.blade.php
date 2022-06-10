@@ -96,14 +96,21 @@
             <div class="details">
                 <div class="bay-section">
                     <h4 class="price"><span>{{$product_info->price}} ₴</span></h4>
-                    <div class="action feature">
-                        <button class="bay-btn add-to-cart-btn" type="button">Купити</button>
-                        <input type="hidden" class="product_id" value="{{ $product_info->id }}"> <!-- Your Product ID -->
-                        <input type="hidden" class="qty-input" value="1">
-                        {{-- <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button> --}}
-                    </div>
+                    @if ($product_info->inCart)
+                        <div class="product-already-in-cart-block">
+                            <a href="{{ route('cart.index') }}" class="align-items-center product-already-in-cart">
+                                В кошику
+                            </a>
+                        </div>
+                    @else
+                        <div class="action feature">
+                            <button class="bay-btn add-to-cart-btn" type="button" onClick="window.location.reload();">Купити</button>
+                            <input type="hidden" class="product_id" value="{{ $product_info->id }}"> <!-- Your Product ID -->
+                            <input type="hidden" class="qty-input" value="1">
+                            {{-- <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button> --}}
+                        </div>
+                    @endif
                 </div>
-
                 <div class="description">
                     <h3>Опис</h3>
                     <p class="product-description">

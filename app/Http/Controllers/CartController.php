@@ -43,9 +43,11 @@ class CartController extends Controller
         $cookie_data = stripslashes(Cookie::get('shopping_cart'));
         $cart_data = json_decode($cookie_data, true);
 
-        foreach ($cart_data as $index => $cart_item) {
-            $prod_id = $cart_data[$index]['item_id'];
-            $cart_data[$index]['item_name'] = Product::find($prod_id)->name;
+        if (!empty($cart_data)) {
+            foreach ($cart_data as $index => $cart_item) {
+                $prod_id = $cart_data[$index]['item_id'];
+                $cart_data[$index]['item_name'] = Product::find($prod_id)->name;
+            }
         }
 
         return view('cart.index')

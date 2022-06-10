@@ -14,7 +14,7 @@ class HomeController extends Controller
     {
         return $content
             ->title('Dashboard')
-            ->description('Welcome to Ukrmarket admin part')
+            ->description('')
             ->row("<div class='title'>Ukrmarket.com - Admin panel</div>")
 
             ->row(function (Row $row) {

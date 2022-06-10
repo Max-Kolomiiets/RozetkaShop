@@ -162,7 +162,7 @@
                             @if ($product->inCart)
                                 <span class="already-in-cart"></span>
                             @else
-                                <a class="cart-btn add-to-cart-btn" onClick="window.location.reload();"></a>
+                                <a class="cart-btn add-to-cart-btn"></a>
                             @endif       
                             <input type="hidden" class="product_id" value="{{ $product->id }}"> <!-- Your Product ID -->
                             <input type="hidden" class="qty-input" value="1">

@@ -19,10 +19,10 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <x-jet-banner />
+        {{-- <x-jet-banner /> --}}
 
         <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+            {{-- @livewire('navigation-menu')
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -31,19 +31,19 @@
                         {{ $header }}
                     </div>
                 </header>
-            @endif
+            @endif --}}
 
             <!-- Page Content -->
             <main>
                 @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+                        <a href="{{ url('/') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Повернутися на головну</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Увійти/a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Зареєструватись</a>
                         @endif
                     @endauth
                 </div>

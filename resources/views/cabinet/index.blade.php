@@ -19,37 +19,37 @@
                     <tr>
                         <td class='personal-data-titel'>Логін</td>
                         <td class='personal-data-value'>
-                            <input type="text" name="login" readonly class="read-only-input" value="value">
+                            <input  id="user-login" type="text" name="login" readonly class="read-only-input" value="{{ $user->email }}">
                         </td>
                     </tr>
                     <tr>
                         <td class='personal-data-titel'>Ім'я</td>
                         <td class='personal-data-value'>
-                            <input type="text" name="Name" readonly class="read-only-input" value="value">
+                            <input id="user-name" type="text" name="Name" readonly class="read-only-input"  value="{{ $user->name }}">
                         </td>
                     </tr>
                     <tr>
                         <td class='personal-data-titel'>Прізвище</td>
                         <td class='personal-data-value'>
-                            <input type="text" name="Surname" readonly class="read-only-input" value="value">
+                            <input id="user-lastname" type="text" name="Surname" readonly class="read-only-input" value="{{ $user->lastname }}">
                         </td>
                     </tr>
                     <tr>
                         <td class='personal-data-titel'>Електрона адреса</td>
                         <td class='personal-data-value'>
-                            <input type="text" name="email" readonly class="read-only-input" value="value">
+                            <input id="user-email" type="text" name="email" readonly class="read-only-input" value="{{ $user->email }}">
                         </td>
                     </tr>
                     <tr>
                         <td class='personal-data-titel'>Телефон</td>
                         <td class='personal-data-value'>
-                            <input type="tel" name="phone" readonly class="read-only-input" value="value">
+                            <input id="user-phone" type="tel" name="phone" readonly class="read-only-input" value="{{ $user->contacts()->first()->phone }}">
                         </td>
                     </tr>
                     <tr>
                         <td class='personal-data-titel'>Адреса</td>
                         <td class='personal-data-value'>
-                            <input type="text" name="address" readonly class="read-only-input" value="value">
+                            <input id="user-address" type="text" name="address" readonly class="read-only-input" value="{{ $user->contacts()->first()->address }}">
                         </td>
                     </tr>
                     <tr id="edit-change-content">
@@ -62,7 +62,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><a href="#">змінити пароль</a></td>
+                        <td><a id="change-pass-btn" href="/user/profile">змінити пароль</a></td>
                     </tr>
                 </table>
             </div>

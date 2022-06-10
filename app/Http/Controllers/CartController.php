@@ -146,7 +146,7 @@ class CartController extends Controller
         if (Auth::check()) {
             $cartProduct = CartProduct::find($prod_id);
             if ($cartProduct == null) 
-                return response()->json(['status' => 'Something went wrong!',  'code' => -1]);
+                return response()->json(['status' => 'Щось пішло не так!',  'code' => -1]);
 
             $product = Product::find($cartProduct->product()->first()->id);
 
@@ -176,7 +176,7 @@ class CartController extends Controller
                 }
             }
         }
-        return response()->json(['status' => 'Something went wrong',  'code' => -1]);
+        return response()->json(['status' => 'Щось пішло не так',  'code' => -1]);
     }
 
     public function removeCartItem(Request $request)
@@ -185,9 +185,9 @@ class CartController extends Controller
 
         if (Auth::check()) {
             if (CartProduct::find($prod_id)->delete())
-                return response()->json(['status' => 'Item Removed from Cart']);
+                return response()->json(['status' => 'Товар був видалений з корзини!']);
 
-            return response()->json(['status' => 'Something went wrong! We are so sorry)']);
+            return response()->json(['status' => 'Щось пішло не так']);
         }
 
         $cart = json_decode(stripslashes(Cookie::get('shopping_cart')), true);
@@ -256,7 +256,7 @@ class CartController extends Controller
             $userCart = $user->cartProducts()->get();
 
             if (is_null($userCart) || empty($userCart))
-                return response()->json(['status' => "No cart items!", 'code' => -1]);
+                return response()->json(['status' => "Немає товарів!", 'code' => -1]);
 
             $orderNumber = Order::exists() ? Order::latest('id')->first()->id + 1 : 1;
 
@@ -276,8 +276,8 @@ class CartController extends Controller
             }
 
             CartProduct::truncate();
-            return response()->json(['status' => "Thank you for your order! We'll be in touch", 'code' => 1]);
+            return response()->json(['status' => "Дякуємо за ваше замовлення! Ми з вами зв'яжемось", 'code' => 1]);
         }
-        return response()->json(['status' => 'Thank you for your order!', 'code' => 1]);
+        return response()->json(['status' => 'Дякуємо за ваше замовлення!', 'code' => 1]);
     }
 }

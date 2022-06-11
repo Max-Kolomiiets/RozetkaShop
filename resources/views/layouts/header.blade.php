@@ -71,12 +71,9 @@
                 </a>
             </div>
             <div id="layout-search">
-                <form id="search" class="d-inline-flex" method="get" action="{{ route('products.search')}}">
-                    <input class="search-input" 
-                                name="word" 
-                                type="text" 
-                                onsubmit="this.form.submit()" 
-                                placeholder="Я шукаю...">
+                <form id="search" class="d-inline-flex" method="get" action="{{ route('products.search') }}">
+                    <input class="search-input" name="word" type="text" onsubmit="this.form.submit()"
+                        placeholder="Я шукаю...">
                     <input class="search-button" type="submit" value="Найти">
                 </form>
             </div>
@@ -86,7 +83,7 @@
                         <span class="nav-item basket-item-count nav-link cart-item-count">
                         </span>
                         <div id="cart-icon">
-                            <img src="{{asset('icons/cart.png')}}" alt="cart">
+                            <img src="{{ asset('icons/cart.png') }}" alt="cart">
                             {{-- <object id="cart-svg" 
                                 data="{{asset('icons/cart.svg')}}" 
                                 type="image/svg+xml" 
@@ -97,17 +94,11 @@
                             </svg> --}}
                         </div>
                     </a>
-                    <a  
-                        id="profile" 
-                        @auth
-                            href="{{ route('cabinet.index') }}"
-                        @else
-                            href="{{ route('login') }}" 
-                        @endauth    
-                        class="icon-link align-items-center">
-                        <div id="profile-icon">
-                            <img src="{{asset('icons/profile.png')}}" alt="cart">
-                            {{-- <object id="profile-svg" 
+                <a id="profile" @auth href="{{ route('cabinet.index') }}" @else href="{{ route('login') }}"
+                    @endauth class="icon-link align-items-center">
+                    <div id="profile-icon">
+                        <img src="{{ asset('icons/profile.png') }}" alt="cart">
+                        {{-- <object id="profile-svg" 
                                 data="{{asset('icons/profile.svg')}}" 
                                 type="image/svg+xml" 
                                 width="32" 
@@ -115,10 +106,10 @@
                             <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" version="1.1">
                                 <use xlink:href="profile.svg#profile"/>
                             </svg> --}}
-                        </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 </div>

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Category;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,7 +51,7 @@ function userCabinetRoute() {
 }
 
 
-Route::get('/categories', "CategoryController@index")->name("category.index");
+
 
 Route::get('/checkout', 'CartController@checkout')->name('checkout');
 Route::post('/make-order','CartController@makeOrder');
@@ -61,3 +61,19 @@ Route::post('/make-order','CartController@makeOrder');
 Route::post('/upload-products', 'UploadController@uploadProductsJson')->name('upload.products');
 
 Route::post('/upload-images', 'UploadController@uploadImagesAndJsonFile')->name('upload.images');
+// for categories
+Route::get('/categories', function () {
+
+    $categories = Category::tree()->get()->toTree();
+
+ 
+
+    return view('categories._categories', [
+
+        'categories' => $categories
+
+    ]);
+
+})->name("category.index");
+
+// Route::get('/categories', "CategoryController@index")->name("category.index");

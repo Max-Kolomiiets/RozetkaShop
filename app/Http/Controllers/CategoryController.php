@@ -14,15 +14,25 @@ use App\Http\Services\CommonService;
 class CategoryController extends Controller
 {
     private CommonService $service;
+     public function index()
+
+    {
+        $categories = Category::tree()->get()->toTree();
+        return view('categories.index')->with('categories', $categories);
+
+        // $rootCategories = Category::where('parent_id', null)->get();
+
+        // //dd($rootCategories[0]->children()->get());
+
+        // return view('categories.index')->with('categories', $rootCategories);
+
+    }
+    
 
     public function __construct() {
         $this->service = new CommonService();
     }
 
-    public function index()
-    {
-        return view('categories.index')->with('categories', Category::all());
-    }
 
     private function filteringProductByPrice($product_id, $prices)
     {

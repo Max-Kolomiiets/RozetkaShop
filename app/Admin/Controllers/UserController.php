@@ -29,6 +29,7 @@ class UserController extends AdminController
 
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('Name'))->sortable();
+        $grid->column('lastname', __('Name'))->sortable();
         $grid->column('email', __('Email'))->sortable();
         $grid->column('email_verified_at', __('Email verified at'));
         $grid->column('password', __('Password'));
@@ -54,6 +55,7 @@ class UserController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
+        $show->field('lastname', __('Name'));
         $show->field('email', __('Email'));
         $show->field('email_verified_at', __('Email verified at'));
         $show->field('password', __('Password'));
@@ -91,6 +93,7 @@ class UserController extends AdminController
         $form = new Form(new User());
 
         $form->text('name', __('Name'));
+        $form->text('lastname', __('Last Name'));
         $form->email('email', __('Email'));
         $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
         $form->password('password', __('Password'));
